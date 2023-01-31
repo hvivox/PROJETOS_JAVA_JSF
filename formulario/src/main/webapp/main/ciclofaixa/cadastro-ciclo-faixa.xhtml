@@ -1,0 +1,253 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:esp="http://www.especializa.com.br/facelets/taglibs"
+	xmlns:espc="http://java.sun.com/jsf/composite/componentes"
+	xmlns:o="http://omnifaces.org/ui"
+	template="../../WEB-INF/templates/mainTemplate.xhtml">
+
+	<!-- <p:growl -->
+	<!-- id="mensagemGrow" -->
+	<!-- showDetail="true" globalOnly="false"/> -->
+
+	<ui:define name="titulo">Cadastro - #{mens.titulo_ciclo_faixa}</ui:define>
+
+
+	<ui:define name="corpo">
+		<f:metadata>
+			<f:viewAction action="#{mbCicloFaixa.inicializar}" />
+			<o:viewParam name="dumy" />
+		</f:metadata>
+
+
+
+		<h:form id="formCadastro">
+			<h1 class="hv-page-title">Cadastro - #{mens.titulo_ciclo_faixa}
+			</h1>
+
+			<p:toolbar>
+				<p:toolbarGroup>
+					<p:commandButton
+						value="Salvar"
+						id="btnSalvar"
+						icon="ui-icon-disk"
+						action="#{ mbCicloFaixa.salvar }"
+						update="formCadastro :hv-msg-topo">
+						<p:resetInput target="formCadastro" />
+					</p:commandButton>
+
+				</p:toolbarGroup>
+
+
+				<p:toolbarGroup align="right">
+					<p:button
+						id="btnVoltar"
+						icon="ui-icon-arrowreturnthick-1-w"
+						value="Voltar"
+						href="https:www.sesc-am.com.br" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+
+
+
+			<!-- torna os campos fluidos -->
+			<div class="ui-fluid">
+
+				<!-- grid: torna o layout responsivo; uigrid-col: divide os espaços na linha até 12;  -->
+				<!-- DADOS PESSOAIS -->
+				<p:panel
+					id="pnlpessoais"
+					header="DADOS"
+					style="margin-bottom:20px">
+
+					<p:panelGrid
+						id="inclusaoPanel"
+						columns="3"
+						columnClasses="ui-grid-col-3, ui-grid-col-7, ui-gri-col-1"
+						layout="grid"
+						style="width: 100%; margin-top: 20px"
+						styleClass="panelgrid-noborder">
+
+
+
+						<h:panelGroup />
+						<h:panelGroup>
+							<p:selectBooleanCheckbox
+								id="aceito"
+								value="#{mbCicloFaixa.cicloFaixa.aceiteRegulamento}"
+								required="true"
+								requiredMessage="É necessário aceitar o regulamento">
+
+								<p:ajax
+									process="@this"
+									update="aceito"
+									immediate="true" />
+
+							</p:selectBooleanCheckbox>
+							<p:spacer
+								width="20"
+								height="10" />
+							<p:link
+								for="aceito"
+								value="Declaro que li e aceito os termos do regulamento"
+								href="http://www.sesc-am.com.br/wp-content/uploads/java-upload/formulario/ciclofaixa/TERMO_CICLO_FAIXA.pdf"
+								target="_blank" />
+							<p:message for="aceito" />
+
+						</h:panelGroup>
+						<h:panelGroup />
+
+
+
+
+						<p:outputLabel
+							value="Nome"
+							for="nome" />
+						<p:inputText
+							id="nome"
+							value="#{mbCicloFaixa.cicloFaixa.nome}"
+							maxlength="150"
+							required="true"
+							requiredMessage="É necessário informar o campo nome">
+						</p:inputText>
+						<p:message
+							id="mensNome"
+							for="nome" />
+
+
+
+
+						<!-- CONTATOS -->
+						<p:outputLabel
+							value="Telefone"
+							for="telefone" />
+						<p:inputText
+							id="telefone"
+							value="#{mbCicloFaixa.cicloFaixa.fone}"
+							maxlength="14"
+							placeholder="(  ) ____-____"
+							style="width:40%"
+							required="true"
+							requiredMessage="É necessário informar o campo telefone">
+						</p:inputText>
+						<p:message
+							id="mensTelefone"
+							for="telefone" />
+
+
+
+
+						<p:outputLabel
+							value="email"
+							for="email" />
+						<p:inputText
+							id="email"
+							value="#{mbCicloFaixa.cicloFaixa.email}"
+							maxlength="100"
+							required="true"
+							requiredMessage="É necessário informar o campo email"
+							validatorMessage="Preencha corretamente o email. Ex: joao@exemplo.com.br">
+
+							<f:validator validatorId="validadorDeEmail" />
+
+						</p:inputText>
+						<p:message
+							id="mensEmail"
+							for="email" />
+
+
+
+						<p:outputLabel
+							value="CPF"
+							for="cpf" />
+						<p:inputMask
+							id="cpf"
+							value="#{mbCicloFaixa.cicloFaixa.cpf}"
+							mask="999.999.999-99"
+							placeholder="___.___.___-__"
+							validatorMessage="CPF Inválido!"
+							style="width:70%">
+							<f:validateRegex pattern="\d{3}(\.\d{3}){2}-\d{2}" />
+							<f:validator validatorId="validadorDeCPF" />
+						</p:inputMask>
+						<p:message
+							id="mensCpf"
+							for="cpf" />
+
+
+
+						<p:outputLabel
+							value="RG"
+							for="rg" />
+						<p:inputText
+							id="rg"
+							value="#{mbCicloFaixa.cicloFaixa.rg}"
+							maxlength="20"
+							placeholder="xxx.xxx.xxx-xx "
+							required="false"
+							requiredMessage="É necessário informar o campo nome RG"
+							style="width:70%" />
+						<p:message
+							id="mensRG"
+							for="rg" />
+
+
+
+
+
+
+						<p:spacer
+							width="20"
+							height="10" />
+						<h:panelGroup>
+							<h:panelGroup>
+								<p:selectBooleanCheckbox
+									id="possuiBicicleta"
+									value="#{mbCicloFaixa.cicloFaixa.possuiBicicleta}"></p:selectBooleanCheckbox>
+								<p:spacer
+									width="20"
+									height="10" />
+								<p:outputLabel
+									for="possuiBicicleta"
+									value="Possui Bicicleta" />
+							</h:panelGroup>
+
+							<p:spacer
+								width="60"
+								height="10" />
+
+							<h:panelGroup>
+								<p:selectBooleanCheckbox
+									id="possuiCapacete"
+									value="#{mbCicloFaixa.cicloFaixa.possuiCapacete}">
+								</p:selectBooleanCheckbox>
+								<p:spacer
+									width="20"
+									height="10" />
+								<p:outputLabel
+									for="possuiCapacete"
+									value="Possui Capacete" />
+
+							</h:panelGroup>
+						</h:panelGroup>
+
+
+					</p:panelGrid>
+				</p:panel>
+
+
+
+
+			</div>
+
+
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

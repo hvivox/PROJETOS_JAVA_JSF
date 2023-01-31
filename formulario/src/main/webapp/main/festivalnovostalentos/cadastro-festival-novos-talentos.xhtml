@@ -1,0 +1,298 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:esp="http://www.especializa.com.br/facelets/taglibs"
+	xmlns:espc="http://java.sun.com/jsf/composite/componentes"
+	xmlns:o="http://omnifaces.org/ui"
+	template="../../WEB-INF/templates/mainTemplate.xhtml">
+
+	<!-- <p:growl -->
+	<!-- id="mensagemGrow" -->
+	<!-- showDetail="true" globalOnly="false"/> -->
+
+	<ui:define name="titulo">Cadastro - #{mens.titulo_fest_calouros}</ui:define>
+
+
+	<ui:define name="corpo">
+		<f:metadata>
+			<f:viewAction action="#{mbFestivalNovosTalentos.inicializar}" />
+			<o:viewParam name="dumy" />
+		</f:metadata>
+
+
+
+		<h:form
+			id="formCadastro"
+			enctype="multipart/form-data">
+			<h1 class="hv-page-title">Cadastro -
+				#{mens.titulo_fest_calouros}</h1>
+
+			<p:toolbar>
+				<p:toolbarGroup>
+					<p:commandButton
+						value="Salvar"
+						id="btnSalvar"
+						icon="ui-icon-disk"
+						action="#{ mbFestivalNovosTalentos.salvar }"
+						update="formCadastro :hv-msg-topo">
+						<p:resetInput target="formCadastro" />
+					</p:commandButton>
+
+				</p:toolbarGroup>
+
+
+				<p:toolbarGroup align="right">
+					<p:button
+						id="btnVoltar"
+						icon="ui-icon-arrowreturnthick-1-w"
+						value="Voltar"
+						href="https:www.sesc-am.com.br" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+
+
+			<!-- torna os campos fluidos -->
+			<div class="ui-fluid">
+
+				<!-- grid: torna o layout responsivo; uigrid-col: divide os espaços na linha até 12;  -->
+				<p:panelGrid
+					id="inclusaoPanel"
+					columns="3"
+					columnClasses="ui-grid-col-3, ui-grid-col-7, ui-gri-col-1"
+					layout="grid"
+					style="width: 100%; margin-top: 20px"
+					styleClass="panelgrid-noborder">
+
+
+					<h:panelGroup />
+					<h:panelGroup>
+						<p:selectBooleanCheckbox
+							id="aceito"
+							value="#{mbFestivalNovosTalentos.festivalNovosTalentos.aceiteRegulamento}"
+							required="true"
+							requiredMessage="É necessário aceitar o regulamento">
+
+							<p:ajax
+								process="@this"
+								update="aceito :hv-msg-topo"
+								immediate="true" />
+
+						</p:selectBooleanCheckbox>
+
+
+						<p:spacer
+							width="20"
+							height="10" />
+
+
+						<p:link
+							for="aceito"
+							value="Declaro que li e aceito os termos do regulamento"
+							href="http://www.sesc-am.com.br/wp-content/uploads/java-upload/formulario/regulamentos/regulamento_41_fest_calouros.pdf"
+							target="_blank" 
+							styleClass="hv-formatacaoLink"/>
+
+						<p:message for="aceito" />
+					</h:panelGroup>
+					<h:panelGroup />
+
+
+					<p:outputLabel
+						value="Nome"
+						for="nome" />
+					<p:inputText
+						id="nome"
+						value="#{mbFestivalNovosTalentos.festivalNovosTalentos.nome}"
+						maxlength="100"
+						required="true"
+						requiredMessage="É necessário informar o campo nome">
+					</p:inputText>
+					<p:message
+						id="mensNome"
+						for="nome" />
+
+
+					<p:outputLabel
+						value="Data Nascimento"
+						for="dtaNascimento" />
+					<p:calendar
+						id="dtaNascimento"
+						locale="pt"
+						maskSlotChar="__/__/____"
+						mask="true"
+						pattern="dd/MM/yyyy"
+						style="width:70%"
+						value="#{mbFestivalNovosTalentos.festivalNovosTalentos.dtaNascimento}"
+						required="true"
+						requiredMessage="É necessário informar a data de nascimento"
+						converter="conversorCalendar">
+					</p:calendar>
+					<p:message
+						id="mensDtaNascimento"
+						for="dtaNascimento" />
+
+
+
+					<p:outputLabel
+						value="Cidade"
+						for="cidade" />
+					<p:inputText
+						id="cidade"
+						value="#{mbFestivalNovosTalentos.festivalNovosTalentos.cidade}"
+						maxlength="100"
+						required="true"
+						requiredMessage="É necessário informar o campo nome do cidade">
+					</p:inputText>
+					<p:message
+						id="mensCidade"
+						for="cidade" />
+
+
+					<p:outputLabel
+						value="Estado"
+						for="estado" />
+					<p:selectOneMenu
+						id="estado"
+						style="width:70%"
+						value="#{mbFestivalNovosTalentos.festivalNovosTalentos.estado}"
+						required="true"
+						requiredMessage="É necessário selecionar um estado">
+						<f:selectItem
+							itemLabel="Selecione"
+							itemValue="#{null}"
+							noSelectionOption="true" />
+						<f:selectItems
+							value="#{mbFestivalNovosTalentos.siglaEstado}"
+							var="siglasEstado"
+							itemValue="#{siglasEstado}"
+							itemLabel="#{siglasEstado.descricao}" />
+					</p:selectOneMenu>
+					<p:message for="estado" />
+
+
+
+					<p:outputLabel
+						value="Endereço"
+						for="endereco" />
+					<p:inputText
+						id="endereco"
+						value="#{mbFestivalNovosTalentos.festivalNovosTalentos.endereco}"
+						maxlength="200"
+						required="true"
+						requiredMessage="É necessário informar o campo endereço">
+					</p:inputText>
+					<p:message
+						id="mensEndereco"
+						for="endereco" />
+
+
+
+
+
+					<p:outputLabel
+						value="Telefone"
+						for="telefone" />
+					<p:inputText
+						id="telefone"
+						value="#{mbFestivalNovosTalentos.festivalNovosTalentos.fone}"
+						maxlength="100"
+						required="true"
+						requiredMessage="É necessário informar o campo telefone">
+					</p:inputText>
+					<p:message
+						id="mensTelefone"
+						for="telefone" />
+
+
+
+					<p:outputLabel
+						value="WhatsApp"
+						for="whatsApp" />
+					<p:inputText
+						id="whatsApp"
+						value="#{mbFestivalNovosTalentos.festivalNovosTalentos.whatZapp}"					
+						maxlength="14"						
+						style="width:40%"
+						required="true"
+						requiredMessage="É necessário informar o campo whatsApp">						
+					</p:inputText>
+					<p:message
+						id="mensWhatsApp"
+						for="whatsApp" />
+
+
+
+
+					<p:outputLabel
+						value="email"
+						for="email" />
+					<p:inputText
+						id="email"
+						value="#{mbFestivalNovosTalentos.festivalNovosTalentos.email}"
+						maxlength="100"
+						required="true"
+						requiredMessage="É necessário informar o campo email"
+						validatorMessage="Preencha corretamente o email. Ex: joao@exemplo.com.br">
+
+						<f:validator validatorId="validadorDeEmail" />
+
+					</p:inputText>
+					<p:message
+						id="mensEmail"
+						for="email" />
+
+
+
+
+
+
+					<p:outputLabel
+						value="Música"
+						for="musica" />
+					<p:inputText
+						id="musica"
+						value="#{mbFestivalNovosTalentos.festivalNovosTalentos.musica}"
+						maxlength="150"
+						required="true"
+						requiredMessage="É necessário informar o campo música">
+					</p:inputText>
+					<p:message
+						id="mensMusica"
+						for="musica" />
+
+
+
+					<p:outputLabel
+						value="Compositor"
+						for="compositor" />
+					<p:inputText
+						id="compositor"
+						value="#{mbFestivalNovosTalentos.festivalNovosTalentos.compositor}"
+						maxlength="100"
+						required="true"
+						requiredMessage="É necessário informar o campo compositor">
+					</p:inputText>
+					<p:message
+						id="mensCompositor"
+						for="compositor" />
+
+
+
+
+
+
+
+				</p:panelGrid>
+			</div>
+
+
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

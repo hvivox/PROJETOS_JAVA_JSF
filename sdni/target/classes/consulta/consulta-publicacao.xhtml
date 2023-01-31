@@ -1,0 +1,139 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:esp="http://www.especializa.com.br/facelets/taglibs"
+	xmlns:espc="http://java.sun.com/jsf/composite/componentes"
+	xmlns:o="http://omnifaces.org/ui"
+	template="/WEB-INF/templatesPublicacao/mainTemplate.xhtml">
+
+	<ui:define name="titulo">#{mens.titulo_doc_publicados}</ui:define>
+
+	<ui:define name="corpo">
+		<f:metadata>
+			<f:event
+				listener="#{mbConsultaDocPublicado.inicializar}"
+				type="preRenderView" />
+			<o:viewParam name="dumy" />
+		</f:metadata>
+
+		<h:form id="formTabela">
+
+			<h1 class="hv-tituoTelaPublicacao">#{mens.titulo_doc_publicados}</h1>
+			<div
+				class="ui-fluid"
+				style="margin-top: 20px"></div>
+			<p:panelGrid
+				columns="1"
+				layout="grid"
+				columnClasses="ui-grid-col-9"
+				styleClass="panelgrid-noborder">
+
+				<ui:repeat
+					var="grupo"
+					value="#{mbConsultaDocPublicado.listaEstruraDocumento}"
+					varStatus="status">
+					<!-- <p:inputText value="Elemente #{status.index}"/> -->
+<!-- 					class="panel #{status.index mod 2 == 0 ? 'panel-info' : 'panel-warning' }" -->
+					
+					
+					<div
+						class="panel panel-primary }"
+						id="ancora#{status.index}">
+						<div class="panel-heading">
+							<h1 class="panel-title  hv-tituloGrupoDocumento">
+								<i
+									class="fa  fa-fw  fa-folder-open"
+									style="color: orange" /> #{grupo.nomeGrupoDoc}
+							</h1>
+						</div>
+
+
+
+						<div class="panel-body">
+							
+							
+							<ui:repeat
+								var="doc"
+								value="#{grupo.documentos}">
+
+								<li class="hv-formatacaoLista" ><a
+									style="display: #{doc.status eq 'ATIVO'? 'block' : 'none' } "
+									class="hv-formatacaoLink"
+									href="#{doc.uridoc}"
+									target="_blank"><i
+										class="fa  fa-fw  fa-file-text"
+										style="color: #e5c7c7"></i> #{doc.titulo} </a></li>
+
+							</ui:repeat>
+
+
+						</div>
+
+					</div>
+
+				</ui:repeat>
+
+			</p:panelGrid>
+
+
+		</h:form>
+
+
+		<!-- 					<article class="borda"> -->
+		<!-- 						<h1 class="tituloGrupoDocumento">#{grupo.nomeGrupoDoc}</h1> -->
+
+		<!-- 						<ui:repeat -->
+		<!-- 							var="doc" -->
+		<!-- 							value="#{grupo.documentos}"> -->
+
+		<!-- 							<li class="formatacaoLista"><a -->
+		<!-- 								class="formatacaoLink" -->
+		<!-- 								href="#{doc.uridoc}" -->
+		<!-- 								target="_blank"><i class="fa  fa-fw  fa-file-text"></i> #{doc.titulo} </a></li> -->
+
+
+		<!-- 						</ui:repeat> -->
+		<!-- 					</article> -->
+
+
+
+
+		<!-- 			<div -->
+		<!-- 				class="ui-fluid" -->
+		<!-- 				style="margin-top: 20px"> -->
+
+		<!-- 				<p:panelGrid -->
+		<!-- 					columns="2" -->
+		<!-- 					layout="grid" -->
+		<!-- 					columnClasses="ui-grid-col-2, ui-grid-col-2," -->
+		<!-- 					styleClass="panelgrid-noborder"> -->
+
+		<!-- 					<p:outputLabel value="Exercício" /> -->
+		<!-- 					<p:selectOneMenu -->
+		<!-- 						id="anoCadastro" -->
+		<!-- 						value="#{mbConsultaDocPublicado.filtro.ano}"> -->
+
+		<!-- 						<f:selectItem -->
+		<!-- 							itemLabel="2018" -->
+		<!-- 							itemValue="2018" /> -->
+		<!-- 						<f:selectItem -->
+		<!-- 							itemLabel="2019" -->
+		<!-- 							itemValue="2019" /> -->
+		<!-- 						<f:selectItem -->
+		<!-- 							itemLabel="2020" -->
+		<!-- 							itemValue="2020" /> -->
+		<!-- 						<p:ajax -->
+		<!-- 							listener="#{mbConsultaDocPublicado.pesquisarPorFiltro}" -->
+		<!-- 							update="tabela :hv-msg-topo" /> -->
+		<!-- 					</p:selectOneMenu> -->
+
+
+		<!-- 				</p:panelGrid> -->
+		<!-- 			</div> -->
+	</ui:define>
+
+</ui:composition>
+

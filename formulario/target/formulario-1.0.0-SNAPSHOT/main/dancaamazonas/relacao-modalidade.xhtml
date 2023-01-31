@@ -1,0 +1,89 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:esp="http://www.especializa.com.br/facelets/taglibs"
+	xmlns:espc="http://java.sun.com/jsf/composite/componentes"
+	xmlns:o="http://omnifaces.org/ui"
+	template="../../WEB-INF/templates/mainTemplate.xhtml">
+
+	<ui:define name="titulo">Inscrição por modalidade</ui:define>
+
+	<ui:define name="corpo">
+
+
+		<f:metadata>
+			<f:event
+				listener="#{mbCadastroDancaAmazonas.inicializar}"
+				type="preRenderView" />
+			<o:viewParam name="dumy" />
+		</f:metadata>
+
+		<h:form id="formTabela">
+			<h1 class="hv-page-title">PROJETO SESC DANÇA AMAZONAS - ESCOLHA
+				A MODALIDADE PARA INSCRIÇÃO</h1>
+
+			<div>
+				<p:outputLabel value="Início das inscrições" />
+				<p:spacer width="8px" />
+				<p:outputLabel value="#{mbCadastroDancaAmazonas.inicioInscricao}" />
+			</div>
+
+
+			<!-- seletionMode, seletion e rowkey: tem que ser utilizados juntos 
+			para setar a linha selecinar no managerBean -->
+			<p:dataTable
+				id="tabela"
+				var="p"
+				value="#{mbCadastroDancaAmazonas.listaDTODadosInscricao}"
+				selectionMode="single"
+				selection="#{mbCadastroDancaAmazonas.dancaAmazonas.modalidade}"
+				rowKey="#{p.modalidade.id}"
+				reflow="true"
+				paginator="true"
+				rows="10"
+				paginatorPosition="bottom"
+				emptyMessage="Nenhum objeto encontrado para pesquisa"
+				style="max-width: 450px; min-width: 450px; overflow: hidden">
+				
+
+				<p:column headerText="Modalidade">
+					<p:outputLabel value="#{p.modalidade.nome}" />
+				</p:column>
+				
+
+				<p:column
+					headerText="Vagas Abertas"
+					styleClass="hv-coluna-personalizada">
+					<p:outputLabel
+						value="#{ p.qtdVagasAbertas > 0 ? p.qtdVagasAbertas : 'Vagas Encerradas'}"/>
+				</p:column>
+
+				
+				<p:column
+					headerText="Inscreva-se aqui"
+					styleClass="hv-coluna-personalizada">
+					<p:commandButton
+						id="lnkInscricao"
+						title="Inscrição"
+						icon="ui-icon-pencil"
+						action="cadastro-danca-amazonica?faces-redirect=true"
+						rendered="#{p.qtdVagasAbertas > 0 ? true : false}">
+						<f:setPropertyActionListener
+							target="#{mbCadastroDancaAmazonas.modalidade}"
+							value="#{p.modalidade}" />
+
+					</p:commandButton>
+
+				</p:column>
+
+
+			</p:dataTable>
+
+
+		</h:form>
+	</ui:define>
+</ui:composition>
+

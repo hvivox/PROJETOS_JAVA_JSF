@@ -1,0 +1,193 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:esp="http://www.especializa.com.br/facelets/taglibs"
+	xmlns:espc="http://java.sun.com/jsf/composite/componentes"
+	xmlns:o="http://omnifaces.org/ui"
+	template="../../WEB-INF/templates/mainTemplate.xhtml">
+
+	<ui:define name="titulo">Relatório -  #{mens.titulo_porta_aberta}</ui:define>
+	<f:metadata>
+		<f:event
+			listener="#{mbRelatorioInscritosPortaAberta.inicializar}"
+			type="preRenderView" />
+		<o:viewParam name="dumy" />
+	</f:metadata>
+
+	<ui:define name="corpo">
+
+		<h:form id="frm">
+			<h1 style="margin-top: 90px">PAINEL GERENCIAL:
+				#{mens.titulo_porta_aberta}</h1>
+
+			<p:panel
+				id="painelFiltroRelatorio"
+				header="FILTO DE PESQUISA RELATÓRIO">
+
+				<p:panelGrid
+					columns="3"
+					id="painel"
+					columnClasses="rotulo, campo, campo"
+					styleClass="panelgrid-noborder">
+
+					<p:outputLabel value="Período Inscrição" />
+					<h:panelGroup>
+						<p:calendar
+							id="dtaNascimento"
+							value="#{mbRelatorioInscritosPortaAberta.dataInicio}"
+							label="Data Inicial"
+							locale="pt"
+							maskSlotChar="__/__/____"
+							mask="true"
+							pattern="dd/MM/yyyy"
+							size="10"
+							immediate="true"
+							required="true"
+							requiredMessage="É necessário informar Data Inicial" />
+
+
+						<p:spacer width="8" />
+						<h:outputText value="à" />
+						<p:spacer width="8" />
+
+
+						<p:calendar
+							value="#{mbRelatorioInscritosPortaAberta.dataFim}"
+							label="Data final"
+							locale="pt"
+							maskSlotChar="__/__/____"
+							mask="true"
+							pattern="dd/MM/yyyy"
+							size="10"
+							required="true"
+							requiredMessage="É necessário informar Data Final" />
+
+					</h:panelGroup>
+					<p:commandButton
+						value="Emitir Relatório"
+						action="#{mbRelatorioInscritosPortaAberta.emitir()}"
+						process="@this :painel"
+						ajax="false" />
+
+
+				</p:panelGrid>
+
+			</p:panel>
+
+
+
+			<!-- TABELA DE INSCRITOS PARA UPLOAD -->
+			<p:panelGrid
+				columns="1"
+				layout="grid"
+				columnClasses="ui-grid-col-12"
+				styleClass="panelgrid-noborder">
+
+				<!-- seletionMode, seletion e rowkey: tem que ser utilizados juntos 
+			para setar a linha selecinar no managerBean -->
+				<p:dataTable
+					id="tabela"
+					style="margin-top: 20px"
+					value="#{mbRelatorioInscritosPortaAberta.pesquisarPorFiltro()}"
+					var="p"
+					reflow="true"
+					paginator="true"
+					rows="50"
+					rowIndexVar="indiceContador"
+					paginatorPosition="bottom"
+					emptyMessage="Nenhum objeto encontrado para pesquisa">
+
+
+					<f:facet name="header">
+
+						<div
+							class="ui-fluid"
+							style="margin-top: 20px">
+
+							<p:panelGrid
+								columns="2"
+								layout="grid"
+								columnClasses="ui-grid-col-3, ui-grid-col-2,"
+								styleClass="panelgrid-noborder">
+
+								<p:outputLabel value="LISTA DE INSCRITOS POR ANO: " />
+								<p:selectOneMenu
+									id="anoInscricao"
+									value="#{mbRelatorioInscritosPortaAberta.filtro.ano}">
+
+									<f:selectItem
+										itemLabel="2018"
+										itemValue="2018" />
+
+									<p:ajax
+										listener="#{mbRelatorioInscritosPortaAberta.pesquisarPorAno()}"
+										update="tabela :hv-msg-topo" />
+
+								</p:selectOneMenu>
+
+
+							</p:panelGrid>
+						</div>
+
+
+					</f:facet>
+
+
+					<!--  <p:ajax
+						event="rowSelect"
+						listener="#{mbRelatorioInscritosPortaAberta.onRowSelect}" />
+					-->
+
+					<p:column
+						headerText="#"
+						style="width: 10px; text-align: center;">
+						#{indiceContador+1}
+					</p:column>
+
+
+					<p:column headerText="Nome">
+						<h:outputText value="#{p.nomeGrupo}">
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Nome Responsável">
+						<h:outputText value="#{p.nomeResponsavel}">
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Celular" styleClass="hv-coluna-personalizada">
+						<h:outputText value="#{p.celular}">
+						</h:outputText>
+					</p:column>
+
+
+					<p:column headerText="Whats Up" styleClass="hv-coluna-personalizada">
+						<h:outputText value="#{p.usaWhatsApp ? 'SIM' :'NAO'} ">
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="CPF" styleClass="hv-coluna-personalizada">
+						<h:outputText value="#{p.cpf}">
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Qtd Participantes" styleClass="hv-coluna-personalizada">
+						<h:outputText value="#{p.qtdParticipantes}">
+						</h:outputText>
+					</p:column>
+
+
+
+				</p:dataTable>
+
+			</p:panelGrid>
+
+
+
+
+		</h:form>
+	</ui:define>
+</ui:composition>

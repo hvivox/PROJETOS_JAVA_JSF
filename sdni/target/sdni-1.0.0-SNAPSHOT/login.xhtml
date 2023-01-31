@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:o="http://omnifaces.org/ui">
+<h:head>
+
+	<title>#{mens.titulo_painel_publicacao}</title>
+	<!-- icone da aba do navegador -->
+	<!-- css do bootstrap -->
+	<h:outputStylesheet
+		library="css"
+		name="bootstrap.css" />
+
+	<!-- js do bootstrap -->
+	<h:outputScript
+		target="body"
+		library="js"
+		name="bootstrap.js" />
+
+	<link
+		rel="shortcut icon"
+		type="image/x-icon"
+		href="#{resource['images/favicon.ico']}" />
+
+	<h:outputStylesheet
+		library="css"
+		name="paginaSemEstrutura.css" />
+
+
+
+
+</h:head>
+
+
+
+<h:body>
+
+	<f:metadata>
+		<f:viewParam name="dummy" />
+		<f:event
+			listener="#{mbLogin.preRender}"
+			type="preRenderView" />
+	</f:metadata>
+
+
+
+
+	<div class="container">
+		<!-- o prepend retira o nameconteiner do form, para permitir a utilização do spring security no campos -->
+		<!-- j_username e j_password são requisito do spring security para validar o login e senha -->
+		<h:form
+			id="frm"
+			prependId="false"
+			styleClass="col-xs-12    col-sm-6 col-sm-offset-3     col-lg-4 col-lg-offset-4    my_form">
+
+
+			<h:graphicImage
+				library="images"
+				name="arquivo.png"
+				styleClass="center-block"
+				alt="" />
+			<!-- #{mbLogin.loginUsuario} só está sendo utilizado para manter o campo usuário preenchido em caso de falha ao logar  -->
+			<h4 class="text-center titulo">Publicação de Documentos
+				Normativos Internos</h4>
+			<p:messages
+				id="messages"
+				autoUpdate="true"
+				closable="true" />
+			<!-- utilizado para ajudar na definição do foco no campo -->
+			<p:focus context="frm" />
+
+			<p:outputLabel
+				value="Usuário"
+				class="sr-only" />
+			<p:inputText
+				id="username"
+				styleClass="form-control txt-usuario"
+				autocomplete="new-password"
+				value="#{mbLogin.loginUsuario}"
+				placeholder="Login"
+				label="Firstname" />
+
+
+
+			<p:outputLabel
+				value="Senha"
+				class="sr-only" />
+			<p:password
+				id="password"
+				styleClass="form-control txt-senha"
+				placeholder="Senha" />
+			<h:panelGroup />
+
+			<p:spacer height="10" />
+			<p:commandButton
+				styleClass="btn btn-lg btn-primary btn-block btn-login"
+				value="Entrar"
+				action="#{mbLogin.login}"
+				ajax="false"
+				update="@parent" />
+
+
+
+
+
+
+		</h:form>
+
+	</div>
+
+
+
+</h:body>
+</html>

@@ -1,0 +1,40 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:esp="http://www.especializa.com.br/facelets/taglibs"
+	xmlns:espc="http://java.sun.com/jsf/composite/componentes"
+	xmlns:o="http://omnifaces.org/ui"
+	template="../../WEB-INF/templates/mainTemplate.xhtml">
+
+	<ui:define name="titulo">Inscrição confirmada</ui:define>
+
+	<ui:define name="corpo">
+
+
+		<h:form>
+
+			<h1
+				class="hv-page-title"
+				style="margin-top: 100px; margin-bottom: 100px">Parabéns! Sua inscrição está confirmada.
+				
+			</h1>
+			
+			<p:spacer
+				width="20"
+				height="10" />
+
+			<p:button
+				id="btnVoltar"
+				style="text-align: center"
+				icon="ui-icon-arrowreturnthick-1-w"
+				value="Voltar"
+				outcome="relacao-modalidade-amazonas-artes" />
+
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>

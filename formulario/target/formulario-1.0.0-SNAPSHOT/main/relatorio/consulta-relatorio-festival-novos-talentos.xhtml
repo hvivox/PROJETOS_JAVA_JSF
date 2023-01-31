@@ -1,0 +1,213 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:esp="http://www.especializa.com.br/facelets/taglibs"
+	xmlns:espc="http://java.sun.com/jsf/composite/componentes"
+	xmlns:o="http://omnifaces.org/ui"
+	template="../../WEB-INF/templates/mainTemplate.xhtml">
+
+	<ui:define name="titulo">Relatório -  #{mens.titulo_fest_calouros}</ui:define>
+	<f:metadata>
+		<f:event
+			listener="#{mbRelatorioInscritosFestivalNovosTalentos.inicializar}"
+			type="preRenderView" />
+		<o:viewParam name="dumy" />
+	</f:metadata>
+
+	<ui:define name="corpo">
+
+		<h:form id="frm">
+			<h1 style="margin-top: 90px">PAINEL GERENCIAL:
+				#{mens.titulo_fest_calouros}</h1>
+
+			<p:panel
+				id="painelFiltroRelatorio"
+				header="FILTO DE PESQUISA RELATÓRIO">
+
+				<p:panelGrid
+					columns="3"
+					id="painel"
+					columnClasses="rotulo, campo, campo"
+					styleClass="panelgrid-noborder">
+
+					<p:outputLabel value="Período Inscrição" />
+					<h:panelGroup>
+						<p:calendar
+							id="dtaNascimento"
+							value="#{mbRelatorioInscritosFestivalNovosTalentos.dataInicio}"
+							label="Data Inicial"
+							locale="pt"
+							maskSlotChar="__/__/____"
+							mask="true"
+							pattern="dd/MM/yyyy"
+							size="10"
+							immediate="true"
+							required="true"
+							requiredMessage="É necessário informar Data Inicial" />
+
+
+						<p:spacer width="8" />
+						<h:outputText value="à" />
+						<p:spacer width="8" />
+
+
+						<p:calendar
+							value="#{mbRelatorioInscritosFestivalNovosTalentos.dataFim}"
+							label="Data final"
+							locale="pt"
+							maskSlotChar="__/__/____"
+							mask="true"
+							pattern="dd/MM/yyyy"
+							size="10"
+							required="true"
+							requiredMessage="É necessário informar Data Final" />
+
+					</h:panelGroup>
+					<p:commandButton
+						value="Emitir Relatório"
+						action="#{mbRelatorioInscritosFestivalNovosTalentos.emitir()}"
+						process="@this :painel"
+						ajax="false" />
+
+
+				</p:panelGrid>
+
+			</p:panel>
+
+
+
+			<!-- TABELA DE INSCRITOS PARA UPLOAD -->
+			<p:panelGrid
+				columns="1"
+				layout="grid"
+				columnClasses="ui-grid-col-12"
+				styleClass="panelgrid-noborder">
+
+				<!-- seletionMode, seletion e rowkey: tem que ser utilizados juntos 
+			para setar a linha selecinar no managerBean -->
+				<p:dataTable
+					id="tabela"
+					style="margin-top: 20px"
+					value="#{mbRelatorioInscritosFestivalNovosTalentos.pesquisarPorFiltro()}"
+					var="p"
+					reflow="true"
+					paginator="true"
+					rows="200"
+					rowIndexVar="indiceContador"
+					paginatorPosition="bottom"
+					emptyMessage="Nenhum objeto encontrado para pesquisa">
+
+
+					<f:facet name="header">
+
+						<div
+							class="ui-fluid"
+							style="margin-top: 20px">
+
+							<p:panelGrid
+								columns="2"
+								layout="grid"
+								columnClasses="ui-grid-col-3, ui-grid-col-2,"
+								styleClass="panelgrid-noborder">
+
+
+								<p:outputLabel value="LISTA DE INSCRITOS POR ANO: " />
+								<p:selectOneMenu
+									id="anoInscricao"
+									value="#{mbRelatorioInscritosFestivalNovosTalentos.filtro.ano}">
+									
+									<f:selectItem
+										itemLabel="2017"
+										itemValue="2017" />
+
+									<f:selectItem
+										itemLabel="2018"
+										itemValue="2018" />
+
+									<f:selectItem
+										itemLabel="2019"
+										itemValue="2019" />
+									
+									<f:selectItem
+										itemLabel="2020"
+										itemValue="2020" />
+									
+									<f:selectItem
+										itemLabel="2021"
+										itemValue="2021" />
+									
+									
+									<p:ajax
+										listener="#{mbRelatorioInscritosFestivalNovosTalentos.pesquisarFestivalPorAno()}"
+										update="tabela " />
+
+								</p:selectOneMenu>
+
+
+							</p:panelGrid>
+						</div>
+
+
+					</f:facet>
+
+
+					<!--  <p:ajax
+						event="rowSelect"
+						listener="#{mbRelatorioInscritosFestivalNovosTalentos.onRowSelect}" />
+					-->
+
+					<p:column
+						headerText="#"
+						style="width: 10px; text-align: center;">
+						#{indiceContador+1}
+					</p:column>
+
+
+					<p:column headerText="Nome">
+						<h:outputText value="#{p.nome}">
+						</h:outputText>
+
+					</p:column>
+
+
+					<p:column
+						headerText="Data Nascimento"
+						styleClass="hv-coluna-personalizada">
+						<h:outputText value="#{p.dtaInscricao.time}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+
+					<p:column
+						headerText="WhatsApp"
+						styleClass="hv-coluna-personalizada">
+						<h:outputText value="#{p.whatZapp}">
+						</h:outputText>
+					</p:column>
+
+
+					<p:column headerText="Música">
+						<h:outputText value="#{p.musica}">
+						</h:outputText>
+					</p:column>
+
+
+					<p:column headerText="Compositor">
+						<h:outputText value="#{p.compositor}">
+						</h:outputText>
+					</p:column>
+
+
+				</p:dataTable>
+
+			</p:panelGrid>
+
+
+
+
+		</h:form>
+	</ui:define>
+</ui:composition>

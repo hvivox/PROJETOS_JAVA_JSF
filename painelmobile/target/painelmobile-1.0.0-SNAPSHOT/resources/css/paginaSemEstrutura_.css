@@ -1,0 +1,46 @@
+@CHARSET "UTF-8";
+
+*{
+	
+	border: 1px dashed blue;
+	
+}	
+
+body{
+	padding: 0px;
+	margin: 0px;
+}
+
+/*PERSONALIZAÇÃO DO TELA DE LOGIN*/
+h1{
+	font-size:24px;
+	font-weight:500;
+	padding:0px;
+	margin:0px;
+}
+
+#login-dialog{
+	width: 260px;
+	margin-left:0;
+	margin-right:34%;
+	margin-top:200px;	
+	float: right;
+}
+
+
+
+.grid-login{
+	background-color: #f2f2f2;
+	border-radius:0px;
+	border: 1px solid #ccc;
+	margin-top: 8px;	
+	padding: 5px;
+	position: relative;
+}
+
+
+
+
+
+
+

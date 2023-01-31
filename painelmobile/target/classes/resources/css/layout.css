@@ -1,0 +1,138 @@
+@CHARSET "UTF-8";
+
+/*--------------------------------------------------------------
+*AREAS DO LAYOUT
+*--------------------------------------------------------------*/
+/*
+*{
+	border: 1px dashed blue;
+}	*/
+
+/*TOPO------------------------------------------------------------*/
+.hv-topbar{	
+	z-index: 9999;/*faz com que este componente venha na frente de todos os outros*/
+	position: fixed ;	
+	left:0;
+	right:0;
+	top:0;
+	min-height: 60px;	
+	
+	color: #fff;/* cor do nome do usuário*/	
+	border-top: 1px solid #777;
+	box-shadow: 0px 2px 2px #ccc ;
+    background: red; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient#191970,#1E90FF); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#191970, #1E90FF); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#191970,#1E90FF); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#191970, #1E90FF); /* Standard syntax (must be last) */
+    
+	/*display: none;*/
+  	opacity:0.8;
+}
+
+
+.hv-topbar > div{
+	float: left;
+	margin-left: 5px;	
+}
+/*-------------------------------------------------------------------*/
+
+
+
+
+
+/* BARRA LATERAL-----------------------------------------------------*/
+.hv-sidebar{
+	position:fixed;
+	top:61px;
+	bottom:0;
+	left:0;	
+	width: 210px;
+	margin-left: -221px;/*por padrão a barra lateral é oculta*/	
+	z-index: 9998;	
+	overflow-y:auto;/*se precisar de barra de rolagem será mostrada no exioy*/
+	transition: margin-left 0.5s;/*efetio da barra quando ela some, quando for modificado o margin-left a transição será de 0.5s*/
+		
+	background: #f6f6f6;
+	border-right:1px solid #eaeaea;
+}
+
+
+/*sempre que houver uma classe sidebar junto com is-toggle será redenrizado estes comandos*/
+/*is-toggle é utilizado como uma flag, para mostrar ou não a barra lateral*/
+.hv-sidebar.is-toggled{
+	margin-left: 0px;
+}
+
+
+/*Mosta e esconde a barra lateral*/
+@media(min-width: 960px){
+	/*se tiver apenas o sidebar: a barra é mostrada*/
+	.hv-sidebar{
+		margin-left: 0px;/*esconde a barra lateral quando a tela está em 960px*/
+	}
+	
+	/*se tiver as duas classe abaixo: ele mostra*/
+	.hv-sidebar.is-toggled{
+		margin-left: -211px;
+	}	
+}
+
+/* --------------------------------------------------------------------*/
+
+
+
+
+
+
+/*CONTEUDO DA PAGINA-----------------------------------------------------*/
+.hv-content{
+	padding:0 15px;/*espaçamento lateral da área conteudo*/	
+	margin-top: 70px;
+	transition: margin-left 0.5s !important;
+}
+
+@media(min-width:960px){
+	.hv-content	{
+	margin-left: 210px;/*o conteúdo começa em 0px quando a tela fica em
+	960px o conteúdo se afasta da margin, lembrando que layout é mobile-fist*/	
+	}
+	
+	.hv-content.is-toggled{
+		margin-left: 0px;
+	}
+	
+}
+/*-----------------------------------------*/
+
+
+
+
+/*RODAPÉ DA PAGINA*/
+.hv-footer {
+	padding: 0px 8px;
+	margin-bottom: 10px;
+	text-align: center;
+	transition: margin-left 0.5s !important;
+}
+
+
+@media(min-width:960px){
+	.hv-footer	{
+	margin-left: 210px;/*o conteúdo começa em 0px quando a tela fica em
+	960px o conteúdo se afasta da margin, lembrando que layout é mobile-fist*/	
+	}
+	
+	.hv-footer.is-toggled{
+		margin-left: 0px;
+	}
+	
+}
+/*---------------------------------------------------*/
+
+
+
+
+
+
+

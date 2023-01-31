@@ -1,0 +1,209 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:esp="http://www.especializa.com.br/facelets/taglibs"
+	xmlns:espc="http://java.sun.com/jsf/composite/componentes"
+	xmlns:o="http://omnifaces.org/ui"
+	template="../../WEB-INF/templates/mainTemplate.xhtml">
+	
+	<ui:define name="titulo">#{mens.titulo_painel_publicacao}</ui:define>
+
+	<ui:define name="corpo">
+		<f:metadata>
+			<o:viewParam
+				name="usuario"
+				value="#{mbCadastroUsuario.usuario}" />
+			<f:viewAction action="#{mbCadastroUsuario.inicializar}" />
+		</f:metadata>
+
+		<h:form
+			id="frm"
+			autocomplete="off">
+			<p:focus context="frm" />
+
+			<h1>#{mbCadastroUsuario.editando ? 'Novo usuário' :  'Edição de usuário' }</h1>
+
+			<p:messages
+				autoUpdate="true"
+				closable="true" />
+
+			<p:toolbar style="margin-top: 20px">
+				<p:toolbarGroup>
+					
+					<p:commandButton
+						value="Salvar"
+						id="botaoSalvar"
+						action="#{mbCadastroUsuario.salvar}"
+						update="@form"
+						validateClient="false" />
+				</p:toolbarGroup>
+				<p:toolbarGroup align="right">
+					<p:button
+						value="Pesquisa"
+						outcome="/main/usuario/consulta-usuario" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+			<p:panelGrid
+				columns="2"
+				id="painel"
+				style="width: 100%; margin-top: 20px"
+				columnClasses="rotulo, campo">
+				<p:outputLabel
+					value="Nome"
+					for="nome" />
+				<p:inputText
+					id="nome"
+					size="60"
+					maxlength="80"
+					value="#{mbCadastroUsuario.usuario.nomeCompleto}" />
+
+
+				<p:outputLabel
+					value="Login"
+					for="login" />
+				<p:inputText
+					id="login"
+					size="60"
+					maxlength="150"
+					value="#{mbCadastroUsuario.usuario.loginUsuario}" />
+
+				<p:outputLabel
+					value="Status"
+					for="status" />
+				<p:selectOneMenu
+					id="status"
+					immediate="true"
+					value="#{mbCadastroUsuario.usuario.estatus}"
+					required="true"
+					requiredMessage="É necessário informar o status">
+
+					<f:selectItems
+						value="#{mbCadastroUsuario.listaEstatus}"
+						var="s"
+						itemLabel="#{s.status}" />
+				</p:selectOneMenu>
+
+
+				<p:outputLabel
+					value="E-mail"
+					for="email" />
+				<p:inputText
+					id="email"
+					size="60"
+					value="#{mbCadastroUsuario.usuario.email}"
+					autocomplete="new-password" />
+
+				<p:outputLabel
+					value="Senha"
+					for="senha" />
+				<p:password
+					id="senha"
+					size="60"
+					maxlength="60"
+					value="#{mbCadastroUsuario.usuario.senha}"					
+					autocomplete="new-password"
+					/>
+					<!-- redisplay="true" -->
+					
+					<p:message
+						id="mensSenha"
+						for="hv-msg-topo" />
+					
+					
+			</p:panelGrid>
+
+			<p:spacer height="15px" />
+
+
+
+			<!-- PICKLIST GRUPOS ###################################################################### -->
+			<p:tabView>
+				<p:tab title="Grupos">
+					<p:pickList
+						value="#{mbCadastroUsuario.listaGrupoDualList}"
+						var="grupo"
+						itemValue="#{grupo}"
+						itemLabel="#{grupo.nome}"
+						showSourceFilter="true"
+						showTargetFilter="true"
+						showCheckbox="true"
+						filterMatchMode="contains"
+						converter="grupoConverter">
+						<f:facet name="sourceCaption">Grupos disponíveis</f:facet>
+						<f:facet name="targetCaption">Grupos do usuário</f:facet>
+					</p:pickList>
+				</p:tab>
+
+
+
+
+				<!-- PICKLIST PERMISSOES ############################################################################### -->
+				<p:tab id="tabPermissao" title="Permissões do Grupo">
+
+					<p:panelGrid 
+						columns="3">
+						<p:outputLabel
+							value="Nome do Grupo"
+							for="cbkListaGrupo" />
+
+						<p:selectOneMenu
+							id="cbkListaGrupo"
+							style="width:20%"
+							value="#{mbCadastroUsuario.grupo}"
+							required="true"
+							requiredMessage="É necessário informar o grupo"
+							converter="grupoConverter">
+							<p:ajax
+								listener="#{mbCadastroUsuario.preencherPickListPermissoesDoGrupo}"
+								event="change"
+								update="pickListPermissao"
+								process="@this" />
+							<!-- 						<f:selectItem -->
+							<!-- 							itemLabel="Selecione Categoria" -->
+							<!-- 							itemValue="" -->
+							<!-- 							noSelectionOption="true" /> -->
+							<f:selectItems
+								value="#{mbCadastroUsuario.listaTodosGrupos}"
+								var="s"
+								itemLabel="#{s.nome}" />
+						</p:selectOneMenu>
+						
+						<p:commandButton
+						value="Salvar Associações"
+						id="btnSalvarPermissao"
+						action="#{mbCadastroUsuario.salvarPermissao}"						
+						process="@this tabPermissao"
+						update="cbkListaGrupo"						
+						validateClient="false" />
+						
+					</p:panelGrid>
+					<p:spacer height="5"/>
+
+
+					<p:pickList
+						id="pickListPermissao"
+						value="#{mbCadastroUsuario.listaPermissoesDualList}"
+						var="permissao"
+						itemValue="#{permissao}"
+						itemLabel="#{permissao.nome}"
+						showSourceFilter="true"
+						showTargetFilter="true"
+						showCheckbox="true"
+						filterMatchMode="contains"
+						converter="permissaoConverter">
+						<f:facet name="sourceCaption">Permissões Disponíveis</f:facet>
+						<f:facet name="targetCaption">Permissões Associadas        </f:facet>
+					</p:pickList>
+
+					
+
+				</p:tab>
+
+			</p:tabView>
+		</h:form>
+	</ui:define>
+</ui:composition>

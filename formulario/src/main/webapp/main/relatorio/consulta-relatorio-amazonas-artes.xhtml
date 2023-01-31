@@ -1,0 +1,135 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:esp="http://www.especializa.com.br/facelets/taglibs"
+	xmlns:espc="http://java.sun.com/jsf/composite/componentes"
+	xmlns:o="http://omnifaces.org/ui"
+	template="../../WEB-INF/templates/mainTemplate.xhtml">
+
+	<ui:define name="titulo">Relatório -  Amazônia das Artes</ui:define>
+	<f:metadata>
+		<f:event
+			listener="#{mbRelatorioInscritosAmazonasArtes.inicializar}"
+			type="preRenderView" />
+		<o:viewParam name="dumy" />
+	</f:metadata>
+
+	<ui:define name="corpo">
+		<h:form id="frm">
+			<h1>Relatório: Inscritos Amazonas das Artes</h1>
+
+			<p:toolbar style="margin-top: 20px">
+				<p:toolbarGroup>
+					<p:commandButton
+						value="Emitir"
+						action="#{mbRelatorioInscritosAmazonasArtes.emitir()}"
+						ajax="false" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+
+			<p:panelGrid
+				columns="2"
+				id="painel"
+				style="width: 100%; margin-top: 20px"
+				columnClasses="rotulo, campo">
+				<p:outputLabel value="Período Inscrição" />
+				<h:panelGroup>
+					<p:calendar
+						value="#{mbRelatorioInscritosAmazonasArtes.dataInicio}"
+						label="Data inicial"
+						locale="pt"
+						maskSlotChar="__/__/____"
+						mask="true"
+						pattern="dd/MM/yyyy"
+						size="10" />
+					<p:spacer width="8" />
+					<h:outputText value="à" />
+					<p:spacer width="8" />
+					<p:calendar
+						value="#{mbRelatorioInscritosAmazonasArtes.dataFim}"
+						label="Data final"
+						locale="pt"
+						maskSlotChar="__/__/____"
+						mask="true"
+						pattern="dd/MM/yyyy"
+						size="10" />
+				</h:panelGroup>
+			</p:panelGrid>
+
+
+
+			<!-- TABELA DE INSCRITOS PARA UPLOAD -->
+			<p:panelGrid
+				columns="1"
+				layout="grid"
+				columnClasses="ui-grid-col-7"
+				styleClass="panelgrid-noborder">
+
+
+				<!-- seletionMode, seletion e rowkey: tem que ser utilizados juntos 
+			para setar a linha selecinar no managerBean -->
+				<p:dataTable
+					id="tabela"
+					style="margin-top: 20px"
+					value="#{mbRelatorioInscritosAmazonasArtes.listaInscritosAmazonasArtes}"
+					var="p"
+					reflow="true"
+					paginator="true"
+					rows="50"
+					paginatorPosition="bottom"
+					emptyMessage="Nenhum objeto encontrado para pesquisa">
+					
+					<f:facet name="header">
+       					 Lista de Incritos - Download Ficha Técnica
+    				</f:facet>
+					<!--
+ 					<p:ajax 
+						event="rowSelect"
+						onstart="window.open('#{p.uridoc}','_blank'); return false;" />
+					-->
+
+					<p:ajax
+						event="rowSelect"
+						listener="#{mbRelatorioInscritosAmazonasArtes.onRowSelect}" />
+
+					<p:column headerText="Grupo">
+						<p:graphicImage />
+						<h:graphicImage
+							library="images"
+							name="download.jpg" />
+
+						<p:link
+							styleClass="hv-ajustar-link"
+							id="nomeGrupo"
+							href="#{p.uri}"
+							value="#{p.nomeGrupo}"
+							target="_blank" />
+
+
+					</p:column>
+
+
+					<p:column
+						headerText="Data Cadastro / Alteração"
+						styleClass="hv-coluna-personalizada">
+						<h:outputText value="#{p.dtaInscricao.time}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+
+
+
+				</p:dataTable>
+
+			</p:panelGrid>
+
+
+
+
+		</h:form>
+	</ui:define>
+</ui:composition>

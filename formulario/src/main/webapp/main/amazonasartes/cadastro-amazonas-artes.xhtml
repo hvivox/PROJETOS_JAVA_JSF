@@ -1,0 +1,409 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:esp="http://www.especializa.com.br/facelets/taglibs"
+	xmlns:espc="http://java.sun.com/jsf/composite/componentes"
+	xmlns:o="http://omnifaces.org/ui"
+	template="../../WEB-INF/templates/mainTemplate.xhtml">
+
+	<!-- <p:growl -->
+	<!-- id="mensagemGrow" -->
+	<!-- showDetail="true" globalOnly="false"/> -->
+
+	<ui:define name="titulo">Cadastro Amazônia das Artes</ui:define>
+
+
+	<ui:define name="corpo">
+		<f:metadata>
+			<f:viewAction action="#{mbAmazonasArtes.inicializar}" />
+			<o:viewParam name="dumy" />
+		</f:metadata>
+
+
+
+		<h:form
+			id="formCadastro"
+			enctype="multipart/form-data">
+			<h1 class="hv-page-title">
+				Cadastro Dança Amazonas: <span style="color: #1E90FF">#{mbAmazonasArtes.amazonasArtes.modAmArtes.nome}</span>
+			</h1>
+
+			<p:toolbar>
+				<p:toolbarGroup>
+					<p:commandButton
+						value="Salvar"
+						id="btnSalvar"
+						icon="ui-icon-disk"						
+						action="#{ mbAmazonasArtes.salvar }"						
+						update="formCadastro :hv-msg-topo">
+						<p:resetInput target="formCadastro" />
+					</p:commandButton>
+
+				</p:toolbarGroup>
+
+
+				<p:toolbarGroup align="right">
+					<p:button
+						id="btnVoltar"
+						icon="ui-icon-arrowreturnthick-1-w"
+						value="Voltar"
+						outcome="relacao-modalidade-amazonas-artes" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+
+
+			<!-- torna os campos fluidos -->
+			<div class="ui-fluid">
+
+
+				<p:panelGrid
+					id="dowloaupUpload"
+					columns="1"
+					columnClasses="ui-grid-col-12, "
+					layout="grid"
+					style="width: 100%; margin-top: 20px; border: 2px solid blue;">
+
+
+					<!-- DOWNLOAD DA FICHA TÉCNICA -->
+					
+					<p:link
+						id="download"
+						value="**ATENÇÃO: Antes de iniciar o cadastro faça o download e preenha a Ficha Técnica clicando aqui"
+						href="http://www.sesc-am.com.br:8090/formulario/documento/FICHA_TECNICA_-_AM_DAS_ARTES.xlsx"
+						target="_blank" 
+						style="color:blue; font-size:17px;"/>
+					
+
+
+					<!-- ################################################################ -->
+					<!-- UPLOAD AUTOMATICO -->
+					
+					<p:panelGrid
+						columns="2"
+						columnClasses="ui-grid-col-5, ui-gri-col-2"
+						layout="grid">
+
+						<p:fileUpload
+							id="autoUpload"
+							multiple="false"
+							fileUploadListener="#{mbAmazonasArtes.autoUpload}"
+							update=":hv-msg-topo nomeDocumento "
+							mode="advanced"
+							auto="true"
+							label="Encaminhar Ficha Técnica Preenchida"
+							sizeLimit="11921600"
+							allowTypes="/(\.|\/)(xls?x)$/" />
+
+						<p:outputLabel
+							id="nomeDocumento"
+							value="#{mbAmazonasArtes.nomeUpload}"
+							style="color:green; font-size:17px; margin-left:0%"
+							target="_blank" />
+					</p:panelGrid>
+					
+				</p:panelGrid>
+
+
+
+
+				<!-- grid: torna o layout responsivo; uigrid-col: divide os espaços na linha até 12;  -->
+				<p:panelGrid
+					id="inclusaoPanel"
+					columns="3"
+					columnClasses="ui-grid-col-3, ui-grid-col-7, ui-gri-col-1"
+					layout="grid"
+					style="width: 100%; margin-top: 20px"
+					styleClass="panelgrid-noborder">
+
+
+					<h:panelGroup />
+					<h:panelGroup>
+						<p:selectBooleanCheckbox
+							id="aceito"
+							value="#{mbAmazonasArtes.amazonasArtes.aceiteRegulamento}"
+							required="true"
+							requiredMessage="É necessário aceitar o regulamento">
+
+							<p:ajax
+								process="@this"
+								update="aceito :hv-msg-topo"
+								immediate="true" />
+
+						</p:selectBooleanCheckbox>
+
+
+						<p:spacer
+							width="20"
+							height="10" />
+
+
+						<p:link
+							for="aceito"
+							value="Declaro que li e aceito os termos do regulamento"
+							href="http://www.sesc-am.com.br:8090/formulario/documento/TERMO_ACEITE.pdf"
+							target="_blank" />
+						<p:message for="aceito" />
+					</h:panelGroup>
+					<h:panelGroup />
+
+
+					<p:outputLabel
+						value="Nome Grupo / Cia"
+						for="nomeGrupo" />
+					<p:inputText
+						id="nomeGrupo"
+						value="#{mbAmazonasArtes.amazonasArtes.nomeGrupo}"
+						maxlength="100"
+						required="true"
+						requiredMessage="É necessário informar o campo nome do grupo">
+					</p:inputText>
+					<p:message
+						id="mensNomeGrupo"
+						for="nomeGrupo" />
+
+
+					<p:outputLabel
+						value="Diretor"
+						for="diretor" />
+					<p:inputText
+						id="diretor"
+						value="#{mbAmazonasArtes.amazonasArtes.diretor}"
+						maxlength="100"
+						required="true"
+						requiredMessage="É necessário informar o campo nome do diretor">
+					</p:inputText>
+					<p:message
+						id="mensDiretor"
+						for="diretor" />
+
+
+
+					<p:outputLabel
+						value="Cnpj"
+						for="cnpj" />
+					<p:inputMask
+						id="cnpj"
+						size="20"
+						mask="99.999.999/9999-99"
+						placeholder="99.999.999/9999-99"
+						value="#{mbAmazonasArtes.amazonasArtes.cnpj}"
+						validatorMessage="CNPJ Inválido!">
+						<f:validateRegex pattern="\d{2}(\.\d{3}){2}/\d{4}-\d{2}" />
+					</p:inputMask>
+					<p:message
+						id="mensCnpj"
+						for="cnpj" />
+
+
+
+					<p:outputLabel
+						value="Cidade"
+						for="cidade" />
+					<p:inputText
+						id="cidade"
+						value="#{mbAmazonasArtes.amazonasArtes.cidade}"
+						maxlength="100"
+						required="true"
+						requiredMessage="É necessário informar o campo nome do cidade">
+					</p:inputText>
+					<p:message
+						id="mensCidade"
+						for="cidade" />
+
+
+
+
+
+					<p:outputLabel
+						value="Estado"
+						for="estado" />
+					<p:selectOneMenu
+						id="estado"
+						style="width:70%"
+						value="#{mbAmazonasArtes.amazonasArtes.estado}"
+						required="true"
+						requiredMessage="É necessário selecionar um estado">
+						<f:selectItem
+							itemLabel="Selecione"
+							itemValue="#{null}"
+							noSelectionOption="true" />
+						<f:selectItems
+							value="#{mbAmazonasArtes.siglaEstado}"
+							var="siglasEstado"
+							itemValue="#{siglasEstado}"
+							itemLabel="#{siglasEstado.descricao}" />
+					</p:selectOneMenu>
+					<p:message for="estado" />
+
+
+
+					<p:outputLabel
+						value="Quantidade de Participantes"
+						for="qtdParticipantes" />
+					<p:inputText
+						id="qtdParticipantes"
+						value="#{mbAmazonasArtes.amazonasArtes.qtdParticipantes}"
+						maxlength="100"
+						required="true"
+						requiredMessage="É necessário informar a quantidade de participantes"
+						converterMessage="Entre com valores numericos">
+
+						<f:convertNumber
+							integerOnly="true"
+							pattern="#######"
+							maxFractionDigits="0" />
+
+					</p:inputText>
+					<p:message
+						id="mensQtdParticipantes"
+						for="qtdParticipantes" />
+
+
+
+
+					<p:outputLabel
+						value="Modalidade"
+						for="modalidade" />
+					<p:selectOneMenu
+						id="modalidade"
+						style="width:70%"
+						value="#{mbAmazonasArtes.amazonasArtes.modAmArtes}"
+						required="true"
+						requiredMessage="É necessário selecionar uma modalidade"
+						disabled="true">
+						<f:selectItem
+							itemLabel="#{mbAmazonasArtes.amazonasArtes.modAmArtes.nome}"
+							itemValue="#{mbAmazonasArtes.amazonasArtes.modAmArtes}" />
+					</p:selectOneMenu>
+					<p:message for="modalidade" />
+
+
+
+					<p:outputLabel
+						value="Nome Espetáculo"
+						for="espetaculo" />
+					<p:inputText
+						id="espetaculo"
+						value="#{mbAmazonasArtes.amazonasArtes.nomeEspetaculo}"
+						maxlength="100"
+						required="true"
+						requiredMessage="É necessário informar o campo nome do espetáculo">
+					</p:inputText>
+					<p:message
+						id="mensNomeEspetaculo"
+						for="espetaculo" />
+
+
+
+					<p:outputLabel
+						value="Breve Histórico"
+						for="historico" />
+					<p:inputTextarea
+						id="historico"
+						value="#{mbAmazonasArtes.amazonasArtes.historico}"
+						rows="2"
+						cols="40"
+						autoResize="false"
+						required="true"
+						requiredMessage="É necessário informar o campo o histórico" />
+					<p:message for="historico" />
+
+
+
+					<p:outputLabel
+						value="Telefone"
+						for="telefone" />
+					<p:inputText
+						id="telefone"
+						value="#{mbAmazonasArtes.amazonasArtes.fone}"
+						maxlength="100"
+						required="true"
+						requiredMessage="É necessário informar o campo telefone">
+					</p:inputText>
+					<p:message
+						id="mensTelefone"
+						for="telefone" />
+
+
+
+					<p:outputLabel
+						value="WhatsApp"
+						for="whatZap" />
+					<p:inputMask
+						id="whatZap"
+						value="#{mbAmazonasArtes.amazonasArtes.whatZapp}"
+						mask="(99) 9999-9999"
+						maxlength="14"
+						placeholder="(  ) ____-____"
+						style="width:40%"
+						required="true"
+						requiredMessage="É necessário informar o campo what zap" />
+					<p:message
+						id="mensWhatZap"
+						for="whatZap" />
+
+
+
+
+					<p:outputLabel
+						value="email"
+						for="email" />
+					<p:inputText
+						id="email"
+						value="#{mbAmazonasArtes.amazonasArtes.email}"
+						maxlength="100"
+						required="true"
+						requiredMessage="É necessário informar o campo email"
+						validatorMessage="Preencha corretamente o email. Ex: joao@exemplo.com.br">
+
+						<f:validator validatorId="validadorDeEmail" />
+
+					</p:inputText>
+					<p:message
+						id="mensEmail"
+						for="email" />
+
+
+					<p:outputLabel
+						value="Link da Coreografia"
+						for="linkSocial" />
+					<p:inputText
+						id="linkSocial"
+						value="#{mbAmazonasArtes.amazonasArtes.linkCoreografia}"
+						maxlength="100">
+					</p:inputText>
+					<p:message
+						id="mensLinkSocial"
+						for="linkSocial" />
+
+
+					<p:outputLabel
+						value="Breve Release"
+						for="release" />
+					<p:inputTextarea
+						id="release"
+						value="#{mbAmazonasArtes.amazonasArtes.release}"
+						rows="2"
+						cols="40"
+						autoResize="false"
+						required="true"
+						requiredMessage="É necessário informar o campo release" />
+					<p:message for="release" />
+
+
+
+
+				</p:panelGrid>
+			</div>
+
+
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

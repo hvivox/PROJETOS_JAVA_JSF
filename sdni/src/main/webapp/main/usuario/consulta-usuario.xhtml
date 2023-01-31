@@ -1,0 +1,141 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:esp="http://www.especializa.com.br/facelets/taglibs"
+	xmlns:espc="http://java.sun.com/jsf/composite/componentes"
+	xmlns:o="http://omnifaces.org/ui"
+	template="../../WEB-INF/templates/mainTemplate.xhtml">
+
+	<ui:define name="titulo">#{mens.titulo_painel_publicacao}</ui:define>
+
+	<ui:define name="corpo">
+		<h:form id="frmPesquisa">
+			<h1>Consulta de Usuários</h1>
+
+			<!-- 			<p:messages -->
+			<!-- 				autoUpdate="true" -->
+			<!-- 				closable="true" /> -->
+
+			<p:toolbar style="margin-top: 20px">
+				<p:toolbarGroup>
+					<p:commandButton
+						value="Pesquisar"
+						update="tabela" />
+				</p:toolbarGroup>
+				<p:toolbarGroup align="right">
+					<p:button
+						value="Novo"
+						outcome="/main/usuario/cadastro-usuario" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+			<p:panelGrid
+				columns="3"
+				id="painel"
+				style="width: 100%; margin-top: 20px"
+				columnClasses="rotulo, campo">
+				<p:outputLabel
+					value="Nome"
+					for="nome" />
+				<p:inputText
+					id="nome"
+					size="60"
+					value="#{mbConsultaUsuario.filtro.nome}" />
+
+
+				<h:panelGroup>
+					<p:selectBooleanCheckbox
+						id="ckbEstatus"
+						value="#{mbConsultaUsuario.filtro.mostraInativos}"
+						valueChangeListener="#{mbConsultaUsuario.verificarCheckBox}"
+						itemLabel="Mostrar Inativos">
+					</p:selectBooleanCheckbox>
+
+				</h:panelGroup>
+			</p:panelGrid>
+
+
+
+			<p:dataTable
+				id="tabela"
+				value="#{mbConsultaUsuario.dataModelUsuario}"
+				var="usuario"
+				style="margin-top: 20px"
+				emptyMessage="Nenhum usuario encontrado."
+				rows="20"
+				paginator="true"
+				paginatorAlwaysVisible="false"
+				paginatorPosition="bottom"
+				lazy="true">
+				<p:column headerText="Nome">
+					<h:outputText value="#{usuario.nomeCompleto}" />
+				</p:column>
+
+
+				<p:column
+					headerText="status"
+					styleClass="hv-coluna-personalizada">
+					<h:outputText value="#{usuario.estatus}" />
+				</p:column>
+
+				<p:column style="width: 100px; text-align: center">
+
+					<p:button
+						outcome="/main/usuario/cadastro-usuario"
+						icon="ui-icon-pencil"
+						title="Editar">
+						<f:param
+							name="usuario"
+							value="#{usuario.id}" />
+					</p:button>
+
+
+					<p:spacer
+						width="5"
+						height="10" />
+
+
+					<p:commandButton
+						icon="ui-icon-cancel"
+						title="Inativar"
+						oncomplete="PF('confirmacao').show()"
+						rendered="#{usuario.estatus eq 'ATIVO'}">
+						<f:setPropertyActionListener
+							value="#{usuario}"
+							target="#{mbConsultaUsuario.usuarioSelecionado}" />
+					</p:commandButton>
+
+
+
+				</p:column>
+			</p:dataTable>
+
+
+
+
+			<p:confirmDialog
+				header="Inativar Documento"
+				responsive="true"
+				message="Tem certeza que deseja inativar o usuário #{mbConsultaUsuario.usuarioSelecionado.nome}?"
+				widgetVar="confirmacao"
+				modal="true"
+				id="confirmacaoInativarDialog">
+				<p:commandButton
+					id="yesButton"
+					value="Sim"
+					process="@this"
+					oncomplete="PF('confirmacao').hide();"
+					update="tabela hv-msg-topo"
+					action="#{mbConsultaUsuario.inativarCadastro}" />
+
+				<p:button
+					value="Não"
+					onclick="PF('confirmacao').hide(); return false;" />
+
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

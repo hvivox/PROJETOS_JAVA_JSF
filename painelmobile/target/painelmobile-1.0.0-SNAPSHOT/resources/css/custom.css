@@ -1,0 +1,174 @@
+@CHARSET "UTF-8";
+
+/*--------------------------------------------------------------
+*CUSTOMIZAÇÕES NO COMPONENTES HTML E JSF
+*--------------------------------------------------------------*/
+
+
+body {
+	margin: 0;
+	font-size: 13px;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+
+
+
+/*PAGE TITLE-------------------------------------------------*/
+.hv-page-title{
+	margin:0;
+	padding: 15px 0 15px 0;/*não precisa de espaço lateral porque o .CONTENT já faz isso*/
+	font-size: 1.3em;
+	color: #373737;
+	display: inline-block;
+}
+
+@media(min-width: 640px){
+	.hv-page-title{
+		font-size: 1.6em;
+	}
+}
+
+/* --------------------------------------------------------------------*/
+
+
+
+
+/*BARRA DE PROGRESSO---------------------------------------------------*/
+.hv-barraProgresso {
+	z-index: 9998;/*faz com que este componente venha na frente de todos os outros*/
+	width: 35px;
+	height: 35px;
+	position: fixed;
+	top: 61px;
+	left: 50%;
+	
+}
+
+
+/* Caixa azul do gif de carregamento*/
+.hv-loading{	
+	background-color: #d9edf7;
+    border-color: 1px solid blue;   	
+    border-radius: 4px;
+}
+/*------------------------------------------------------------------------*/
+
+
+
+
+/*MENSAGEM DO TOPO ---------------------------------------------*/
+
+#hv-msg-topo > .ui-messages-warn{
+	margin: 0px !important;
+}
+
+/*--------------------------------------------------------------*/
+
+
+/*tipos de mensagens muda a cor----------------------------------*/
+.hv-info {
+	color: #00F;
+}
+
+.hv-warn {
+	color: #b0b000;
+	float: inherit;
+}
+
+.hv-erro {
+	color: #F00;
+}
+
+.hv-fatal {
+	color: #F00;
+	font-weight: bold;
+}
+/*---------------------------------------------------------*/
+
+
+
+/* Page: 400 and 500 error pages--------------------------*/
+.hv-conteudo-erro {
+	display: inline-block;
+	clear: right;
+	margin-top: -50;
+}
+
+.hv-conteudo-erro>p {
+	font-size: 14px;
+}
+
+.hv-linha-vermelha {
+	color: #d81b60 !important;
+	display: inline;
+	font-size: 100px;
+	font-weight: 300;
+}
+/* -------------------------------------------------------*/
+
+
+
+/*DATATABLE -----------------------------------------------*/
+.ui-column-title {
+	font-size: 14px;
+	font-weight: bold;
+}
+
+@media ( min-width: 640px ) {
+	.hv-coluna-personalizada {
+		width: 80px;
+		text-align: center;
+	}
+}
+
+/*intensifica a cor dos botões da linha selecionada da tabela*/
+.ui-state-highlight .ui-icon {
+	background-image: url("/painelmobile/javax.faces.resource/images/ui-icons_333333_256x240.png.xhtml?ln=primefaces-bootstrap");
+}
+
+/*--------------------------------------------------------------*/
+
+
+
+
+
+/* PANELGRID -------------------------------------------------- */
+.ui-panelgrid.panelgrid-noborder .ui-grid-responsive {
+	border: none;
+}
+
+/*utilizado para retirar uma borda de uma linha que é mostrada ao empilhar*/
+@media (max-width: 640px) {
+	.ui-panelgrid.panelgrid-noborder .ui-grid-responsive .ui-grid-row {
+		border: none;
+	}
+}
+
+/*--------------------------------------------------------------*/
+
+
+
+
+
+/*SEPARADOR DE COMPONENTES - UTILIZADO PARA DAS ESPAÇOS AOS COMPONENTES DA TELA
+este componente pode estar presente na maioria dos grids*/
+.hv-nao-mostrar-separador{
+	visibility: hidden; /*não mostra o elemento na tela mas ele ainda continua ocupado o espaço*/
+	
+}
+
+
+
+
+/*TITULO DO DIALOGO ------------------------------------------*/
+.ui-dialog-title{
+	text-align: center;
+	font-size: 16px !important;
+	margin-left: 1px !important;
+}
+
+/*------------------------------------------------------------*/
+
+
+

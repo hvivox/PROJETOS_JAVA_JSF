@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Configuration>
+
+
+	<!-- CONFIGURA COMO O LOG SERÁ EXIBIDO NO CONSOLE -->
+	<Appenders>
+		<Console name="console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d %-5p [%c] %m%n" />
+		</Console>
+
+
+		<!-- CONFIGURA OS LOGS DE ARQUIVO -->
+		<RollingFile name="arquivo" fileName="C:/sdni_logs/sdni - %d{yyyy-MM-dd}-%i.log"
+			filePattern="C:/sdni_logs/sdni - %d{yyyy-MM-dd}-%i.log">
+			<!-- name="arquivo" fileName="${sys:catalina.home}/logs/pedido-venda.log" filePattern="${sys:catalina.home}/logs/pedido-venda-%d{yyyy-MM-dd}-%i.log"> -->
+
+			<PatternLayout pattern="%d %-5p [%c] %m%n" />
+
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="50 MB" />
+			</Policies>
+		</RollingFile>
+
+		<!-- <SMTP name="EMAIL_APPENDER" suppressExceptions="false" subject="[KVP] %c{1}: %m" -->
+		<!-- to="hermogenes.silva@sesc-am.com.br" from="hermogenes.silva@sesc-am.com.br" SMTPHost="smtp.office365.com" -->
+		<!-- SMTPPort="587" SMTPUsername="hermogenes.silva@sesc-am.com.br" SMTPPassword="monitor@709" bufferSize="60"> -->
+		<!-- <BurstFilter rate="0.1" /> -->
+		<!-- </SMTP> -->
+
+		<!-- <appender name="mailAppender" class="org.apache.log4j.net.SMTPAppender"> <param name="BufferSize" 
+			value="50" /> <param name="SMTPHost" value="smtp.office365.com" /> <param name="SMTPPort" value="587" 
+			/> <param name="SMTPUsername" value="hermogenes.silva@sesc-am.com.br" /> <param name="SMTPPassword" value="monitor@709" 
+			/> <param name="From" value="hermogenes.silva@sesc-am.com.br" /> <param name="To" value="hermogenes.silva@sesc-am.com.br" 
+			/> <param name="Subject" value="Testing Log4j mail notification" /> <layout class="org.apache.log4j.PatternLayout"> 
+			<param name="ConversionPattern" value="[%d{ISO8601}]%n%n%-5p%n%n%c%n%n%m%n%n" /> </layout> <filter class="org.apache.log4j.varia.LevelRangeFilter"> 
+			<param name="LevelMin" value="error" /> <param name="LevelMax" value="fatal" /> </filter> </appender> -->
+
+
+	</Appenders>
+
+
+
+	<!-- CONFIGURA QUAIS TIPOS DE LOGS SERÃO EXIBIDOS EM ARQUIVO E EM CONSOLE -->
+	<Loggers>
+
+<!-- 		<logger name="com.br.sdni" level="warn"> -->
+<!-- 			<appender-ref ref="FILE_APPENDER" /> -->
+<!-- 			<appender-ref ref="STANDARD_CONSOLE" /> -->
+<!-- 		</logger> -->
+
+
+		<logger name="com.br.sdni.util.managerbean.excecaojsf" level="error">
+			<appender-ref ref="FILE_APPENDER" />
+			<appender-ref ref="STANDARD_CONSOLE" />
+		</logger>
+
+
+
+<!-- 		<logger name="org.hibernate" level="debug"> -->
+<!-- 			<appender-ref ref="FILE_APPENDER" /> -->
+<!-- 			<appender-ref ref="STANDARD_CONSOLE" /> -->
+<!-- 		</logger> -->
+
+
+<!-- 		<logger name="log4j.logger.org.hibernate.format_sql" level="debug"> -->
+<!-- 		<appender-ref ref="FILE_APPENDER" /> -->
+<!-- 		<appender-ref ref="STANDARD_CONSOLE" /> -->
+<!-- 		</logger> -->
+
+
+
+
+<!-- 		<logger name="org.hibernate.SQL" level="debug"> -->
+<!-- 			<appender-ref ref="FILE_APPENDER" /> -->
+<!-- 			<appender-ref ref="STANDARD_CONSOLE" /> -->
+<!-- 		</logger> -->
+
+
+<!-- 		<logger name="log4j.logger.org.hibernate.tool.hbm2ddl" level="debug"> -->
+<!-- 			<appender-ref ref="FILE_APPENDER" /> -->
+<!-- 			<appender-ref ref="STANDARD_CONSOLE" /> -->
+<!-- 		</logger> -->
+
+
+		<!-- <logger name="org.springframework" level="warn"> <appender-ref ref="FILE_APPENDER" /> </logger> 
+			<logger name="org.springframework.security" level="warn"> <appender-ref ref="FILE_APPENDER" /> </logger> 
+			<logger name="org.apache.cxf" level="info"> <appender-ref ref="FILE_APPENDER" /> </logger> -->
+
+
+
+		<Root level="info">
+			<!-- <AppenderRef ref="mailAppender" /> -->
+			<AppenderRef ref="console" />
+			<AppenderRef ref="arquivo" />
+		</Root>
+	</Loggers>
+
+</Configuration>

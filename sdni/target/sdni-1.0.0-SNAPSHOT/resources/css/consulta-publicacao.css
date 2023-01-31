@@ -1,0 +1,176 @@
+.hv-sidebar{
+	width: 301px !important;
+	margin-left: -301px !important;/*por padrÃ£o a barra lateral Ã© oculta*/	
+	
+}
+/*ajuste do painel de documentos - borda*/
+.panel-primary {
+	box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.30) !important;
+}
+
+/*TELA PULICAÇÃO - TITULO GERAL DA TELA*/
+.hv-tituoTelaPublicacao{	
+	font-size: 28px;
+	font-weight:bold;
+	text-transform: uppercase !important;
+	padding-top: 10px !important;
+	color: #337ab7;
+}
+
+
+
+/*TITULO GRUPO TELA DE PUBLICAÇÃO*/
+.hv-tituloGrupoDocumento {
+	font-size: 24px !important;
+	text-transform: uppercase !important;
+}
+
+
+.hv-toggle{
+	color: orange !important;
+} 
+
+
+/*-TELA PUBLICACAO - FORMATACAO LISTA*/
+li.hv-formatacaoLista {
+	padding-left:30px;
+	list-style: none !important;
+	display: list-item;
+}
+
+
+/*-TELA PUBLICACAO - FORMATACAO LINK*/
+a.hv-formatacaoLink {
+	font-size: 18px;
+	text-decoration: none;
+	padding: 8px 0 8px 0;
+	color: #003e75;
+	text-decoration: none;
+	display: list-item;
+}
+
+a:hover.hv-formatacaoLink, a:focus.hv-formatacaoLink {
+	color: #d48f1f;
+	background-color: #dfdfdf;
+}
+
+
+
+/*-TELA PUBLICACAO - FIM*/
+@media ( min-width : 640px) {
+	#hv-opcao-topo {
+		display: inline-block !important;
+		float: right !important;
+		right: 15% !important;
+	}
+}
+
+
+/*------------------------------------------------------------------*/
+
+/*MODIFICANDO A BARRA LATERAL*/
+.hv-sidebar{
+	position:fixed;
+	top:61px;
+	bottom:0;
+	left:0;	
+	width: 300px !important;
+	margin-left: -301px;/*por padrão a barra lateral é oculta*/	
+	/*margin-left: -401px !important;*/
+	z-index: 9998;	
+	overflow-y:auto;/*se precisar de barra de rolagem será mostrada no exioy*/
+	transition: margin-left 0.5s;/*efetio da barra quando ela some, quando for modificado o margin-left a transição será de 0.5s*/
+		
+	background: #f6f6f6;
+	border-right:1px solid #eaeaea;
+}
+
+
+/*Mosta e esconde a barra lateral*/
+@media(min-width: 960px){
+	/*se tiver apenas o sidebar: a barra é mostrada*/
+	.hv-sidebar{
+		margin-left: 0px !important;/*esconde a barra lateral quando a tela está em 960px*/
+	}
+	
+	/*se tiver as duas classe abaixo: ele mostra*/
+	.hv-sidebar.is-toggled{
+		margin-left: -301px !important;
+	}	
+}
+
+
+/*MENU --------------------------------------- */
+.hv-menu {
+	font-size: 1.1em; /*Multiplica o tamanho da fonte do pai por 1.1*/
+}
+
+/*alteração da lista de menus*/
+.hv-menu ul {
+	margin: 0;
+	margin-top: 0px;
+	padding: 0;
+	list-style: none;
+}
+
+/*formatação dos menus*/
+.hv-menu ul a {
+	display: block;
+	padding: 10px 15px;
+	text-decoration: none;
+	font-weight: 500;
+	color: #373737;
+}
+
+/*distancia entre o texto e o icone*/
+.hv-menu ul i {
+	margin-right: 6px;
+}
+
+/*coloca um efeito  ao passar o mouse por cima ou selecionar os menus*/
+.hv-menu ul a:hover, .hv-menu>ul a:focus {
+	background-color: #dfdfdf;
+}
+
+/*menu muda de cor ao ser clicado*/
+.hv-menu ul .is-selected {
+	border-left: 3px solid #1e94d2; /*exibe uma barra ao lado do menu para dar destaque*/
+	background-color: #f3f3f3;
+}
+
+/*menu muda de cor da fonte quando o menu for clicado*/
+.hv-menu ul .is-selected a {
+	margin-left: -3px; /*retira a diferença da barra lateral de cada menu*/
+	color: #1e94d2;
+}
+/*------------------------------------------------------------*/
+
+
+
+/*-------------------------------------------------*/
+
+@media(min-width:960px){
+	.hv-content	{
+	margin-left: 301px !important;/*o conteúdo começa em 0px quando a tela fica em
+	960px o conteúdo se afasta da margin, lembrando que layout é mobile-fist*/	
+	}
+	
+	.hv-content.is-toggled{
+		margin-left: 0px !important;
+	}
+	
+}
+
+
+@media(min-width:960px){
+	.hv-footer	{
+	margin-left: 301px;/*o conteúdo começa em 0px quando a tela fica em
+	960px o conteúdo se afasta da margin, lembrando que layout é mobile-fist*/	
+	}
+	
+	.hv-footer.is-toggled{
+		margin-left: 0px;
+	}
+	
+}
+/*---------------------------------------------------*/

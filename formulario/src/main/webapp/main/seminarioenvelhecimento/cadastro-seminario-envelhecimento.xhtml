@@ -1,0 +1,218 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:esp="http://www.especializa.com.br/facelets/taglibs"
+	xmlns:espc="http://java.sun.com/jsf/composite/componentes"
+	xmlns:o="http://omnifaces.org/ui"
+	template="../../WEB-INF/templates/mainTemplate.xhtml">
+
+	<!-- <p:growl -->
+	<!-- id="mensagemGrow" -->
+	<!-- showDetail="true" globalOnly="false"/> -->
+
+	<ui:define name="titulo">Cadastro - #{mens.titulo_seminario_envelhecimento}</ui:define>
+
+
+	<ui:define name="corpo">
+		<f:metadata>
+			<f:viewAction action="#{mbSeminarioEnvelhecimento.inicializar}" />
+			<o:viewParam name="dumy" />
+		</f:metadata>
+
+		
+
+		<h:form
+			id="formCadastro"
+			rendered="#{ mbSeminarioEnvelhecimento.qtdCadastrados le 220  }">
+			<h1 class="hv-page-title">Cadastro - 
+				#{mens.titulo_seminario_envelhecimento}</h1>
+
+			<p:toolbar>
+				<p:toolbarGroup>
+					<p:commandButton
+						value="Salvar"
+						id="btnSalvar"
+						icon="ui-icon-disk"
+						action="#{ mbSeminarioEnvelhecimento.salvar }"
+						update="formCadastro :hv-msg-topo">
+						<p:resetInput target="formCadastro" />
+					</p:commandButton>
+
+				</p:toolbarGroup>
+
+
+				<p:toolbarGroup align="right">
+					<p:button
+						id="btnVoltar"
+						icon="ui-icon-arrowreturnthick-1-w"
+						value="Voltar"
+						href="https:www.sesc-am.com.br" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+
+
+
+			<!-- torna os campos fluidos -->
+			<div class="ui-fluid">
+
+				<!-- grid: torna o layout responsivo; uigrid-col: divide os espaços na linha até 12;  -->
+				<!-- DADOS PESSOAIS -->
+				<p:panel
+					id="pnlpessoais"
+					header="DADOS PESSOAIS"
+					style="margin-bottom:20px">
+
+					<p:panelGrid
+						id="inclusaoPanel"
+						columns="3"
+						columnClasses="ui-grid-col-3, ui-grid-col-7, ui-gri-col-1"
+						layout="grid"
+						style="width: 100%; margin-top: 20px"
+						styleClass="panelgrid-noborder">
+
+
+						<p:outputLabel
+							value="Nome"
+							for="nome" />
+						<p:inputText
+							id="nome"
+							value="#{mbSeminarioEnvelhecimento.seminarioEnvelhecimento.nome}"
+							maxlength="150"
+							required="true"
+							requiredMessage="É necessário informar o campo nome">
+						</p:inputText>
+						<p:message
+							id="mensNome"
+							for="nome" />
+
+
+
+						<p:outputLabel
+							value="Data Nascimento"
+							for="dtaNascimento" />
+						<p:calendar
+							id="dtaNascimento"
+							locale="pt"
+							maskSlotChar="__/__/____"
+							mask="true"
+							pattern="dd/MM/yyyy"
+							style="width:70%"
+							value="#{mbSeminarioEnvelhecimento.seminarioEnvelhecimento.dtaNascimento}"
+							required="true"
+							requiredMessage="É necessário informar a data de nascimento"
+							converter="conversorCalendar">
+						</p:calendar>
+						<p:message
+							id="mensDtaNascimento"
+							for="dtaNascimento" />
+
+
+						<p:outputLabel
+							value="Sexo"
+							for="sexo" />
+						<p:selectOneMenu
+							id="sexo"
+							value="#{mbSeminarioEnvelhecimento.seminarioEnvelhecimento.sexo}"
+							style="width:125px"
+							required="true"
+							requiredMessage="É necessário informar o campo sexo">
+							<f:selectItem
+								noSelectionOption="true"
+								itemLabel="Selecione" />
+							<f:selectItem
+								itemLabel="Masculino"
+								itemValue="Masculino" />
+							<f:selectItem
+								itemLabel="Feminino"
+								itemValue="Feminino" />
+
+						</p:selectOneMenu>
+						<p:message for="sexo" />
+
+
+
+
+						<!-- CONTATOS -->
+
+						<p:outputLabel
+							value="email"
+							for="email" />
+						<p:inputText
+							id="email"
+							value="#{mbSeminarioEnvelhecimento.seminarioEnvelhecimento.email}"
+							maxlength="100">
+
+
+						</p:inputText>
+						<p:message
+							id="mensEmail"
+							for="email" />
+
+
+						<p:outputLabel
+							value="Telefone"
+							for="telefone" />
+						<p:inputMask
+							id="telefone"
+							value="#{mbSeminarioEnvelhecimento.seminarioEnvelhecimento.fone}"
+							mask="(99) 9999-9999"
+							maxlength="14"
+							placeholder="(  ) ____-____"
+							required="true"
+							requiredMessage="É necessário informar o campo telefone" />
+						<p:message
+							id="mensTelefone"
+							for="telefone" />
+
+
+
+
+
+						<p:outputLabel
+							value="Tipo"
+							for="tipo" />
+						<p:selectOneMenu
+							id="tipo"
+							value="#{mbSeminarioEnvelhecimento.seminarioEnvelhecimento.tipo}"
+							style="width:125px"
+							required="true"
+							requiredMessage="É necessário informar o campo tipo">
+							<f:selectItem
+								noSelectionOption="true"
+								itemLabel="Selecione" />
+							<f:selectItem
+								itemLabel="Acadêmico"
+								itemValue="academico" />
+							<f:selectItem
+								itemLabel="Idoso"
+								itemValue="idoso" />
+							<f:selectItem
+								itemLabel="Profissional"
+								itemValue="profissional" />
+
+						</p:selectOneMenu>
+						<p:message for="tipo" />
+
+
+
+
+
+					</p:panelGrid>
+				</p:panel>
+
+
+
+
+			</div>
+
+
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

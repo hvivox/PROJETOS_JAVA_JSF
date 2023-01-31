@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="painelmobilePU">
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+		
+		<class>com.br.painelmobile.modelo.persistencia.entidade.mapeadas.Cardapio</class>
+		<class>com.br.painelmobile.modelo.persistencia.entidade.mapeadas.CategoriaParceiro</class>
+		<class>com.br.painelmobile.modelo.persistencia.entidade.mapeadas.CategoriaServico</class>
+		<class>com.br.painelmobile.modelo.persistencia.entidade.mapeadas.Evento</class>
+		<class>com.br.painelmobile.modelo.persistencia.entidade.mapeadas.GaleriaImagem</class>
+		<class>com.br.painelmobile.modelo.persistencia.entidade.mapeadas.Grupo</class>
+		<class>com.br.painelmobile.modelo.persistencia.entidade.mapeadas.Imagem</class>
+		<class>com.br.painelmobile.modelo.persistencia.entidade.mapeadas.Mensagem</class>
+		<class>com.br.painelmobile.modelo.persistencia.entidade.mapeadas.Parceiro</class>
+		<class>com.br.painelmobile.modelo.persistencia.entidade.mapeadas.Postagem</class>
+		<class>com.br.painelmobile.modelo.persistencia.entidade.mapeadas.Selecao</class>
+		<class>com.br.painelmobile.modelo.persistencia.entidade.mapeadas.Servico</class>
+		<class>com.br.painelmobile.modelo.persistencia.entidade.mapeadas.Unidade</class>
+		<class>com.br.painelmobile.modelo.persistencia.entidade.mapeadas.Usuario</class>
+		<class>com.br.painelmobile.modelo.persistencia.entidade.mapeadas.ValueObject</class>
+		<class>com.br.painelmobile.modelo.persistencia.entidade.mapeadas.Video</class>
+		
+		
+		
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+		
+		<properties>
+
+<!-- ################################## -->
+<!-- ### CONFIGURAÇÃO BANCO DE DADOS### -->
+<!-- ################################## -->			
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
+<!-- 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/portalsescam?autoReconnect=true&amp;zeroDateTimeBehavior=convertToNull&amp;verifyServerCertificate=false&amp;useSSL=false" /> -->
+<!-- 			<property name="javax.persistence.jdbc.user" value="root" /> -->
+<!-- 			<property name="javax.persistence.jdbc.password" value="sescdr@123" />		 -->
+			
+			
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://192.168.5.145:3306/portalsescam?autoReconnect=true&amp;zeroDateTimeBehavior=convertToNull&amp;verifyServerCertificate=false&amp;useSSL=false" />
+			<property name="javax.persistence.jdbc.user" value="painelmobile"/>
+			<property name="javax.persistence.jdbc.password" value="pm#157" />		
+			<!-- true or false. Setting which indicates whether or not the new IdentifierGenerator implementations are used for AUTO, TABLE -->
+			<!-- #and SEQUENCE. Default to false to keep backward compatibility. Faz com que cada um das classes tenham seus próprios contadores, caso contrario o sitema seguirá uma seguencia unica -->
+			<!-- <property name="hibernate.id.new_generator_mappings" value="true" /> -->
+			
+			
+<!-- ################################# -->
+<!-- ### CONFIGURAÇÃO DO HIBERNATE ### -->
+<!-- ################################# -->			
+			
+<!-- 		<property name="hibernate.hbm2ddl.auto" value="create-drop" />  -->
+			<property name="hibernate.show_sql" value="false" />
+			
+			<!--Identa as consultas que são mostrada no log -->
+			<property name="hibernate.format_sql" value="true" />			
+			
+			<!--In eager fetching, only join three tables deep if joins are used 2 -->
+			<property name="hibernate.max_fetch_depth" value="2" />
+			
+			<!--set the default batch size for batch fetching (Determina um tamanho padrão para busca de associação em lotes do hibernate: valores recomndados 4, 8, 16) -->
+			<property name="hibernate.default_batch_fetch_size" value="8" />
+			
+			
+			
+<!-- ########################### -->
+<!-- ### C3P0 Connection Pool### -->
+<!-- ########################### -->
+			<property name="hibernate.connection.provider_class" 
+			value="org.hibernate.connection.C3P0ConnectionProvider" />
+					
+			
+			<!--maximo de conexao. uma exeção será lançada caso o numero se esgote. -->
+			<property name="hibernate.c3p0.max_size" value="30" />
+
+			<!--numero padrao de conexão. estarao preparadas a todo o tempo. Numero de conexões que são criadas ao inicialiar a aplicação -->
+			<property name="hibernate.c3p0.min_size" value="3" />
+
+			<!-- Número de conexões adicionais que serão criadas. Isso acontece apenas quando atingir o numero minimo de conexão definido -->
+			<property name="hibernate.c3p0.acquire_increment" value="1" />
+
+			<!-- tempo em segundos para que uma conexao seja validada. 
+			Verificar quais conexões estão em espera de 3000 em 3000 segundos 
+			nÃO PODE SER UM NUMERO BAIXO POR CONTA DO DDOs-->
+			<property name="hibernate.c3p0.idle_test_period" value="180" />
+
+			<!-- Segundos que uma Conexão será mantida no pool sem ser usada, antes de ser descartada. Este deve ser sempre maior 
+				que o test_perid #Zero significa que a conexão nunca expira Tempo para que uma conexao inativa seja removida do pool. (em 
+				segundos) -->
+			<property name="hibernate.c3p0.timeout" value="180" />
+
+			<!-- Quantidade de statemnets que irão para o cache -->
+			<property name="hibernate.c3p0.max_statements" value="10" />
+			
+			<!-- habilita fazer o checkin da conexão			 -->
+			<property name="hibernate.c3p0.testConnectionOnCheckin" value="true" />
+			<!-- Consulta utilziada para verificar a conexão			 -->
+			<property name="hibernate.c3p0.preferredTestQuery" value="select 1+1" />
+			
+
+
+		</properties>
+		
+		
+		
+	</persistence-unit>
+</persistence>

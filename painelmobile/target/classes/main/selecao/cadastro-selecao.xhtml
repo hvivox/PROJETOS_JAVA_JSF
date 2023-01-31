@@ -1,0 +1,178 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:esp="http://www.especializa.com.br/facelets/taglibs"
+	xmlns:espc="http://java.sun.com/jsf/composite/componentes"
+	xmlns:o="http://omnifaces.org/ui"
+	template="../../WEB-INF/templates/mainTemplate.xhtml">
+
+	<!-- <p:growl -->
+	<!-- id="mensagemGrow" -->
+	<!-- showDetail="true" globalOnly="false"/> -->
+
+	<ui:define name="titulo">PM - Cadastro Seleção</ui:define>
+
+
+	<ui:define name="corpo">
+		<f:metadata>
+			<f:event
+				listener="#{mbCadastroSelecao.inicializar}"
+				type="preRenderView" />
+
+			<o:viewParam
+				name="idSelecao"
+				value="#{mbCadastroSelecao.selecao}" />
+		</f:metadata>
+
+
+
+		<h:form id="formCadastro">
+			<h1 class="hv-page-title">Cadastro Seleção</h1>
+
+			<p:toolbar>
+				<p:toolbarGroup>
+					<p:commandButton
+						value="Salvar"
+						id="btnSalvar"
+						icon="ui-icon-disk"
+						action="#{mbCadastroSelecao.salvar}"
+						update="formCadastro :hv-msg-topo">
+						<p:resetInput target="formCadastro" />
+
+					</p:commandButton>
+				</p:toolbarGroup>
+
+
+				<p:toolbarGroup align="right">
+					<p:button
+						id="btnVoltar"
+						icon="ui-icon-arrowreturnthick-1-w"
+						value="Voltar"
+						outcome="consulta-selecao" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+
+
+			<!-- torna os campos fluidos -->
+			<div class="ui-fluid">
+
+
+				<!-- grid: torna o layout responsivo; uigrid-col: divide os espaços na linha até 12;  -->
+				<p:panelGrid
+					id="inclusaoPanel"
+					columns="3"
+					columnClasses="ui-grid-col-2, ui-grid-col-6, ui-gri-col-1"
+					layout="grid"
+					style="width: 100%; margin-top: 20px">
+
+
+					<p:outputLabel
+						value="Título"
+						for="titulo" />
+					<p:inputText
+						id="titulo"
+						value="#{mbCadastroSelecao.selecao.titulo}"
+						maxlength="100"
+						required="true"
+						requiredMessage="É necessário informar o campo título">
+					</p:inputText>
+					<p:message
+						id="mensTitulo"
+						for="titulo" />
+					
+					
+					
+					<p:outputLabel
+						value="Vigência"
+						for="vigencia" />
+					<p:calendar
+						id="vigencia"
+						locale="pt"
+						maskSlotChar="__/__/____"
+						mask="true"
+						pattern="dd/MM/yyyy"
+						style="width:70%"
+						value="#{mbCadastroSelecao.selecao.dtaVigencia}"
+						required="true"
+						requiredMessage="É necessário informar a vigência"
+						converter="conversorCalendar">
+					</p:calendar>
+					<p:message
+						id="mensVigencia"
+						for="vigencia" />
+					
+					
+					
+					<p:outputLabel
+						value="Status"
+						for="estatus" />
+					<p:selectOneMenu
+						id="estatus"
+						immediate="true"
+						style="width:70%"
+						value="#{mbCadastroSelecao.selecao.estatus}"
+						required="true"
+						requiredMessage="É necessário informar o estatus">
+
+						<f:selectItems
+							value="#{mbCadastroSelecao.listaEstatus}"
+							var="s"
+							itemLabel="#{s.estatus}" />
+					</p:selectOneMenu>
+					<p:message for="estatus" />
+
+
+
+					<p:outputLabel value="Descrição" />
+					<p:inputTextarea
+						id="descricao"
+						value="#{mbCadastroSelecao.selecao.descricao}"
+						rows="1"
+						cols="40"
+						maxlength="250"
+						autoResize="false" />
+					<p:message for="descricao" />
+
+				</p:panelGrid>
+
+			</div>
+
+
+
+			<!-- SUPORTA até 800KB por arquivos	          -->
+			<p:fileUpload
+				id="fileUpload"
+				fileUploadListener="#{mbGerImagem.uploadImagem}"
+				mode="advanced"
+				dragDropSupport="false"
+				multiple="false"
+				auto="true"
+				update=":hv-msg-topo imgExibir"
+				sizeLimit="921600"
+				label="Selecionar"
+				invalidFileMessage="Tipo de imagem inválido"
+				invalidSizeMessage="Imagem muito grande"
+				fileLimitMessage="Favor anexar apenas uma imagem"
+				allowTypes="/(\.|\/)(jpe?g|png)$/" />
+
+
+			<p:graphicImage
+				id="imgExibir"
+				value="#{mbGerImagem.imagem}"
+				cache="false"
+				title="#{mbCadastroSelecao.selecao.descricao}"
+				alt="#{mbCadastroSelecao.selecao.descricao}"
+				width="200"
+				height="200"
+				style="margin-left:10%" />
+
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

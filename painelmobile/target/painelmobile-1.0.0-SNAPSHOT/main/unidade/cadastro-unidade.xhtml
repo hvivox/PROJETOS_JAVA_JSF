@@ -1,0 +1,207 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:esp="http://www.especializa.com.br/facelets/taglibs"
+	xmlns:espc="http://java.sun.com/jsf/composite/componentes"
+	xmlns:o="http://omnifaces.org/ui"
+	template="../../WEB-INF/templates/mainTemplate.xhtml">
+
+	<!-- <p:growl -->
+	<!-- id="mensagemGrow" -->
+	<!-- showDetail="true" globalOnly="false"/> -->
+
+	<ui:define name="titulo">PM - Cadastro Unidades</ui:define>
+
+
+	<ui:define name="corpo">
+		<f:metadata>
+			<f:event
+				listener="#{mbCadastroUnidade.inicializar}"
+				type="preRenderView" />
+
+			<o:viewParam
+				name="idUnidade"
+				value="#{mbCadastroUnidade.unidade}" />
+		</f:metadata>
+
+
+
+		<h:form id="formCadastro">
+			<h1 class="hv-page-title">Cadastro Unidade</h1>
+
+			<p:toolbar>
+				<p:toolbarGroup>
+					<p:commandButton
+						value="Salvar"
+						id="btnSalvar"
+						icon="ui-icon-disk"
+						action="#{mbCadastroUnidade.salvar}"
+						update="formCadastro :hv-msg-topo">
+						<p:resetInput target="formCadastro" />
+
+					</p:commandButton>
+				</p:toolbarGroup>
+
+
+				<p:toolbarGroup align="right">
+					<p:button
+						id="btnVoltar"
+						icon="ui-icon-arrowreturnthick-1-w"
+						value="Voltar"
+						outcome="consulta-unidade" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+
+
+			<!-- torna os campos fluidos -->
+			<div class="ui-fluid">
+
+
+				<!-- grid: torna o layout responsivo; uigrid-col: divide os espaços na linha até 12;  -->
+				<p:panelGrid
+					id="inclusaoPanel"
+					columns="3"
+					columnClasses="ui-grid-col-2, ui-grid-col-6, ui-gri-col-1"
+					layout="grid"
+					style="width: 100%; margin-top: 20px"
+					styleClass="panelgrid-noborder">
+
+
+					<p:outputLabel
+						value="Unidade"
+						for="unidade" />
+					<p:inputText
+						id="unidade"
+						value="#{mbCadastroUnidade.unidade.nomeUnidade}"
+						maxlength="100"
+						required="true"
+						requiredMessage="É necessário informar o campo Unidade" />
+					<p:message
+						id="mensUnidade"
+						for="unidade" />
+
+
+
+					<p:outputLabel
+						value="Cidade"
+						for="cidade" />
+					<p:inputText
+						id="cidade"
+						value="#{mbCadastroUnidade.unidade.cidade}"
+						maxlength="100"
+						required="true"
+						requiredMessage="É necessário informar o campo Cidade" />
+					<p:message
+						id="mensCidade"
+						for="cidade" />
+
+
+
+					<p:outputLabel
+						value="Telefone"
+						for="telefone" />
+					<p:inputMask
+						id="telefone"
+						value="#{mbCadastroUnidade.unidade.fone}"
+						mask="(99) 9999-9999"
+						maxlength="14"
+						placeholder="(  ) ____-____"
+						style="width:40%"
+						required="true"
+						requiredMessage="É necessário informar o campo telefone" />
+					<p:message
+						id="mensTelefone"
+						for="telefone" />
+
+
+					<p:outputLabel
+						value="Latitude"
+						for="latitude" />
+					<p:inputText
+						id="latitude"
+						value="#{mbCadastroUnidade.unidade.latitude}"
+						maxlength="100"
+						style="width:40%"
+						required="true"
+						requiredMessage="É necessário informar o campo latitude" />
+					<p:message
+						id="mensLatitude"
+						for="latitude" />
+
+
+
+					<p:outputLabel
+						value="Longitude"
+						for="longitude" />
+					<p:inputMask
+						id="longitude"
+						value="#{mbCadastroUnidade.unidade.longitude}"
+						maxlength="100"
+						style="width:40%"
+						required="true"
+						requiredMessage="É necessário informar o campo Longitude" />
+					<p:message
+						id="mensLogitude"
+						for="longitude" />
+
+
+
+					<p:outputLabel
+						value="Status"
+						for="estatus" />
+					<p:selectOneMenu
+						id="estatus"
+						immediate="true"
+						style="width:40%"
+						value="#{mbCadastroUnidade.unidade.estatus}"
+						required="true"
+						requiredMessage="É necessário informar o estatus">
+
+						<f:selectItems
+							value="#{mbCadastroUnidade.listaEstatus}"
+							var="s"
+							itemLabel="#{s.estatus}" />
+					</p:selectOneMenu>
+					<p:message for="estatus" />
+
+				</p:panelGrid>
+
+			</div>
+
+
+			<!-- SUPORTA até 800KB por arquivos	          -->
+			<p:fileUpload
+				id="fileUpload"
+				fileUploadListener="#{mbGerImagem.uploadImagem}"
+				mode="advanced"
+				dragDropSupport="false"
+				multiple="false"
+				auto="true"
+				update=":hv-msg-topo imgExibir"
+				sizeLimit="921600"
+				label="Selecionar"
+				invalidFileMessage="Tipo de imagem inválido"
+				invalidSizeMessage="Imagem muito grande"
+				fileLimitMessage="Favor anexar apenas uma imagem"
+				allowTypes="/(\.|\/)(jpe?g|png)$/" />
+
+
+			<p:graphicImage
+				id="imgExibir"
+				value="#{mbGerImagem.imagem}"
+				cache="false"
+				width="200"
+				height="200"
+				style="margin-left:10%" />
+
+
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

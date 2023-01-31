@@ -1,0 +1,65 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+
+
+
+	<nav class="hv-menu">
+
+
+
+		<ul>
+
+			<li class="#{navegacao.getItemCssClass('/home')}"><h:link outcome="/home.xhtml">
+					<i class="fa  fa-fw  fa-home"></i>Home
+			</h:link></li>
+
+
+			<sec:authorize ifAllGranted="ROLE_GERENCIAR_GRUPO">
+				<li class="#{navegacao.getItemCssClass('/main/grupodocumento/consulta-grupodocumento')}"><h:link
+						outcome="/main/grupodocumento/consulta-grupodocumento.xhtml">
+						<i
+							class="fa  fa-fw fa-folder-open"
+							style="color: orange"></i>Grupo de Documentos
+				</h:link></li>
+			</sec:authorize>
+
+
+
+
+			<sec:authorize ifAllGranted="ROLE_GERENCIAR_DOCUMENTO">
+				<li class="#{navegacao.getItemCssClass('/main/documento/consulta-documento')}"><h:link
+						outcome="/main/documento/consulta-documento.xhtml">
+						<i
+							class="fa  fa-fw  fa-file-text"
+							style="color: #e5c7c7"></i>Documentos
+				</h:link></li>
+			</sec:authorize>
+
+
+
+			<sec:authorize ifAllGranted="ROLE_GERENCIAR_USUARIO">
+				<li class="#{navegacao.getItemCssClass('/main/usuario/consulta-usuario')}"><h:link
+						outcome="/main/usuario/consulta-usuario.xhtml">
+						<i class="fa  fa-fw  fa-user"></i>Usuários
+				</h:link></li>
+			</sec:authorize>
+
+
+
+
+			<li><h:outputLink value="/sdni/logout">
+					<i class="fa  fa-fw  fa-power-off"></i>Sair
+			</h:outputLink></li>
+
+		</ul>
+	</nav>
+
+
+</ui:composition>
+

@@ -1,0 +1,49 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:o="http://omnifaces.org/ui">
+
+	<!-- ########################################################################## -->
+	<!-- ########################################################################## -->
+	<!-- INATIVAR GALERIA - tela de dialogo -->
+	
+	<p:dialog
+		id="inativarCadastro"		
+		header="Inativar GaleriaImagem"
+		responsive="true"
+		widgetVar="confirmacao"
+		modal="true"
+		resizable="false">
+
+		<div class="ui-fluid">
+			<h:outputLabel value="Tem certeza que deseja inativar Galeria selecionada?" />
+			<br /> <br /> <br />
+				
+			<p:panelGrid
+				columns="2"
+				layout="grid"
+				styleClass="panelgrid-noborder"
+				columnClasses="ui-grid-col-6, ui-grid-col-6">
+
+				<p:commandButton
+					value="Sim"
+					update="tabela hv-msg-topo"
+					process="@this"
+					oncomplete="PF('confirmacao').hide()"
+					action="#{mbConsultaGaleriaImagem.inativarCadastro}" />
+
+				<p:button
+					value="Não"
+					onclick="PF('confirmacao').hide(); return false;" />
+			</p:panelGrid>
+		</div>
+	</p:dialog>
+
+
+	
+
+</ui:composition>
+

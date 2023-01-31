@@ -1,0 +1,81 @@
+/*--------------------------------------------------------------
+* COMPONENTES DA PAGINA - CRIADO A MÃO
+*--------------------------------------------------------------*/
+
+/*BOTAO PARA ALTERNAR TELA - TOGGLE --------------------------------------*/
+.hv-toggle {
+	float: left;	
+	margin-top: 17px;
+	/*line-height: 3;*/
+	margin-left: 15px;	
+	color: #fff;
+	 
+}
+
+
+
+
+/*MENU --------------------------------------- */
+.hv-menu {
+	font-size: 1.1em; /*Multiplica o tamanho da fonte do pai por 1.1*/
+}
+
+/*alteração da lista de menus*/
+.hv-menu > ul {
+	margin: 0;
+	margin-top: 30px;
+	padding: 0;
+	list-style: none;
+}
+
+/*formatação dos menus*/
+.hv-menu > ul a {
+	display: block;
+	padding: 10px 15px;
+	text-decoration: none;
+	font-weight: 500;
+	color: #373737;
+}
+
+/*distancia entre o texto e o icone*/
+.hv-menu > ul i {
+	margin-right: 6px;
+}
+
+/*coloca um efeito  ao passar o mouse por cima ou selecionar os menus*/
+.hv-menu > ul a:hover, .hv-menu >ul a:focus {
+	background-color: #dfdfdf;
+}
+
+/*menu muda de cor ao ser clicado*/
+.hv-menu >ul .is-selected {	
+	border-left: 3px solid #1e94d2; /*exibe uma barra ao lado do menu para dar destaque*/
+	background-color: #f3f3f3;
+}
+
+
+/*menu muda de cor da fonte quando o menu for clicado*/
+.hv-menu>ul .is-selected a {
+	margin-left: -3px; /*retira a diferença da barra lateral de cada menu*/
+	color: #1e94d2;
+}
+/*------------------------------------------------------------*/
+
+
+
+
+/*OPÇÕES LOCALIZADAS NO TOPO DA PAGINA - nome usuário*/
+#hv-opcao-topo{
+	display: none;
+	
+}
+
+@media(min-width: 640px){
+	#hv-opcao-topo{
+	display: inline-block;
+	float: right;
+	right: 15%;
+	}
+
+}
+

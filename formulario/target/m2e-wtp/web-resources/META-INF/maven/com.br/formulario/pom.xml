@@ -1,0 +1,414 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.br</groupId>
+  <artifactId>formulario</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+
+
+  <packaging>war</packaging>
+  <build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.3</version>
+
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	
+	
+	
+		<!-- ******************************************************* -->
+	<!-- Properties -->
+	<!-- ******************************************************* -->
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<!-- SISTEMA WEB ############################### -->
+		<faces-glassfish.version>2.2.11</faces-glassfish.version>
+		<junit.version>4.11</junit.version>
+		<hibernate-c3p0.version>4.3.10.Final</hibernate-c3p0.version>
+		<hibernate.entitymanager>4.3.10.Final</hibernate.entitymanager>
+		<hibernate.core.version>4.3.10.Final</hibernate.core.version>
+		<log4j.version>1.2.17</log4j.version>
+		<commons-logging.version>1.2</commons-logging.version>
+		
+		<primefaces.version>5.3</primefaces.version>
+		<commons-fileupload.version>1.2.2</commons-fileupload.version>
+		<javax.servlet-api.version>3.1.0</javax.servlet-api.version>
+		<commons-io.version>2.4</commons-io.version>
+		<jodatime.version>2.1</jodatime.version>
+		<postgres.version>9.4-1201-jdbc41</postgres.version>
+		<weld.version>2.2.0.Final</weld.version>
+		<primefaces.theme.version>1.0.10</primefaces.theme.version>
+		<omnifaces.version>2.1</omnifaces.version>
+		<commons-lang3.version>3.4</commons-lang3.version>
+		<jsoup.version>1.9.2</jsoup.version>
+		<mysql.version>5.1.38</mysql.version>
+		<hibernate-validator.version>5.0.1.Final</hibernate-validator.version>
+
+
+		<!-- WEBSERVICE ############################### -->
+		<jersey.core.version>2.6</jersey.core.version>
+		<jersey.containers.version>2.6</jersey.containers.version>
+		<jersey.cdi.version>2.6</jersey.cdi.version>
+		<jackson.jaxrs.version>2.4.1</jackson.jaxrs.version>
+		<code.gson.version>2.6.2</code.gson.version>
+	</properties>
+
+
+
+
+
+	<!-- ******************************************************************************************************** -->
+	<!-- DEPENDENCIAS -->
+	<!-- ******************************************************************************************************** -->
+	<dependencies>
+		<!-- RECUSOS WEB -->
+
+		<!-- PROJETO MOJARRA DO GLASSFISH É A IMPLEMENTAÇÃO DO JSF -->
+		<dependency>
+			<groupId>org.glassfish</groupId>
+			<artifactId>javax.faces</artifactId>
+			<version>${faces-glassfish.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+			<scope>provided</scope>
+		</dependency>
+
+
+
+		<!-- BIBLIOTECA DO PRIME ACREDITO QUE NAO É NECESSÁRIO VISTO QUE O MOJARRA ATENDE -->
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<version>${primefaces.version}</version>
+		</dependency>
+
+
+		<!-- BIBLIOTECAS AUXILIARES PARA O SISTEMA ENTENDER AS SERVLETS -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>${javax.servlet-api.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+
+		<!-- Dependencia obrigatoria de upload para usar jsf 2.2 + primefaces acima do 4.0 -->
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>${commons-fileupload.version}</version>
+
+		</dependency>
+
+
+
+		<!-- TEMA UNICO PARA JSF -->
+		<dependency>
+			<groupId>org.primefaces.themes</groupId>
+			<artifactId>bootstrap</artifactId>
+			<version>${primefaces.theme.version}</version>
+		</dependency>
+
+
+
+
+
+		<!-- BIBLIOTECAS AUXILIARES PARA O SISTEMA ENTENDER AS SERVLETS -->
+		<!-- utilizado para utilizar as anotações que estão no filtro -->
+		<!-- // Biblioteca auxiliares para o funcinamento de servlet -->
+
+
+		<!-- Joda Time -->
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>${jodatime.version}</version>
+		</dependency>
+		<!-- // Joda Time -->
+
+
+		<!-- BANCO DE DADOS <dependency> <groupId>org.postgresql</groupId> <artifactId>postgresql</artifactId> 
+			<version>${postgres.version}</version> </dependency> -->
+
+
+		<!-- Driver JDBC do MySQL -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql.version}</version>
+			<scope>compile</scope>
+		</dependency>
+
+
+		<!-- Weld (implementação do CDI) -->
+		<dependency>
+			<groupId>org.jboss.weld.servlet</groupId>
+			<artifactId>weld-servlet</artifactId>
+			<version>${weld.version}</version>
+			<scope>compile</scope>
+		</dependency>
+
+
+
+		<!-- HIBERNATE -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate.core.version}</version>
+		</dependency>
+
+
+		<!-- Implementação de EntityManager da JPA -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${hibernate.entitymanager}</version>
+			<scope>compile</scope>
+		</dependency>
+
+
+		<!-- Hibernate c3p0 connection pool -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-c3p0</artifactId>
+			<version>${hibernate-c3p0.version}</version>
+		</dependency>
+
+
+		<!-- Implementacao do Bean Validation -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>${hibernate-validator.version}</version>
+			<scope>compile</scope>
+		</dependency>
+
+
+
+
+		<!-- Tests -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+		</dependency>
+
+
+		<!-- Log -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j.version}</version>
+			<scope>compile</scope>
+		</dependency>
+
+
+
+		<!-- Permite a utilização do recurso de logggin dentro do codigo fonte -->
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>${commons-logging.version}</version>
+		</dependency>
+		<!-- // Log -->
+
+
+		<!-- OmniFaces (utilitarios para JSF) utilizado para injeção em conversores e passagem de paramentros -->
+		<dependency>
+			<groupId>org.omnifaces</groupId>
+			<artifactId>omnifaces</artifactId>
+			<version>${omnifaces.version}</version>
+			<scope>compile</scope>
+		</dependency>
+
+
+		<!-- Commons Lang (utilidades) utilizado para manipulação de strings -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${commons-lang3.version}</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<!-- Utilizado para converter imagem em bytes facilitando o processo de upload de imagem -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>${commons-io.version}</version>
+			<scope>compile</scope>
+		</dependency>
+
+
+
+
+
+		<!-- Abstração para envio de e-mails -->
+		<dependency>
+			<groupId>com.outjected</groupId>
+			<artifactId>simple-email</artifactId>
+			<version>0.2.5-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<!-- Requerido para envio de e-mails -->
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.7</version>
+			<scope>compile</scope>
+		</dependency>
+
+
+		<!-- JASPER REPORT PARA GEREGAÇÃ DE RELATORIOS -->
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+			<version>5.6.0</version>
+			<scope>compile</scope>
+		</dependency>
+		
+
+		<!-- <dependency> <groupId>postgresql</groupId> <artifactId>postgresql</artifactId> <version>9.3-1100.jdbc41</version> 
+			<scope>system</scope> <systemPath>${project.basedir}/WebContent/WEB-INF/lib/postgresql-9.3-1100.jdbc41.jar</systemPath> 
+			</dependency> -->
+
+		
+	
+	   <dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.11</version>
+			<scope>compile</scope>
+		</dependency>
+		
+		
+
+		<!-- ******************************************************************************************************** -->
+		<!-- DEPENDENCIAS DO WEBSERVICE -->
+		<!-- ******************************************************************************************************** -->
+
+		<!-- api nucleo do webservice -->
+		<dependency>
+			<groupId>org.glassfish.jersey.core</groupId>
+			<artifactId>jersey-server</artifactId>
+			<version>${jersey.core.version}</version>
+		</dependency>
+
+
+		<!-- api complentar do websercice -->
+		<dependency>
+			<groupId>org.glassfish.jersey.containers</groupId>
+			<artifactId>jersey-container-servlet</artifactId>
+			<version>${jersey.containers.version}</version>
+		</dependency>
+
+
+
+		<!-- interliga o jersei com o CDI -->
+		<dependency>
+			<groupId>org.glassfish.jersey.containers.glassfish</groupId>
+			<artifactId>jersey-gf-cdi</artifactId>
+			<version>${jersey.cdi.version}</version>
+		</dependency>
+
+
+
+		<!-- utilizado mesmo se o projeto utilizar o webservice rest com .json -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.jaxrs</groupId>
+			<artifactId>jackson-jaxrs-json-provider</artifactId>
+			<version>${jackson.jaxrs.version}</version>
+		</dependency>
+
+
+		<!-- realiza o passer. codifica e decofica o .json -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>${code.gson.version}</version>
+		</dependency>
+
+	</dependencies>
+
+
+
+	<repositories>
+
+		<!-- maven repositorio oficiaL -->
+		<repository>
+			<id>mvnrepository</id>
+			<url>http://mvnrepository.com/artifact</url>
+			<layout>default</layout>
+		</repository>
+
+
+		<!-- maven repositorio oficiaL -->
+		<repository>
+			<id>maven-org</id>
+			<url>http://search.maven.org</url>
+
+		</repository>
+
+
+		<!-- Primefaces Repository -->
+		<repository>
+			<id>prime-repo</id>
+			<name>PrimeFaces Maven Repository</name>
+			<url>http://repository.primefaces.org</url>
+
+		</repository>
+
+
+
+		<!-- Java Net -->
+		<repository>
+			<id>java.net</id>
+			<url>http://download.java.net/maven/1</url>
+		</repository>
+
+
+
+		<!-- JBoss Releases -->
+		<repository>
+			<id>jboss-releases</id>
+			<url>http://repository.jboss.org/nexus/content/repositories/releases</url>
+		</repository>
+
+
+
+		<!-- JBoss repository for Hibernate -->
+		<repository>
+			<id>JBoss repository</id>
+			<url>http://repository.jboss.org/nexus/content/groups/public/</url>
+		</repository>
+
+
+
+		<repository>
+			<id>REPO1 MARVEN</id>
+			<url>https://repo1.maven.org/maven2/</url>
+		</repository>
+
+		<repository>
+			<id>Central Marvem</id>
+			<url>http://central.maven.org/maven2/</url>
+		</repository>
+
+
+	</repositories>
+	
+	
+	
+	
+</project>

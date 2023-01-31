@@ -1,0 +1,187 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:esp="http://www.especializa.com.br/facelets/taglibs"
+	xmlns:espc="http://java.sun.com/jsf/composite/componentes"
+	xmlns:o="http://omnifaces.org/ui"
+	template="../../WEB-INF/templates/mainTemplate.xhtml">
+
+	<ui:define name="titulo">PM - Consulta de Vídeo</ui:define>
+
+	<ui:define name="corpo">
+		<f:metadata>
+			<f:event
+				listener="#{mbConsultaVideo.inicializar}"
+				type="preRenderView" />
+			<o:viewParam name="dumy" />
+		</f:metadata>
+
+		<h:form id="formTabela">
+
+			<h1 class="hv-page-title">Consulta de Vídeos</h1>
+			<p:toolbar>
+				<p:toolbarGroup>
+					<p:commandButton
+						value="Pesquisa"
+						id="btnPesquisa"
+						action="#{mbConsultaVideo.pesquisarPorFiltro}"
+						process="@this descricaoPesquisa ckbEstatus"
+						update=":hv-msg-topo tabela"
+						icon="ui-icon-search" />
+
+				</p:toolbarGroup>
+
+				<p:toolbarGroup align="right">
+					<p:button
+						id="btnNovo"
+						value="Novo"
+						outcome="cadastro-video" />
+				</p:toolbarGroup>
+
+			</p:toolbar>
+
+
+			<div
+				class="ui-fluid"
+				style="margin-top: 20px">
+
+				<p:panelGrid
+					columns="3"
+					layout="grid"
+					columnClasses="ui-grid-col-1, ui-grid-col-9, ui-grid-col-2"
+					styleClass="panelgrid-noborder">
+
+					<p:outputLabel
+						value="Nome"
+						for="descricaoPesquisa" />
+					<p:inputText
+						id="descricaoPesquisa"
+						value="#{mbConsultaVideo.filtro.titulo}">
+					</p:inputText>
+
+					<h:panelGroup>
+						<p:selectBooleanCheckbox
+							id="ckbEstatus"
+							value="#{mbConsultaVideo.filtro.mostraInitivos}"
+							valueChangeListener="#{mbConsultaVideo.verificarCheckBox}"
+							itemLabel="Mostrar Inativos">
+
+							<!-- 							ajax atualiza os componente sempre que o botão é precionado -->
+							<!-- 							<p:ajax
+								process="btnPesquisa"
+								update="tabela :hv-msg-topo descricaoPesquisa"
+								listener="#{mbConsultaVideo.pesquisarAposClicarCheckBox}" /> -->
+						</p:selectBooleanCheckbox>
+
+					</h:panelGroup>
+				</p:panelGrid>
+			</div>
+
+
+			<!-- seletionMode, seletion e rowkey: tem que ser utilizados juntos 
+			para setar a linha selecinar no managerBean -->
+			<p:dataTable
+				id="tabela"
+				style="margin-top: 20px"
+				value="#{mbConsultaVideo.listaDeVideos}"
+				var="p"
+				selectionMode="single"
+				selection="#{mbConsultaVideo.video}"
+				rowKey="#{p.id}"
+				reflow="true"
+				paginator="true"
+				rows="10"
+				paginatorPosition="bottom"
+				emptyMessage="Nenhum objeto encontrado para pesquisa">
+
+				<p:column headerText="Titulo">
+					<h:outputText value="#{p.titulo}" />
+				</p:column>
+
+				<p:column
+					headerText="Data Cadastro"
+					styleClass="hv-coluna-personalizada">
+					<h:outputText value="#{p.dtaInclusaoVideo.time}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+
+				<p:column
+					headerText="Status"
+					styleClass="hv-coluna-personalizada">
+					<h:outputText value="#{p.estatus.toString()}" />
+				</p:column>
+
+				<p:column
+					headerText="Operações"
+					styleClass="hv-coluna-personalizada">
+					<p:button
+						id="lnkEditar"
+						title="Editar"
+						icon="ui-icon-pencil"
+						outcome="cadastro-video.xhtml">
+						<f:param
+							name="idVideo"
+							value="#{p.id}" />
+					</p:button>
+
+					<p:spacer
+						width="5"
+						height="10" />
+
+					<p:commandButton
+						icon="ui-icon-cancel"
+						title="Inativar"
+						oncomplete="PF('confirmacao').show()"
+						rendered="#{p.estatus eq 'ATIVO'}">
+						<f:setPropertyActionListener
+							value="#{p}"
+							target="#{mbConsultaVideo.video}" />
+					</p:commandButton>
+
+				</p:column>
+			</p:dataTable>
+
+
+
+			<!-- tela de dialogo modal -->
+			<p:dialog
+				header="Inativar Video"
+				responsive="true"
+				widgetVar="confirmacao"
+				modal="true"
+				resizable="false">
+
+				<div class="ui-fluid">
+					<h:outputLabel
+						value="Tem certeza que deseja inativar Video selecionado?" />
+					<br /> <br /> <br />
+
+					<p:panelGrid
+						columns="2"
+						layout="grid"
+						styleClass="panelgrid-noborder"
+						columnClasses="ui-grid-col-6, ui-grid-col-6">
+						<p:commandButton
+							value="Sim"
+							update="tabela hv-msg-topo"
+							process="@this"
+							oncomplete="PF('confirmacao').hide()"
+							action="#{mbConsultaVideo.inativarCadastro}" />
+						<p:button
+							value="Não"
+							onclick="PF('confirmacao').hide(); return false;" />
+					</p:panelGrid>
+
+				</div>
+			</p:dialog>
+
+
+		</h:form>
+	</ui:define>
+
+</ui:composition>
+

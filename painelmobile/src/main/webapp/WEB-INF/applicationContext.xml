@@ -1,0 +1,136 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security" xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/security
+           http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+	<!-- ############################################################################################################# -->
+	<!-- CLASSES DO OMIFACES PARA RESOLVER O PROBLEMA COM AJAS######################################################### -->
+
+	<beans:bean id="exceptionTranslationFilter" class="org.springframework.security.web.access.ExceptionTranslationFilter">
+		<beans:property name="accessDeniedHandler" ref="jsfAccessDeniedHandler" />
+		<beans:property name="authenticationEntryPoint" ref="authenticationEntryPoint" />
+	</beans:bean>
+
+	<beans:bean id="jsfAccessDeniedHandler" class="com.br.painelmobile.util.security.JsfAccessDeniedHandler">
+		<beans:property name="loginPath" value="/error/403.xhtml" />
+		<beans:property name="contextRelative" value="true" />
+	</beans:bean>
+
+	<beans:bean id="authenticationEntryPoint" class="com.br.painelmobile.util.security.JsfLoginUrlAuthenticationEntryPoint">
+		<beans:property name="loginFormUrl" value="/login.xhtml" />
+		<beans:property name="redirectStrategy" ref="jsfRedirectStrategy" />
+	</beans:bean>
+
+	<beans:bean id="jsfRedirectStrategy" class="com.br.painelmobile.util.security.JsfRedirectStrategy" />
+	<!-- ############################################################################################################# -->
+
+
+
+	<!-- ############################################################################################################# -->
+	<!-- CLASSES DE CONFIGURAÇÃO DO SPRING SECURITY################################################################### -->
+	<!--registrando a classe AppUserDetailsService como um bean cdi. Classe utilizada para validar o login 
+		senha e grupo o usuário que está tentando se logar -->
+	<beans:bean id="appUserDetailsService" class="com.br.painelmobile.util.security.AppUserDetailsService" />
+
+
+	<!-- informa ao spring que não será aplicado segurança para testas telas -->
+	<http pattern="/login.xhtml" security="none" />
+
+	<!-- libera acesso a todas as paginas do webservice -->
+	<http pattern="/webservice/**" security="none" />
+
+
+	<!-- Se o usuário digitar o caminha errado durante a utilização do webservice dará uma msg de erro -->
+	<http pattern="/error/404.xhtml" security="none" />
+	<http pattern="/error/500.xhtml" security="none" />
+
+
+	<!-- retira a checagem de seguraça do link abaixo que permite acesso ao javaScrip e a imagem. Este caminho 
+		representa a pasta de recusos -->
+	<http pattern="/javax.faces.resource/**" security="none" />
+
+
+	<!-- habilita/inabilita a tela de login springa (auto-config="false"). Habilita expressão para custumizar 
+		os acessos as páginas (use-expressions="true") -->
+	<http auto-config="false" use-expressions="true">
+
+		<!-- utilizado para filtrar as chamadas das classe referente oa ominifaces listadas a cimaa -->
+		<custom-filter ref="exceptionTranslationFilter" before="FILTER_SECURITY_INTERCEPTOR" />
+
+		<!-- possibilita a entrada para /home.xhtml a qualquer usuário autenticado -->
+		<intercept-url pattern="/home.xhtml" access="isAuthenticated()" />
+
+		<!-- importante q seja mostrada essa tela apenas para usuários logados. Motivo explicado na aula 7 
+			de segurança -->
+		<intercept-url pattern="/error/403.xhtml" access="isAuthenticated()" />
+
+
+
+
+		<!-- ACESSO DO ADMINISTRADOR - PODE ACESSAR TUDO DENTO DE MAIN -->
+		<!-- ACESSO SUPERVISOR - NÃO TEM ACESSO AO CADASTRO DE USUÁRIO -->
+		<!-- ACESSO AUXILIAR - NÃO TEM ACESSO AO CADASTRO DE USUÁRIO E AS CATEGORIAS -->
+		<!-- IMPORTANTE SEMPRE SEGUIR A ORDEM. PRIMEIRO AS FUNCIONALIDADE DE TEM MAIS GRUPOS ASSOCIADOS-->
+		<intercept-url pattern="/main/cardapio/**" access="hasAnyRole('ADMINISTRADOR', 'SUPERVISOR', 'AUXILIAR')" />
+
+		<intercept-url pattern="/main/evento/**" access="hasAnyRole('ADMINISTRADOR', 'SUPERVISOR', 'AUXILIAR')" />
+
+		<intercept-url pattern="/main/galeria/**" access="hasAnyRole('ADMINISTRADOR', 'SUPERVISOR', 'AUXILIAR')" />
+		
+		<!-- RESTRINGE O ACESSO DO AUXILIAR AO PARCEIRO. A ORDEM DAS PERMISSÕES INFLUENCIA -->
+		<intercept-url pattern="/main/parceiro/consulta-parceiro.xhtml" access="hasAnyRole('ADMINISTRADOR','SUPERVISOR','AUXILIAR')" />
+		<intercept-url pattern="/main/parceiro/cadastro-parceiro.xhtml" access="hasAnyRole('ADMINISTRADOR','SUPERVISOR', 'AUXILIAR')" />
+		<intercept-url pattern="/main/parceiro/**" access="hasAnyRole('ADMINISTRADOR','SUPERVISOR')" />
+
+
+		<intercept-url pattern="/main/selecao/**" access="hasAnyRole('ADMINISTRADOR', 'SUPERVISOR', 'AUXILIAR')" />
+		
+		<!-- RESTRINGE O ACESSO DO AUXILIAR AO SERVIÇO. A ORDEM DAS PERMISSÕES INFLUENCIA -->
+		<intercept-url pattern="/main/servico/consulta-servico.xhtml" access="hasAnyRole('ADMINISTRADOR','SUPERVISOR', 'AUXILIAR')" />
+		<intercept-url pattern="/main/servico/cadastro-servico.xhtml" access="hasAnyRole('ADMINISTRADOR','SUPERVISOR', 'AUXILIAR')" />
+		<intercept-url pattern="/main/servico/**" access="hasAnyRole('ADMINISTRADOR','SUPERVISOR')" />
+		
+		<intercept-url pattern="/main/unidade/**" access="hasAnyRole('ADMINISTRADOR', 'SUPERVISOR', 'AUXILIAR')" />
+		
+		<intercept-url pattern="/main/video/**" access="hasAnyRole('ADMINISTRADOR', 'SUPERVISOR', 'AUXILIAR')" />
+		
+		
+		<!-- O ADMINISTRADOR TERÁ ACESSO A TUDO QUE NAO FOI ESPECIFICADO ACIMA.  -->
+		<intercept-url pattern="/main/**" access="hasAnyRole('ADMINISTRADOR')" />
+
+		<intercept-url pattern="/**" access="denyAll" />
+
+
+
+		<!-- login-page: indica qual a tela que representa o login do sistema - primeira tela a ser apresentada -->
+		<!-- default-target-url: indica para onde o usuário será direcionado quando logar no sistema. direciona 
+			para o welcome-file definido no web.xml -->
+		<!-- always-use-default-target: indica que será a pagina será direcionado para o default-target -->
+		<form-login login-page="/login.xhtml" authentication-failure-url="/login.xhtml?invalid=true"
+			default-target-url="/" always-use-default-target="true" />
+
+
+		<!-- ao fazer logout será diferecioando para o link abaixo e vai invalidar a sessão do usuário no sistema -->
+		<logout logout-url="/j_spring_security_logout" invalidate-session="true" />
+
+
+	</http>
+
+
+	<!-- PROVEDOR DE AUTENTIFICAÇÃO - esta configuração indica que será custumizada uma tela de login -->
+	<!-- AQUI SÃO INFORMADOS OS USUARIOS E SEUS PERFIS DE ACESSO -->
+	<authentication-manager>
+		<authentication-provider user-service-ref="appUserDetailsService">
+			<!-- <password-encoder hash="md5" /> -->
+		</authentication-provider>
+	</authentication-manager>
+
+
+	<!-- authorities="ROLE_VENDEDORES": nome da permissão intercept-url pattern="/**": realiza a interceptação 
+		das paginas do sistema /j_spring_security_check: caminho utilizado para fazer o logout <http auto-config="true" 
+		use-expressions="true"> <intercept-url pattern="/Home.xhtml" access="isAuthenticated()" - utilizado para 
+		customizar o acesso as páginas do sistema /> -->
+
+</beans:beans>

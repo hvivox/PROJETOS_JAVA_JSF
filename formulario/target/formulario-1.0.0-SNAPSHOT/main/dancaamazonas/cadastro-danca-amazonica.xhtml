@@ -1,0 +1,411 @@
+ <ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:esp="http://www.especializa.com.br/facelets/taglibs"
+	xmlns:espc="http://java.sun.com/jsf/composite/componentes"
+	xmlns:o="http://omnifaces.org/ui"
+	template="../../WEB-INF/templates/mainTemplate.xhtml">
+
+	<!-- <p:growl -->
+	<!-- id="mensagemGrow" -->
+	<!-- showDetail="true" globalOnly="false"/> -->
+
+	<ui:define name="titulo">Cadastro Dança Amazonas</ui:define>
+
+
+	<ui:define name="corpo">
+		<f:metadata>
+			<f:viewAction action="#{mbCadastroDancaAmazonas.inicializar}" />
+			<o:viewParam name="dumy" />			
+		</f:metadata>
+		
+		
+		
+		<h:form id="formCadastro">
+			<h1 class="hv-page-title">
+				Cadastro Dança Amazonas: <span style="color: #1E90FF">#{mbCadastroDancaAmazonas.dancaAmazonas.modalidade.nome}</span>
+			</h1>
+
+			<p:toolbar>
+				<p:toolbarGroup>
+					<p:commandButton
+						value="Salvar"
+						id="btnSalvar"
+						icon="ui-icon-disk"
+						action="#{ mbCadastroDancaAmazonas.salvar }"
+						update="formCadastro :hv-msg-topo">
+						<p:resetInput target="formCadastro" />
+					</p:commandButton>
+
+				</p:toolbarGroup>
+
+
+				<p:toolbarGroup align="right">
+					<p:button
+						id="btnVoltar"
+						icon="ui-icon-arrowreturnthick-1-w"
+						value="Voltar"
+						outcome="relacao-modalidade" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+
+
+			<!-- torna os campos fluidos -->
+			<div class="ui-fluid">
+
+
+				<!-- grid: torna o layout responsivo; uigrid-col: divide os espaços na linha até 12;  -->
+				<p:panelGrid
+					id="inclusaoPanel"
+					columns="3"
+					columnClasses="ui-grid-col-3, ui-grid-col-7, ui-gri-col-1"
+					layout="grid"
+					style="width: 100%; margin-top: 20px"
+					styleClass="panelgrid-noborder">
+
+
+					<h:panelGroup />
+					<h:panelGroup>
+						<p:selectBooleanCheckbox
+							id="aceito"
+							value="#{mbCadastroDancaAmazonas.dancaAmazonas.aceiteRegulamento}"
+							required="true"
+							requiredMessage="É necessário aceitar o regulamento">
+
+							<p:ajax
+								process="@this"
+								update="aceito"
+								immediate="true" />
+
+						</p:selectBooleanCheckbox>
+						<p:spacer
+							width="20"
+							height="10" />
+						<p:link
+							for="aceito"
+							value="Declaro que li e aceito os termos do regulamento"
+							href="http://www.sesc-am.com.br/wp-content/uploads/formulario/MOSTRA_REGIONAL_DE_DANCA_DO_SESC_II_ETAPA.pdf"
+							target="_blank" />
+						<p:message for="aceito" />
+
+					</h:panelGroup>
+					<h:panelGroup />
+
+
+
+
+
+					<p:outputLabel
+						value="Nome Grupo / Cia"
+						for="nomeGrupo" />
+					<p:inputText
+						id="nomeGrupo"
+						value="#{mbCadastroDancaAmazonas.dancaAmazonas.nomeGrupo}"
+						maxlength="100"
+						required="true"
+						requiredMessage="É necessário informar o campo nome do grupo">
+					</p:inputText>
+					<p:message
+						id="mensNomeGrupo"
+						for="nomeGrupo" />
+
+
+					<p:outputLabel
+						value="Diretor"
+						for="diretor" />
+					<p:inputText
+						id="diretor"
+						value="#{mbCadastroDancaAmazonas.dancaAmazonas.diretor}"
+						maxlength="100"
+						required="true"
+						requiredMessage="É necessário informar o campo nome do diretor">
+					</p:inputText>
+					<p:message
+						id="mensDiretor"
+						for="diretor" />
+
+
+					<p:outputLabel
+						value="Cidade"
+						for="cidade" />
+					<p:inputText
+						id="cidade"
+						value="#{mbCadastroDancaAmazonas.dancaAmazonas.cidade}"
+						maxlength="100"
+						required="true"
+						requiredMessage="É necessário informar o campo nome do cidade">
+					</p:inputText>
+					<p:message
+						id="mensCidade"
+						for="cidade" />
+
+
+
+
+
+					<p:outputLabel
+						value="Estado"
+						for="estado" />
+					<p:selectOneMenu
+						id="estado"
+						style="width:70%"
+						value="#{mbCadastroDancaAmazonas.dancaAmazonas.estado}"
+						required="true"
+						requiredMessage="É necessário selecionar um estado">
+						<f:selectItem
+							itemLabel="Selecione"
+							itemValue="#{null}"
+							noSelectionOption="true" />
+						<f:selectItems
+							value="#{mbCadastroDancaAmazonas.siglaEstado}"
+							var="siglasEstado"
+							itemValue="#{siglasEstado}"
+							itemLabel="#{siglasEstado.descricao}" />
+					</p:selectOneMenu>
+					<p:message for="estado" />
+
+
+
+					<p:outputLabel
+						value="Quantidade de Participantes"
+						for="qtdParticipantes" />
+					<p:inputText
+						id="qtdParticipantes"
+						value="#{mbCadastroDancaAmazonas.dancaAmazonas.qtdParticipantes}"
+						maxlength="100"
+						required="true"
+						requiredMessage="É necessário informar a quantidade de participantes"
+						converterMessage="Entre com valores numericos">
+
+						<f:convertNumber
+							integerOnly="true"
+							pattern="#######"
+							maxFractionDigits="0" />
+
+					</p:inputText>
+					<p:message
+						id="mensQtdParticipantes"
+						for="qtdParticipantes" />
+
+
+
+
+					<p:outputLabel
+						value="Modalidade"
+						for="modalidade" />
+					<p:selectOneMenu
+						id="modalidade"
+						style="width:70%"
+						value="#{mbCadastroDancaAmazonas.dancaAmazonas.modalidade}"
+						required="true"
+						requiredMessage="É necessário selecionar uma modalidade"
+						disabled="true">						
+						<f:selectItem
+							itemLabel="#{mbCadastroDancaAmazonas.dancaAmazonas.modalidade.nome}"
+							itemValue="#{mbCadastroDancaAmazonas.dancaAmazonas.modalidade}"
+							 />
+					</p:selectOneMenu>
+					<p:message for="modalidade" />
+
+
+
+					<p:outputLabel
+						value="Nome Coreografia ou Processo Coreográfico"
+						for="coreografia" />
+					<p:inputText
+						id="coreografia"
+						value="#{mbCadastroDancaAmazonas.dancaAmazonas.nomeCoreografia}"
+						maxlength="100"
+						required="true"
+						requiredMessage="É necessário informar o campo nome do coreografia">
+					</p:inputText>
+					<p:message
+						id="mensNomeCoreografia"
+						for="coreografia" />
+
+
+
+					<p:outputLabel
+						value="Histórico do Grupo"
+						for="historico" />
+					<p:inputTextarea
+						id="historico"
+						value="#{mbCadastroDancaAmazonas.dancaAmazonas.historico}"
+						rows="2"
+						cols="40"
+						autoResize="false"
+						required="true"
+						requiredMessage="É necessário informar o campo do nome coreografo" />
+					<p:message for="historico" />
+
+
+
+
+
+					<p:outputLabel
+						value="Ficha Técnica"
+						for="fichaTecnica" />
+					<p:inputTextarea
+						id="fichaTecnica"
+						value="#{mbCadastroDancaAmazonas.dancaAmazonas.fichaTecnica}"
+						rows="2"
+						cols="40"
+						autoResize="false"
+						required="true"
+						requiredMessage="É necessário informar o campo do nome coreografo" />
+					<p:message for="fichaTecnica" />
+
+
+
+
+					<p:outputLabel
+						value="Nome Coreografo"
+						for="nomeCoreografo" />
+					<p:inputText
+						id="nomeCoreografo"
+						value="#{mbCadastroDancaAmazonas.dancaAmazonas.coreografo}"
+						maxlength="100"
+						required="true"
+						requiredMessage="É necessário informar o campo do nome coreografo">
+					</p:inputText>
+					<p:message
+						id="mensNomeCoreografo"
+						for="nomeCoreografo" />
+
+
+
+					<p:outputLabel
+						value="Tempo de Apresentação (Limite até 15 minutos)"
+						for="tempoApresentacao" />
+					<p:inputText
+						id="tempoApresentacao"
+						value="#{mbCadastroDancaAmazonas.dancaAmazonas.tempoApresentacao}"
+						maxlength="100"
+						required="true"
+						requiredMessage="É necessário informar o tempo de apresentação"
+						converterMessage="Entre com valores numericos">
+
+						<f:convertNumber
+							integerOnly="true"
+							pattern="#######"
+							maxFractionDigits="0" />
+					</p:inputText>
+					<p:message
+						id="mensTempoApresentacao"
+						for="tempoApresentacao" />
+
+
+
+					<p:outputLabel
+						value="Telefone"
+						for="telefone" />
+					<p:inputText
+						id="telefone"
+						value="#{mbCadastroDancaAmazonas.dancaAmazonas.fone}"
+						maxlength="100"
+						required="true"
+						requiredMessage="É necessário informar o campo telefone">
+					</p:inputText>
+					<p:message
+						id="mensTelefone"
+						for="telefone" />
+
+
+
+					<p:outputLabel
+						value="What Zap"
+						for="whatZap" />
+					<p:inputMask
+						id="whatZap"
+						value="#{mbCadastroDancaAmazonas.dancaAmazonas.whatZapp}"
+						mask="(99) 9999-9999"
+						maxlength="14"
+						placeholder="(  ) ____-____"
+						style="width:40%"
+						required="true"
+						requiredMessage="É necessário informar o campo what zap" />
+					<p:message
+						id="mensWhatZap"
+						for="whatZap" />
+
+
+
+
+					<p:outputLabel
+						value="email"
+						for="email" />
+					<p:inputText
+						id="email"
+						value="#{mbCadastroDancaAmazonas.dancaAmazonas.email}"
+						maxlength="100"
+						required="true"
+						requiredMessage="É necessário informar o campo email"
+						validatorMessage="Preencha corretamente o email. Ex: joao@exemplo.com.br">
+
+						<f:validator validatorId="validadorDeEmail" />
+
+					</p:inputText>
+					<p:message
+						id="mensEmail"
+						for="email" />
+
+
+					<p:outputLabel
+						value="Site ou Rede Social de Contato"
+						for="linkSocial" />
+					<p:inputText
+						id="linkSocial"
+						value="#{mbCadastroDancaAmazonas.dancaAmazonas.siteContato}"
+						maxlength="100">
+					</p:inputText>
+					<p:message
+						id="mensLinkSocial"
+						for="linkSocial" />
+
+
+					<p:outputLabel
+						value="Música e Compositor"
+						for="compositorMusica" />
+					<p:inputText
+						id="compositorMusica"
+						value="#{mbCadastroDancaAmazonas.dancaAmazonas.musicaCompositor}"
+						maxlength="100"
+						required="true"
+						requiredMessage="É necessário informar o campo compositor música	">
+					</p:inputText>
+					<p:message
+						id="mensCompositorMusica"
+						for="compositorMusica" />
+
+
+
+
+					<p:outputLabel
+						value="Link Coreografia"
+						for="linkCoreografia" />
+					<p:inputText
+						id="linkCoreografia"
+						value="#{mbCadastroDancaAmazonas.dancaAmazonas.linkCoreografia}"
+						maxlength="100"
+						required="true"
+						requiredMessage="É necessário informar o campo Link Coreografia	">
+					</p:inputText>
+					<p:message
+						id="mensLinkCoreografia"
+						for="linkCoreografia" />
+
+
+				</p:panelGrid>
+			</div>
+
+
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

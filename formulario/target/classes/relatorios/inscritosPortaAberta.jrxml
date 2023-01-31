@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inscritosPortaAberta" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1946da4e-6ec5-4ee3-b640-e3a32c92ef89">
+	<property name="template.type" value="columnar"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="23"/>
+	<style name="Title" forecolor="#000000" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="dataInicio" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dataFim" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="caminhoImagem" class="java.lang.String">
+		<defaultValueExpression><![CDATA["/resources/images/"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     portaaberta.`idPortaAberta` AS portaaberta_idPortaAberta,
+     portaaberta.`celular` AS portaaberta_celular,
+     portaaberta.`cep` AS portaaberta_cep,
+     portaaberta.`cidade` AS portaaberta_cidade,
+     portaaberta.`cpf` AS portaaberta_cpf,
+     portaaberta.`dtaInscricao` AS portaaberta_dtaInscricao,
+     portaaberta.`dtaNascimento` AS portaaberta_dtaNascimento,
+     portaaberta.`email` AS portaaberta_email,
+     portaaberta.`endereco` AS portaaberta_endereco,
+     portaaberta.`estado` AS portaaberta_estado,
+     portaaberta.`fone` AS portaaberta_fone,
+     portaaberta.`historico` AS portaaberta_historico,
+     portaaberta.`horario` AS portaaberta_horario,
+     portaaberta.`membroGrupo` AS portaaberta_membroGrupo,
+     portaaberta.`modalidade` AS portaaberta_modalidade,
+     portaaberta.`nomeArtistico` AS portaaberta_nomeArtistico,
+     portaaberta.`nomeEspetaculo` AS portaaberta_nomeEspetaculo,
+     portaaberta.`nomeGrupo` AS portaaberta_nomeGrupo,
+     portaaberta.`nomeResponsavel` AS portaaberta_nomeResponsavel,
+     portaaberta.`profissao` AS portaaberta_profissao,
+     portaaberta.`qtdParticipantes` AS portaaberta_qtdParticipantes,
+     portaaberta.`nomeRg` AS portaaberta_nomeRg,
+     portaaberta.`usaWhatsApp` AS portaaberta_usaWhatsApp
+FROM
+     `portaaberta` portaaberta
+WHERE
+     (portaAberta.`dtaInscricao` BETWEEN $P{dataInicio} and $P{dataFim})
+ AND portaAberta.`statusTipo` = 'ATIVO']]>
+	</queryString>
+	<field name="portaaberta_idPortaAberta" class="java.lang.Integer"/>
+	<field name="portaaberta_celular" class="java.lang.String"/>
+	<field name="portaaberta_cep" class="java.lang.String"/>
+	<field name="portaaberta_cidade" class="java.lang.String"/>
+	<field name="portaaberta_cpf" class="java.lang.String"/>
+	<field name="portaaberta_dtaInscricao" class="java.sql.Date"/>
+	<field name="portaaberta_dtaNascimento" class="java.sql.Date"/>
+	<field name="portaaberta_email" class="java.lang.String"/>
+	<field name="portaaberta_endereco" class="java.lang.String"/>
+	<field name="portaaberta_estado" class="java.lang.String"/>
+	<field name="portaaberta_fone" class="java.lang.String"/>
+	<field name="portaaberta_historico" class="java.lang.String"/>
+	<field name="portaaberta_horario" class="java.lang.String"/>
+	<field name="portaaberta_membroGrupo" class="java.lang.String"/>
+	<field name="portaaberta_modalidade" class="java.lang.String"/>
+	<field name="portaaberta_nomeArtistico" class="java.lang.String"/>
+	<field name="portaaberta_nomeEspetaculo" class="java.lang.String"/>
+	<field name="portaaberta_nomeGrupo" class="java.lang.String"/>
+	<field name="portaaberta_nomeResponsavel" class="java.lang.String"/>
+	<field name="portaaberta_profissao" class="java.lang.String"/>
+	<field name="portaaberta_qtdParticipantes" class="java.lang.Integer"/>
+	<field name="portaaberta_nomeRg" class="java.lang.String"/>
+	<field name="portaaberta_usaWhatsApp" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="87">
+			<rectangle>
+				<reportElement x="3" y="4" width="549" height="80" forecolor="#000000" uuid="50008bae-7fa5-4179-aec3-9e34e7eefe38"/>
+				<graphicElement>
+					<pen lineWidth="1.5"/>
+				</graphicElement>
+			</rectangle>
+			<image vAlign="Middle" isUsingCache="false" onErrorType="Icon">
+				<reportElement mode="Transparent" x="4" y="16" width="108" height="49" backcolor="#FFFFFF" uuid="9ef50e29-157a-48ab-a95b-9eb73abc7bf8"/>
+				<imageExpression><![CDATA[$P{caminhoImagem}+"logoRelatorio.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="114" y="19" width="436" height="29" uuid="6b4abcda-33bf-499e-b131-d77ab4e50b5e"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font size="22" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório Projeto Sesc de Portas Abertas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="115" y="48" width="50" height="17" uuid="f6937a9c-6f8f-43c1-adaf-2840121e32b7"/>
+				<textElement verticalAlignment="Top">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Período:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="246" y="48" width="63" height="17" uuid="f65f261d-91ec-4901-bb72-80564c3edde7"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dataFim}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="228" y="48" width="18" height="17" uuid="b5804ddd-80cf-495d-9079-4ad903ed8d3c"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[à]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="165" y="48" width="63" height="17" uuid="ff3a32df-7699-4cde-973f-c5e31df58d91"/>
+				<textElement verticalAlignment="Top">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dataInicio}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="450" splitType="Immediate">
+			<staticText>
+				<reportElement style="Column header" positionType="Float" mode="Opaque" x="7" y="9" width="112" height="20" forecolor="#000000" backcolor="#F0F0F0" uuid="780d2741-c97f-4235-8903-4b65f385c534"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nº Inscrição]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="127" y="9" width="101" height="18" uuid="3c23f0eb-013b-4c36-ab79-ea89e89433b3"/>
+				<textElement>
+					<font size="14" isBold="false" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{portaaberta_idPortaAberta}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="392" y="10" width="154" height="18" uuid="52d58ed9-ffd9-4c66-a899-c65f7e5c5a55"/>
+				<textElement>
+					<font size="14" isBold="false" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{portaaberta_dtaInscricao}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" mode="Opaque" x="7" y="253" width="132" height="20" forecolor="#000000" backcolor="#F0F0F0" uuid="cfa30049-87c7-433f-ad84-73234c16d6dc"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Email]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="143" y="253" width="403" height="18" uuid="3f82cc15-e33b-4350-b923-0d8aaf1cfdd8"/>
+				<textElement>
+					<font size="14" isBold="false" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{portaaberta_email}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" mode="Opaque" x="7" y="143" width="132" height="20" forecolor="#000000" backcolor="#F0F0F0" uuid="4e2a9ae5-4001-4d97-8fee-7c04c6777758"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="143" y="143" width="58" height="18" uuid="b6b3ca9c-9c66-479c-afe3-a6abc08b9cf2"/>
+				<textElement>
+					<font size="14" isBold="false" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{portaaberta_estado}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" mode="Opaque" x="7" y="211" width="132" height="20" forecolor="#000000" backcolor="#F0F0F0" uuid="06fd39ed-d7b5-4008-af1f-d483db769f3a"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Telefone]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="143" y="211" width="394" height="20" uuid="22c0e6c8-5dc7-4374-94d2-d0feee7e3361"/>
+				<textElement>
+					<font size="14" isBold="false" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{portaaberta_fone}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" mode="Opaque" x="8" y="282" width="131" height="20" forecolor="#000000" backcolor="#F0F0F0" uuid="9ad99187-7fd5-494b-af07-cfdf86ea8d10"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nome Grupo]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="143" y="282" width="403" height="20" uuid="906b6026-cb04-44f6-8a69-55674580bec4"/>
+				<textElement>
+					<font size="14" isBold="false" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{portaaberta_nomeGrupo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" mode="Opaque" x="292" y="141" width="44" height="20" forecolor="#000000" backcolor="#F0F0F0" uuid="1b3753f2-212b-4554-9531-e06374397f0f"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cidade]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="340" y="141" width="155" height="18" uuid="7a68e44c-8146-4104-aa75-0646195dec91"/>
+				<textElement>
+					<font size="14" isBold="false" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{portaaberta_cidade}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" mode="Opaque" x="7" y="30" width="113" height="18" forecolor="#000000" backcolor="#F0F0F0" uuid="43ba5f70-9521-4dd8-af3c-8e6c2c7bf507"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nome]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" mode="Transparent" x="124" y="30" width="419" height="18" uuid="c8fe2715-38d4-4e41-9744-b724352f73fd"/>
+				<textElement>
+					<font size="14" isBold="false" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{portaaberta_nomeResponsavel}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" mode="Opaque" x="7" y="232" width="132" height="20" forecolor="#000000" backcolor="#F0F0F0" uuid="7fe4406f-1fc6-4108-be33-6e00d7dbb7b8"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Celular]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="143" y="232" width="148" height="20" uuid="4147a72f-2b47-472c-a0de-3101a8419650"/>
+				<textElement>
+					<font size="14" isBold="false" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{portaaberta_celular}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" mode="Opaque" x="7" y="164" width="132" height="20" forecolor="#000000" backcolor="#F0F0F0" uuid="6b22adee-1145-49b8-a989-dbd4402ccc67"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Endereço]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="139" y="184" width="398" height="18" uuid="d5376d8b-41c4-47ba-8a50-1b8a6883b20b"/>
+				<textElement>
+					<font size="14" isBold="false" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{portaaberta_endereco}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" mode="Opaque" x="292" y="8" width="98" height="20" forecolor="#000000" backcolor="#F0F0F0" uuid="d6557ff7-0144-4a08-88be-8361a69eb3b5"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data Inscrição]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" mode="Opaque" x="9" y="112" width="110" height="20" forecolor="#000000" backcolor="#F0F0F0" uuid="d9aa6906-318b-4d8d-b5a0-9ccf996866e0"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data Nascimento]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="124" y="114" width="122" height="18" uuid="58bc453f-e854-4c1f-9736-77c82202b397"/>
+				<textElement>
+					<font size="14" isBold="false" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{portaaberta_dtaNascimento}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" mode="Opaque" x="7" y="49" width="112" height="20" forecolor="#000000" backcolor="#F0F0F0" uuid="842ad9a0-8790-493d-a6db-d0eefdde9920"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nome Artístico]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="125" y="50" width="419" height="18" uuid="af9d5b29-6348-43be-8cc9-b1c6e034c3e2"/>
+				<textElement>
+					<font size="14" isBold="false" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{portaaberta_nomeArtistico}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" mode="Opaque" x="7" y="70" width="112" height="20" forecolor="#000000" backcolor="#F0F0F0" uuid="2ef6993a-1bad-493f-bb5c-e33756634fb8"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Profissão]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="124" y="69" width="419" height="21" uuid="0187e2a2-48ce-4bb2-800d-d2889440d593"/>
+				<textElement>
+					<font size="14" isBold="false" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{portaaberta_profissao}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="125" y="92" width="122" height="18" uuid="cf5b4977-d9d4-4c5c-a076-365d2ebb7861"/>
+				<textElement>
+					<font size="14" isBold="false" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{portaaberta_cpf}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" mode="Opaque" x="8" y="91" width="112" height="20" forecolor="#000000" backcolor="#F0F0F0" uuid="236bf2fe-45e6-4c72-9a8f-2f5a0ce1ccc1"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CPF]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" mode="Opaque" x="291" y="93" width="32" height="20" forecolor="#000000" backcolor="#F0F0F0" uuid="f938acc7-d7c1-4d8e-bdf1-22e3e79a014a"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[RG]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="330" y="94" width="165" height="18" uuid="364d8d68-150c-485a-bea9-0d395257e1f0"/>
+				<textElement>
+					<font size="14" isBold="false" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{portaaberta_nomeRg}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" mode="Opaque" x="292" y="162" width="44" height="20" forecolor="#000000" backcolor="#F0F0F0" uuid="3dbfbd72-2f69-4133-85d6-0c684db88152"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CEP]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="340" y="162" width="155" height="18" uuid="5eff8550-d6cb-4b42-9016-89269e2c520f"/>
+				<textElement>
+					<font size="14" isBold="false" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{portaaberta_cep}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement style="Detail" positionType="Float" x="392" y="233" width="76" height="20" uuid="b5414200-b699-47f5-80de-4f165f80869e"/>
+				<textElement>
+					<font size="14" isBold="false" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{portaaberta_usaWhatsApp}.equals("T") ? "SIM" : "NÃO")]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" mode="Opaque" x="292" y="232" width="96" height="20" forecolor="#000000" backcolor="#F0F0F0" uuid="b9f917d8-6af4-4caa-b3a2-ec1e1d265162"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Usa WhatsApp]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" mode="Opaque" x="9" y="347" width="132" height="17" forecolor="#000000" backcolor="#F0F0F0" uuid="7a964bc6-076d-4340-bb9c-7ce32fa99b2a"/>
+				<textElement verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Membros]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="138" y="364" width="405" height="18" uuid="466fe933-131e-48f6-a484-36734f5f060a"/>
+				<textElement textAlignment="Justified">
+					<font size="14" isBold="false" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{portaaberta_membroGrupo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" mode="Opaque" x="9" y="325" width="131" height="20" forecolor="#000000" backcolor="#F0F0F0" uuid="048d1018-a8d0-45ee-b444-b442f22ec6ec"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Qtd Participantes]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="144" y="325" width="85" height="20" uuid="b2c0d2f8-26ef-4181-b6ca-6f7365bf6f07"/>
+				<textElement>
+					<font size="14" isBold="false" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{portaaberta_qtdParticipantes}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" mode="Opaque" x="229" y="325" width="75" height="20" forecolor="#000000" backcolor="#F0F0F0" uuid="044adf07-9b65-4110-99cb-0aeff863b33e"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Modalidade]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="307" y="325" width="85" height="20" uuid="8d1a7110-77de-4553-b85b-2adae245b1e7"/>
+				<textElement>
+					<font size="14" isBold="false" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{portaaberta_modalidade}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" mode="Opaque" x="390" y="325" width="75" height="20" forecolor="#000000" backcolor="#F0F0F0" uuid="8b15e758-d0b9-43a9-95d9-2618828b9653"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hora Uso]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="468" y="325" width="85" height="20" uuid="406aaadb-9120-468e-97b3-f8c73e05ac97"/>
+				<textElement>
+					<font size="14" isBold="false" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{portaaberta_horario}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" mode="Opaque" x="9" y="304" width="131" height="20" forecolor="#000000" backcolor="#F0F0F0" uuid="e1fc0f31-d97e-4cfc-9f5b-4c8157d4c33b"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nome Espetáculo]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="144" y="304" width="403" height="20" uuid="41608316-783a-49cd-9b9e-8375affe134f"/>
+				<textElement>
+					<font size="14" isBold="false" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{portaaberta_nomeEspetaculo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" mode="Opaque" x="9" y="385" width="132" height="17" forecolor="#000000" backcolor="#F0F0F0" uuid="c9b19041-2b92-4c47-b0b5-629e3e93d344"/>
+				<textElement verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Histórico]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="139" y="402" width="405" height="18" uuid="da5925d5-6497-47ed-bced-344dc19d0196"/>
+				<textElement textAlignment="Justified">
+					<font size="14" isBold="false" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{portaaberta_historico}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="13" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="2" y="0" width="555" height="13" forecolor="#D0B48E" backcolor="#9DB1B8" uuid="0e1c8761-0047-4536-9816-96bbeafeb679"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="513" y="0" width="40" height="13" forecolor="#FFFFFF" uuid="2928fb6a-c21a-4b21-bdf4-94c426333f08"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="429" y="0" width="84" height="13" forecolor="#FFFFFF" uuid="af87ce57-b4ce-40e8-bba5-7c3ed6985e3c"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="2" y="0" width="197" height="13" forecolor="#FFFFFF" uuid="46e66055-6e4e-4031-9f7b-50de9e31d7ea"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

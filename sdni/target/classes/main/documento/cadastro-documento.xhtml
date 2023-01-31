@@ -1,0 +1,169 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:esp="http://www.especializa.com.br/facelets/taglibs"
+	xmlns:espc="http://java.sun.com/jsf/composite/componentes"
+	xmlns:o="http://omnifaces.org/ui"
+	template="../../WEB-INF/templates/mainTemplate.xhtml">
+
+
+	<ui:define name="titulo">#{mens.titulo_painel_publicacao}</ui:define>
+
+
+	<ui:define name="corpo">
+		<f:metadata>
+			<f:event
+				listener="#{mBCadastroDocumento.inicializar}"
+				type="preRenderView" />
+
+			<o:viewParam
+				name="idDocumento"
+				value="#{mBCadastroDocumento.documento}" />
+		</f:metadata>
+
+
+
+		<h:form
+			id="formCadastro"
+			enctype="multipart/form-data">
+			<h1 class="hv-page-title">Cadastro Documento</h1>
+
+			<p:toolbar>
+				<p:toolbarGroup>
+					<p:commandButton
+						value="Salvar"
+						id="btnSalvar"
+						icon="ui-icon-disk"
+						action="#{mBCadastroDocumento.salvar}"
+						update="formCadastro :hv-msg-topo"
+						ajax="false">
+						<p:resetInput target="formCadastro" />
+
+					</p:commandButton>
+				</p:toolbarGroup>
+
+
+				<p:toolbarGroup align="right">
+					<p:button
+						id="btnVoltar"
+						icon="ui-icon-arrowreturnthick-1-w"
+						value="Voltar"
+						outcome="consulta-documento" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+
+
+			<!-- torna os campos fluidos -->
+			<div class="ui-fluid">
+
+
+				<!-- grid: torna o layout responsivo; uigrid-col: divide os espaços na linha até 12;  -->
+				<p:panelGrid
+					id="inclusaoPanel"
+					columns="3"
+					columnClasses="ui-grid-col-2, ui-grid-col-6, ui-gri-col-1"
+					layout="grid"
+					style="width: 100%; margin-top: 20px"
+					styleClass="panelgrid-noborder">
+
+
+					<p:outputLabel
+						value="Título"
+						for="titulo" />
+					<p:inputText
+						id="titulo"
+						value="#{mBCadastroDocumento.documento.titulo}"
+						maxlength="100"
+						required="true"
+						requiredMessage="É necessário informar o campo título">
+					</p:inputText>
+					<p:message
+						id="mensTitulo"
+						for="titulo" />
+					
+					
+					
+					<p:outputLabel
+						value="Nome do Grupo do Documento"
+						for="grupoDocumento" /> 
+					<p:selectOneMenu
+						id="grupoDocumento"
+						style="width:70%"
+						value="#{mBCadastroDocumento.documento.grupoDoc}"
+						required="true"
+						requiredMessage="É necessário selecionar o grupo do documento">
+						<f:selectItem itemLabel="SELECIONE UMA OPÇÃO"  noSelectionOption="true"/>
+						<f:selectItems
+							value="#{mBCadastroDocumento.listaGrupoDocumento}"
+							var="s"
+							itemLabel="#{s.nomeGrupoDoc}" />
+					</p:selectOneMenu>
+					<p:message for="grupoDocumento" />
+					
+					
+
+					<p:outputLabel
+						value="Status"
+						for="estatus" />
+					<p:selectOneMenu
+						id="estatus"
+						immediate="true"
+						style="width:70%"
+						value="#{mBCadastroDocumento.documento.status}"
+						required="true"
+						requiredMessage="É necessário informar o estatus">
+
+						<f:selectItems
+							value="#{mBCadastroDocumento.listaEstatus}"
+							var="s"
+							itemLabel="#{s.status}" />
+					</p:selectOneMenu>
+					<p:message for="estatus" />
+
+
+				</p:panelGrid>
+			</div>
+
+
+
+			<!-- SUPORTA até 800KB por arquivos	          -->
+			<p:fileUpload
+				id="fileUpload"
+				value="#{mBCadastroDocumento.uploadFile}"
+				mode="simple"
+				dragDropSupport="false"
+				multiple="false"
+				auto="false"
+				update=":hv-msg-topo nomeDocumento"
+				sizeLimit="11921600"
+				label="Selecionar"
+				invalidFileMessage="Tipo de imagem inválido"
+				invalidSizeMessage="Imagem muito grande"
+				fileLimitMessage="Favor anexar apenas uma imagem"
+				allowTypes="/(\.|\/)(jpe?g|png|pdf)$/"
+				skinSimple="true" />
+
+
+			<p:spacer
+						width="15"
+						height="5" />
+			
+			<p:link
+				id="nomeDocumento"
+				rendered="#{mBCadastroDocumento.documento.id > 0 }"
+				href="#{mBCadastroDocumento.documento.uridoc}"
+				value="#{mBCadastroDocumento.documento.nomeDocOriginal}"
+				style="color:blue; font-size:25px; margin-left:10%"
+				target="_blank" />
+
+
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

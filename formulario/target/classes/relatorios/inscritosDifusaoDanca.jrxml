@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inscritosDifusaoDanca" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1946da4e-6ec5-4ee3-b640-e3a32c92ef89">
+	<property name="template.type" value="columnar"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="23"/>
+	<style name="Title" forecolor="#000000" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="dataInicio" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dataFim" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="caminhoImagem" class="java.lang.String">
+		<defaultValueExpression><![CDATA["/resources/images/"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     difusaodanca.`idDifusaoDanca` AS difusaodanca_idDifusaoDanca,
+     difusaodanca.`aceiteRegulamento` AS difusaodanca_aceiteRegulamento,
+     difusaodanca.`celular` AS difusaodanca_celular,
+     difusaodanca.`cep` AS difusaodanca_cep,
+     difusaodanca.`cidade` AS difusaodanca_cidade,
+     difusaodanca.`dtaInscricao` AS difusaodanca_dtaInscricao,
+     difusaodanca.`dtaNascimento` AS difusaodanca_dtaNascimento,
+     difusaodanca.`email` AS difusaodanca_email,
+     difusaodanca.`endereco` AS difusaodanca_endereco,
+     difusaodanca.`estado` AS difusaodanca_estado,
+     difusaodanca.`fone` AS difusaodanca_fone,
+     difusaodanca.`formacao` AS difusaodanca_formacao,
+     difusaodanca.`nome` AS difusaodanca_nome,
+     difusaodanca.`profissao` AS difusaodanca_profissao,
+     difusaodanca.`statusTipo` AS difusaodanca_statusTipo,
+     difusaodanca.`usaWhatsApp` AS difusaodanca_usaWhatsApp
+FROM
+     `difusaodanca` difusaodanca
+WHERE
+     (difusaodanca.`dtaInscricao`
+BETWEEN
+     $P{dataInicio} and $P{dataFim})
+ AND
+  difusaodanca.`statusTipo` = 'ATIVO']]>
+	</queryString>
+	<field name="difusaodanca_idDifusaoDanca" class="java.lang.Integer"/>
+	<field name="difusaodanca_aceiteRegulamento" class="java.lang.String"/>
+	<field name="difusaodanca_celular" class="java.lang.String"/>
+	<field name="difusaodanca_cep" class="java.lang.String"/>
+	<field name="difusaodanca_cidade" class="java.lang.String"/>
+	<field name="difusaodanca_dtaInscricao" class="java.sql.Date"/>
+	<field name="difusaodanca_dtaNascimento" class="java.sql.Date"/>
+	<field name="difusaodanca_email" class="java.lang.String"/>
+	<field name="difusaodanca_endereco" class="java.lang.String"/>
+	<field name="difusaodanca_estado" class="java.lang.String"/>
+	<field name="difusaodanca_fone" class="java.lang.String"/>
+	<field name="difusaodanca_formacao" class="java.lang.String"/>
+	<field name="difusaodanca_nome" class="java.lang.String"/>
+	<field name="difusaodanca_profissao" class="java.lang.String"/>
+	<field name="difusaodanca_statusTipo" class="java.lang.String"/>
+	<field name="difusaodanca_usaWhatsApp" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="87">
+			<rectangle>
+				<reportElement x="3" y="4" width="549" height="80" forecolor="#000000" uuid="50008bae-7fa5-4179-aec3-9e34e7eefe38"/>
+				<graphicElement>
+					<pen lineWidth="1.5"/>
+				</graphicElement>
+			</rectangle>
+			<image vAlign="Middle" isUsingCache="false" onErrorType="Icon">
+				<reportElement mode="Transparent" x="4" y="16" width="108" height="49" backcolor="#FFFFFF" uuid="9ef50e29-157a-48ab-a95b-9eb73abc7bf8"/>
+				<imageExpression><![CDATA[$P{caminhoImagem}+"logoRelatorio.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="114" y="19" width="436" height="29" uuid="6b4abcda-33bf-499e-b131-d77ab4e50b5e"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font size="22" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório Projeto Sesc Difusão de Dança]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="115" y="48" width="50" height="17" uuid="f6937a9c-6f8f-43c1-adaf-2840121e32b7"/>
+				<textElement verticalAlignment="Top">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Período:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="246" y="48" width="63" height="17" uuid="f65f261d-91ec-4901-bb72-80564c3edde7"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dataFim}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="228" y="48" width="18" height="17" uuid="b5804ddd-80cf-495d-9079-4ad903ed8d3c"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[à]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="165" y="48" width="63" height="17" uuid="ff3a32df-7699-4cde-973f-c5e31df58d91"/>
+				<textElement verticalAlignment="Top">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dataInicio}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="450" splitType="Immediate">
+			<staticText>
+				<reportElement style="Column header" positionType="Float" mode="Opaque" x="7" y="9" width="112" height="20" forecolor="#000000" backcolor="#F0F0F0" uuid="780d2741-c97f-4235-8903-4b65f385c534"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nº Inscrição]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="127" y="9" width="101" height="18" uuid="3c23f0eb-013b-4c36-ab79-ea89e89433b3"/>
+				<textElement>
+					<font size="14" isBold="false" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{difusaodanca_idDifusaoDanca}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="385" y="9" width="154" height="18" uuid="52d58ed9-ffd9-4c66-a899-c65f7e5c5a55"/>
+				<textElement>
+					<font size="14" isBold="false" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{difusaodanca_dtaInscricao}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" mode="Opaque" x="7" y="219" width="132" height="20" forecolor="#000000" backcolor="#F0F0F0" uuid="cfa30049-87c7-433f-ad84-73234c16d6dc"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Email]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="143" y="219" width="403" height="18" uuid="3f82cc15-e33b-4350-b923-0d8aaf1cfdd8"/>
+				<textElement>
+					<font size="14" isBold="false" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{difusaodanca_email}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" mode="Opaque" x="7" y="107" width="132" height="20" forecolor="#000000" backcolor="#F0F0F0" uuid="4e2a9ae5-4001-4d97-8fee-7c04c6777758"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="143" y="107" width="58" height="18" uuid="b6b3ca9c-9c66-479c-afe3-a6abc08b9cf2"/>
+				<textElement>
+					<font size="14" isBold="false" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{difusaodanca_estado}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" mode="Opaque" x="7" y="177" width="132" height="20" forecolor="#000000" backcolor="#F0F0F0" uuid="06fd39ed-d7b5-4008-af1f-d483db769f3a"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Telefone]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="143" y="177" width="394" height="20" uuid="22c0e6c8-5dc7-4374-94d2-d0feee7e3361"/>
+				<textElement>
+					<font size="14" isBold="false" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{difusaodanca_fone}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" mode="Opaque" x="339" y="104" width="44" height="20" forecolor="#000000" backcolor="#F0F0F0" uuid="1b3753f2-212b-4554-9531-e06374397f0f"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cidade]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="387" y="104" width="155" height="18" uuid="7a68e44c-8146-4104-aa75-0646195dec91"/>
+				<textElement>
+					<font size="14" isBold="false" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{difusaodanca_cidade}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" mode="Opaque" x="7" y="30" width="113" height="18" forecolor="#000000" backcolor="#F0F0F0" uuid="43ba5f70-9521-4dd8-af3c-8e6c2c7bf507"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nome]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" mode="Transparent" x="124" y="30" width="419" height="18" uuid="c8fe2715-38d4-4e41-9744-b724352f73fd"/>
+				<textElement>
+					<font size="14" isBold="false" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{difusaodanca_nome}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" mode="Opaque" x="7" y="198" width="132" height="20" forecolor="#000000" backcolor="#F0F0F0" uuid="7fe4406f-1fc6-4108-be33-6e00d7dbb7b8"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Celular]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="143" y="198" width="148" height="20" uuid="4147a72f-2b47-472c-a0de-3101a8419650"/>
+				<textElement>
+					<font size="14" isBold="false" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{difusaodanca_celular}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" mode="Opaque" x="7" y="128" width="132" height="20" forecolor="#000000" backcolor="#F0F0F0" uuid="6b22adee-1145-49b8-a989-dbd4402ccc67"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Endereço]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="139" y="148" width="398" height="18" uuid="d5376d8b-41c4-47ba-8a50-1b8a6883b20b"/>
+				<textElement>
+					<font size="14" isBold="false" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{difusaodanca_endereco}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" mode="Opaque" x="285" y="7" width="98" height="20" forecolor="#000000" backcolor="#F0F0F0" uuid="d6557ff7-0144-4a08-88be-8361a69eb3b5"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data Inscrição]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" mode="Opaque" x="273" y="72" width="110" height="20" forecolor="#000000" backcolor="#F0F0F0" uuid="d9aa6906-318b-4d8d-b5a0-9ccf996866e0"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data Nascimento]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="388" y="72" width="122" height="18" uuid="58bc453f-e854-4c1f-9736-77c82202b397"/>
+				<textElement>
+					<font size="14" isBold="false" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{difusaodanca_dtaNascimento}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" mode="Opaque" x="7" y="50" width="112" height="20" forecolor="#000000" backcolor="#F0F0F0" uuid="2ef6993a-1bad-493f-bb5c-e33756634fb8"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Profissão]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="124" y="49" width="419" height="21" uuid="0187e2a2-48ce-4bb2-800d-d2889440d593"/>
+				<textElement>
+					<font size="14" isBold="false" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{difusaodanca_profissao}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" mode="Opaque" x="339" y="125" width="44" height="20" forecolor="#000000" backcolor="#F0F0F0" uuid="3dbfbd72-2f69-4133-85d6-0c684db88152"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CEP]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="387" y="125" width="155" height="18" uuid="5eff8550-d6cb-4b42-9016-89269e2c520f"/>
+				<textElement>
+					<font size="14" isBold="false" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{difusaodanca_cep}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement style="Detail" positionType="Float" x="388" y="198" width="76" height="20" uuid="b5414200-b699-47f5-80de-4f165f80869e"/>
+				<textElement>
+					<font size="14" isBold="false" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{difusaodanca_usaWhatsApp}.equals("T") ? "SIM" : "NÃO")]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" mode="Opaque" x="289" y="198" width="96" height="20" forecolor="#000000" backcolor="#F0F0F0" uuid="b9f917d8-6af4-4caa-b3a2-ec1e1d265162"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Usa WhatsApp]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" mode="Opaque" x="45" y="71" width="75" height="20" forecolor="#000000" backcolor="#F0F0F0" uuid="044adf07-9b65-4110-99cb-0aeff863b33e"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Formação]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="123" y="71" width="85" height="20" uuid="8d1a7110-77de-4553-b85b-2adae245b1e7"/>
+				<textElement>
+					<font size="14" isBold="false" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{difusaodanca_formacao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="13" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="2" y="0" width="555" height="13" forecolor="#D0B48E" backcolor="#9DB1B8" uuid="0e1c8761-0047-4536-9816-96bbeafeb679"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="513" y="0" width="40" height="13" forecolor="#FFFFFF" uuid="2928fb6a-c21a-4b21-bdf4-94c426333f08"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="429" y="0" width="84" height="13" forecolor="#FFFFFF" uuid="af87ce57-b4ce-40e8-bba5-7c3ed6985e3c"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="2" y="0" width="197" height="13" forecolor="#FFFFFF" uuid="46e66055-6e4e-4031-9f7b-50de9e31d7ea"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

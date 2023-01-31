@@ -1,0 +1,189 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:esp="http://www.especializa.com.br/facelets/taglibs"
+	xmlns:espc="http://java.sun.com/jsf/composite/componentes"
+	xmlns:o="http://omnifaces.org/ui"
+	template="../../WEB-INF/templates/mainTemplate.xhtml">
+
+	<ui:define name="titulo">Relatório -  #{mens.titulo_ciclo_faixa}</ui:define>
+	<f:metadata>
+		<f:event
+			listener="#{mbRelatorioInscritosCicloFaixa.inicializar}"
+			type="preRenderView" />
+		<o:viewParam name="dumy" />
+	</f:metadata>
+
+	<ui:define name="corpo">
+
+		<h:form id="frm">
+			<h1 style="margin-top: 90px">PAINEL GERENCIAL:
+				#{mens.titulo_ciclo_faixa}</h1>
+
+
+			<p:panel
+				id="painelFiltroRelatorio"
+				header="RELATÓRIO">
+
+				<p:panelGrid
+					columns="1"
+					id="painel"
+					columnClasses="campo"
+					styleClass="panelgrid-noborder">
+
+
+					<!-- RELATORIO EXCEL -->
+					<p:commandButton
+						value="Exportar para Excel"
+						ajax="false"
+						update="false"
+						process="@this"
+						disabled="{ empty mbRelatorioInscritosDifusaoDanca.pesquisarPorFiltro() }">
+
+						<p:dataExporter
+							type="xls"
+							target="tabela"
+							fileName="RelatorioExcel" />
+
+					</p:commandButton>
+
+
+
+				</p:panelGrid>
+
+			</p:panel>
+
+
+
+			<!-- TABELA DE INSCRITOS PARA UPLOAD -->
+			<p:panelGrid
+				columns="1"
+				layout="grid"
+				columnClasses="ui-grid-col-12"
+				styleClass="panelgrid-noborder">
+
+
+
+
+
+				<!-- seletionMode, seletion e rowkey: tem que ser utilizados juntos 
+			para setar a linha selecinar no managerBean -->
+				<p:dataTable
+					id="tabela"
+					style="margin-top: 20px"
+					value="#{mbRelatorioInscritosCicloFaixa.pesquisarPorFiltro()}"
+					var="p"
+					reflow="true"
+					paginator="true"
+					rows="500"
+					rowIndexVar="indiceContador"
+					paginatorPosition="bottom"
+					emptyMessage="Nenhum objeto encontrado para pesquisa">
+
+
+					<f:facet name="header">
+
+						<div
+							class="ui-fluid"
+							style="margin-top: 20px">
+
+							<p:panelGrid
+								columns="2"
+								layout="grid"
+								columnClasses="ui-grid-col-3, ui-grid-col-2,"
+								styleClass="panelgrid-noborder">
+
+								<p:outputLabel value="LISTA DE INSCRITOS POR ANO: " />
+								<p:selectOneMenu
+									id="anoInscricao"
+									value="#{mbRelatorioInscritosCicloFaixa.filtro.ano}">
+
+									<f:selectItem
+										itemLabel="2018"
+										itemValue="2018" />
+
+									<p:ajax
+										listener="#{mbRelatorioInscritosCicloFaixa.pesquisarPorAno()}"
+										update="tabela :hv-msg-topo" />
+
+								</p:selectOneMenu>
+
+
+							</p:panelGrid>
+						</div>
+
+
+					</f:facet>
+
+
+
+
+					<p:column headerText="Nome">
+						<h:outputText value="#{p.nome}">
+						</h:outputText>
+					</p:column>
+
+
+					<p:column headerText="Email">
+						<h:outputText value="#{p.email}">
+						</h:outputText>
+					</p:column>
+					
+					
+					<p:column headerText="CPF">
+						<h:outputText value="#{p.cpf}">
+						</h:outputText>
+					</p:column>
+				
+					
+					<p:column headerText="RG"
+					styleClass="hv-coluna-personalizada">
+						<h:outputText value="#{p.rg}">
+						</h:outputText>
+					</p:column>					
+	
+					
+									
+					<p:column headerText="Telefone"
+					styleClass="hv-coluna-personalizada">
+						<h:outputText value="#{p.fone}">
+						</h:outputText>
+					</p:column>
+
+
+
+					<p:column
+						headerText="Possui Bicicleta"
+						styleClass="hv-coluna-personalizada">
+						<h:outputText value="#{p.possuiBicicleta ? 'SIM' :'NAO'} ">
+						</h:outputText>
+					</p:column>
+
+
+
+					<p:column
+						headerText="Possui Capacete"
+						styleClass="hv-coluna-personalizada">
+						<h:outputText value="#{p.possuiCapacete ? 'SIM' :'NAO'} ">
+						</h:outputText>
+					</p:column>
+					
+
+
+
+				</p:dataTable>
+
+
+
+
+			</p:panelGrid>
+
+
+
+
+		</h:form>
+	</ui:define>
+</ui:composition>

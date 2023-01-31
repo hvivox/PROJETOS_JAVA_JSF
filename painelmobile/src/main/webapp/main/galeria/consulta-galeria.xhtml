@@ -1,0 +1,171 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:esp="http://www.especializa.com.br/facelets/taglibs"
+	xmlns:espc="http://java.sun.com/jsf/composite/componentes"
+	xmlns:o="http://omnifaces.org/ui"
+	template="../../WEB-INF/templates/mainTemplate.xhtml">
+
+	<ui:define name="titulo">PM - Consulta Galeria de Imagens</ui:define>
+
+	<ui:define name="corpo">
+		<f:metadata>
+			<f:event
+				listener="#{mbConsultaGaleriaImagem.inicializar}"
+				type="preRenderView" />
+			<o:viewParam name="dumy" />
+		</f:metadata>
+
+		<h:form id="formTabela">
+
+			<h1 class="hv-page-title">Consulta Galeria de Imagens</h1>
+			<p:toolbar>
+				<p:toolbarGroup>
+					<p:commandButton
+						value="Pesquisa"
+						id="btnPesquisa"
+						action="#{mbConsultaGaleriaImagem.pesquisarPorFiltro}"
+						process="@this descricaoPesquisa ckbEstatus"
+						update=":hv-msg-topo tabela"
+						icon="ui-icon-search" />
+
+				</p:toolbarGroup>
+
+				<p:toolbarGroup align="right">
+					<p:button
+						id="btnNovo"
+						value="Novo"
+						outcome="cadastro-galeria" />
+				</p:toolbarGroup>
+
+			</p:toolbar>
+
+
+			<div
+				class="ui-fluid"
+				style="margin-top: 20px">
+
+				<p:panelGrid
+					columns="3"
+					layout="grid"
+					columnClasses="ui-grid-col-1, ui-grid-col-9, ui-grid-col-2"
+					styleClass="panelgrid-noborder">
+
+					<p:outputLabel
+						value="Nome"
+						for="descricaoPesquisa" />
+					<p:inputText
+						id="descricaoPesquisa"
+						value="#{mbConsultaGaleriaImagem.filtro.titulo}">
+					</p:inputText>
+
+					<h:panelGroup>
+						<p:selectBooleanCheckbox
+							id="ckbEstatus"
+							value="#{mbConsultaGaleriaImagem.filtro.mostraInitivos}"
+							valueChangeListener="#{mbConsultaGaleriaImagem.verificarCheckBox}"
+							itemLabel="Mostrar Inativos">
+
+					</p:selectBooleanCheckbox>
+
+					</h:panelGroup>
+				</p:panelGrid>
+			</div>
+
+
+			<!-- seletionMode, seletion e rowkey: tem que ser utilizados juntos 
+			para setar a linha selecinar no managerBean -->
+			<p:dataTable
+				id="tabela"
+				style="margin-top: 20px"
+				value="#{mbConsultaGaleriaImagem.listaDeGaleriaImagems}"
+				var="p"
+				selectionMode="single"
+				selection="#{mbConsultaGaleriaImagem.galeriaImagem}"
+				rowKey="#{p.id}"
+				reflow="true"
+				paginator="true"
+				rows="10"
+				paginatorPosition="bottom"
+				emptyMessage="Nenhum objeto encontrado para pesquisa">
+
+				<p:column headerText="Titulo">
+					<h:outputText value="#{p.titulo}" />
+				</p:column>
+
+				<p:column
+					headerText="Data Realização"
+					styleClass="hv-coluna-personalizada">
+					<h:outputText value="#{p.dtaEvento.time}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+
+				<p:column
+					headerText="Status"
+					styleClass="hv-coluna-personalizada">
+					<h:outputText value="#{p.estatus.toString()}" />
+				</p:column>
+
+				<p:column
+					headerText="Operações"
+					styleClass="hv-coluna-personalizada">
+					
+					<p:button
+						id="lnkEditar"
+						title="Editar Galeria"
+						icon="ui-icon-pencil"
+						outcome="cadastro-galeria.xhtml">
+						<f:param
+							name="idGaleriaImagem"
+							value="#{p.id}" />
+					</p:button>
+
+
+					<p:spacer
+						width="5"
+						height="10" />
+
+
+					<p:commandButton
+						icon="ui-icon-cancel"
+						title="Inativar Galeria"
+						oncomplete="PF('confirmacao').show()"
+						rendered="#{p.estatus eq 'ATIVO'}">
+						<f:setPropertyActionListener
+							value="#{p}"
+							target="#{mbConsultaGaleriaImagem.galeriaImagem}" />
+					</p:commandButton>
+					
+					
+					<p:spacer
+						width="5"
+						height="10" />
+					
+					
+						<!-- CONSULTA GALERIA NA TELA.................. -->
+					<p:button
+						id="lnkExibiImagem"
+						title="Exibir e adicionar imagens da galeria"						
+						icon="ui-icon-plus"
+						
+						rendered="#{p.estatus eq 'ATIVO'}"
+						outcome="cadastro-exibir-imagem.xhtml">
+							
+						<f:param
+							name="idGaleriaImagem"
+							value="#{p.id}" />
+					</p:button>
+				</p:column>
+			</p:dataTable>
+
+			<ui:include src="dialogo-inativar-galeria.xhtml" />
+
+		</h:form>
+	</ui:define>
+
+</ui:composition>
+

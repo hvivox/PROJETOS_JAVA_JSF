@@ -1,0 +1,343 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:esp="http://www.especializa.com.br/facelets/taglibs"
+	xmlns:espc="http://java.sun.com/jsf/composite/componentes"
+	xmlns:o="http://omnifaces.org/ui"
+	template="../../WEB-INF/templates/mainTemplate.xhtml">
+
+	<!-- <p:growl -->
+	<!-- id="mensagemGrow" -->
+	<!-- showDetail="true" globalOnly="false"/> -->
+
+	<ui:define name="titulo">Cadastro - #{mens.titulo_difusao_danca}</ui:define>
+
+
+	<ui:define name="corpo">
+		<f:metadata>
+			<f:viewAction action="#{mbDifusaoDanca.inicializar}" />
+			<o:viewParam name="dumy" />
+		</f:metadata>
+
+
+
+		<h:form id="formCadastro">
+			<h1 class="hv-page-title">Cadastro - #{mens.titulo_difusao_danca}
+			</h1>
+
+			<p:toolbar>
+				<p:toolbarGroup>
+					<p:commandButton
+						value="Salvar"
+						id="btnSalvar"
+						icon="ui-icon-disk"
+						action="#{ mbDifusaoDanca.salvar }"
+						update="formCadastro :hv-msg-topo">
+						<p:resetInput target="formCadastro" />
+					</p:commandButton>
+
+				</p:toolbarGroup>
+
+
+				<p:toolbarGroup align="right">
+					<p:button
+						id="btnVoltar"
+						icon="ui-icon-arrowreturnthick-1-w"
+						value="Voltar"
+						href="https:www.sesc-am.com.br" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+
+
+
+			<!-- torna os campos fluidos -->
+			<div class="ui-fluid">
+
+				<!-- grid: torna o layout responsivo; uigrid-col: divide os espaços na linha até 12;  -->
+				<!-- DADOS PESSOAIS -->
+				<p:panel
+					id="pnlpessoais"
+					header="DADOS PESSOAIS"
+					style="margin-bottom:20px">
+					
+					<p:panelGrid
+						id="inclusaoPanel"
+						columns="3"
+						columnClasses="ui-grid-col-3, ui-grid-col-7, ui-gri-col-1"
+						layout="grid"
+						style="width: 100%; margin-top: 20px"
+						styleClass="panelgrid-noborder">
+						
+						
+						<p:outputLabel
+							value="Nome"
+							for="nome" />
+						<p:inputText
+							id="nome"
+							value="#{mbDifusaoDanca.difusaoDanca.nome}"
+							maxlength="150"
+							required="true"
+							requiredMessage="É necessário informar o campo nome">
+						</p:inputText>
+						<p:message
+							id="mensNome"
+							for="nome" />
+
+
+
+						<p:outputLabel
+							value="Profissão"
+							for="profissao" />
+						<p:inputText
+							id="profissao"
+							value="#{mbDifusaoDanca.difusaoDanca.profissao}"
+							maxlength="150"
+							required="true"
+							requiredMessage="É necessário informar o campo profissão">
+						</p:inputText>
+						<p:message
+							id="mensProfissao"
+							for="profissao" />
+
+
+						
+						<p:outputLabel
+							value="Formação"
+							for="formacao" />
+						<p:selectOneMenu
+							id="formacao"
+							style="width:70%"
+							value="#{mbDifusaoDanca.difusaoDanca.formacao}"
+							required="true"
+							requiredMessage="É necessário selecionar uma formação">
+							<f:selectItem
+								noSelectionOption="true"
+								itemLabel="Selecione uma formação" />
+							<f:selectItem
+								itemValue="fundamental"
+								itemLabel="Fundamental" />
+							<f:selectItem
+								itemValue="medio"
+								itemLabel="Médio" />
+							<f:selectItem
+								itemValue="superior"
+								itemLabel="Superior" />
+							
+						</p:selectOneMenu>
+						<p:message for="formacao" />
+						
+
+						<p:outputLabel
+							value="Data Nascimento"
+							for="dtaNascimento" />
+						<p:calendar
+							id="dtaNascimento"
+							locale="pt"
+							maskSlotChar="__/__/____"
+							mask="true"
+							pattern="dd/MM/yyyy"
+							style="width:70%"
+							value="#{mbDifusaoDanca.difusaoDanca.dtaNascimento}"
+							required="true"
+							requiredMessage="É necessário informar a data de nascimento"
+							converter="conversorCalendar">
+						</p:calendar>
+						<p:message
+							id="mensDtaNascimento"
+							for="dtaNascimento" />
+
+					</p:panelGrid>
+				</p:panel>
+
+
+
+
+
+
+
+
+				<!-- grid: torna o layout responsivo; uigrid-col: divide os espaços na linha até 12;  -->
+				<p:panel
+					id="pnlcontato"
+					header="CONTATO"
+					style="margin-bottom:20px">
+
+					<p:panelGrid
+						id="dadosContato"
+						columns="3"
+						columnClasses="ui-grid-col-3, ui-grid-col-7, ui-gri-col-1"
+						layout="grid"
+						style="width: 100%; margin-top: 20px"
+						styleClass="panelgrid-noborder">
+
+
+						<!-- CONTATOS -->
+
+						<p:outputLabel
+							value="Telefone"
+							for="telefone" />
+						<p:inputText
+							id="telefone"
+							value="#{mbDifusaoDanca.difusaoDanca.fone}"
+							maxlength="100"
+							required="true"
+							requiredMessage="É necessário informar o campo telefone">
+						</p:inputText>
+						<p:message
+							id="mensTelefone"
+							for="telefone" />
+
+
+
+
+						<p:outputLabel
+							value="Celular"
+							for="celular" />
+						<h:panelGroup>
+							<p:inputMask
+								id="celular"
+								value="#{mbDifusaoDanca.difusaoDanca.celular}"
+								mask="(99) 99999-9999"
+								maxlength="15"
+								placeholder="(  ) _____-____"
+								style="width:40%"
+								required="true"
+								requiredMessage="É necessário informar o campo celular" />
+
+							<p:selectBooleanCheckbox
+								id="usaWhatsApp"
+								value="#{mbDifusaoDanca.difusaoDanca.usaWhatsApp}">
+
+							</p:selectBooleanCheckbox>
+							<p:outputLabel value="Usa Whats Up?" />
+
+						</h:panelGroup>
+						<p:message
+							id="mensCelular"
+							for="celular" />
+
+
+
+
+						<p:outputLabel
+							value="email"
+							for="email" />
+						<p:inputText
+							id="email"
+							value="#{mbDifusaoDanca.difusaoDanca.email}"
+							maxlength="100"
+							required="true"
+							requiredMessage="É necessário informar o campo email"
+							validatorMessage="Preencha corretamente o email. Ex: joao@exemplo.com.br">
+
+							<f:validator validatorId="validadorDeEmail" />
+
+						</p:inputText>
+						<p:message
+							id="mensEmail"
+							for="email" />
+
+					</p:panelGrid>
+				</p:panel>
+
+
+
+
+
+				<!-- ENDERECO -->
+				<p:panel
+					id="pnlEndereco"
+					header="ENDEREÇO"
+					style="margin-bottom:20px">
+
+					<p:panelGrid
+						id="dadoEndereco"
+						columns="3"
+						columnClasses="ui-grid-col-3, ui-grid-col-7, ui-gri-col-1"
+						layout="grid"
+						style="width: 100%; margin-top: 20px"
+						styleClass="panelgrid-noborder">
+						<p:outputLabel
+							value="Endereço"
+							for="endereco" />
+						<p:inputText
+							id="endereco"
+							value="#{mbDifusaoDanca.difusaoDanca.endereco}"
+							placeholder=" Digite o endereço completo: logrado | nº | bairro | etc"
+							maxlength="200"
+							required="true"
+							requiredMessage="É necessário informar o campo endereço">
+						</p:inputText>
+						<p:message
+							id="mensEndereco"
+							for="endereco" />
+
+						<p:outputLabel
+							value="Cep"
+							for="cep" />
+						<p:inputMask
+							id="cep"
+							value="#{mbDifusaoDanca.difusaoDanca.cep}"
+							mask="99999-999"
+							maxlength="9"
+							placeholder="_____-___"
+							style="width:40%"
+							required="true"
+							requiredMessage="É necessário informar o campo cep" />
+						<p:message
+							id="mensCep"
+							for="cep" />
+
+
+						<p:outputLabel
+							value="Cidade"
+							for="cidade" />
+						<p:inputText
+							id="cidade"
+							value="#{mbDifusaoDanca.difusaoDanca.cidade}"
+							maxlength="100"
+							required="true"
+							requiredMessage="É necessário informar o campo nome do cidade">
+						</p:inputText>
+						<p:message
+							id="mensCidade"
+							for="cidade" />
+
+
+						<p:outputLabel
+							value="Estado"
+							for="estado" />
+						<p:selectOneMenu
+							id="estado"
+							style="width:70%"
+							value="#{mbDifusaoDanca.difusaoDanca.estado}"
+							required="true"
+							requiredMessage="É necessário selecionar um estado">
+							<f:selectItem
+								itemLabel="Selecione"
+								itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems
+								value="#{mbDifusaoDanca.siglaEstado}"
+								var="siglasEstado"
+								itemValue="#{siglasEstado}"
+								itemLabel="#{siglasEstado.descricao}" />
+						</p:selectOneMenu>
+						<p:message for="estado" />
+					</p:panelGrid>
+				</p:panel>
+
+
+			</div>
+
+
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

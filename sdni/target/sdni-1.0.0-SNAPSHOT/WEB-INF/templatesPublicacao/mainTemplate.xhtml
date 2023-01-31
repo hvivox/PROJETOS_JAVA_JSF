@@ -1,0 +1,295 @@
+
+<!DOCTYPE html>
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<h:head>
+	<!-- informa que estes comandos será os primeiro a serem carregados -->
+	<!-- viewport informa que todos recursos como: divs, imagens etc sempre terão 
+	o tamanho original na tela -->
+	<f:facet name="first">
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1" />
+	</f:facet>
+
+	<title><ui:insert name="titulo">#{titulo_doc_publicados}</ui:insert></title>
+
+	
+
+	<!-- compatilidade com o internet explore -->
+	<meta
+		http-equiv="X-UA-Compatible"
+		content="IE=edge" />
+
+	<!-- icone da aba do navegador -->
+	<link
+		rel="shortcut icon"
+		type="image/x-icon"
+		href="#{resource['images/favicon.ico']}" />
+
+	<!-- direciona para tela de inicial quando terminar a sessão -->
+	<meta
+		http-equiv="refresh"
+		content="${request.session.maxInactiveInterval};url=http://192.168.5.124/" />
+
+	<!-- Utilizado para traduzir o calendar para lingua portugues Brasil -->
+	<h:outputScript
+		target="body"
+		library="js"
+		name="calendario.js" />
+
+	<!-- utilizado para controlar o toggle -->
+	<h:outputScript
+		target="body"
+		library="js"
+		name="app.js" />
+
+	<!-- js do bootstrap -->
+	<h:outputScript
+		target="body"
+		library="js"
+		name="bootstrap.js" />
+
+
+	<h:outputScript
+		library="js"
+		name="jquery.maskMoney.js" />
+	
+	
+		<!-- css do bootstrap -->
+	<h:outputStylesheet
+		library="css"
+		name="consulta-publicacao.css" />
+	
+	<!-- css do bootstrap -->
+	<h:outputStylesheet
+		library="css"
+		name="bootstrap.css" />
+
+
+	<h:outputStylesheet
+		library="css"
+		name="layout.css" />
+
+	<!-- utilizado para custumizar o layout principal -->
+	<h:outputStylesheet
+		library="css"
+		name="custom.css" />
+
+	<!-- customizacao de componente feitos manualmente toggle, menu etc-->
+	<h:outputStylesheet
+		library="css"
+		name="components.css" />
+
+	<!-- 	<link rel="stylesheet" href="/hermes/resources/estilo.css" type="text/css" />  -->
+</h:head>
+
+
+
+<h:body>
+
+	<!-- STATUS DO AJAX: é chamado todas as vezes que um evento ajax é acionado -->
+	<p:ajaxStatus
+		styleClass="hv-barraProgresso"
+		onsuccess="configurarMoeda()">
+		<f:facet name="start">
+			<h:graphicImage
+				library="images"
+				name="loading.gif"
+				styleClass="hv-loading" />
+		</f:facet>
+
+		<f:facet name="complete">
+			<h:outputText value="" />
+		</f:facet>
+	</p:ajaxStatus>
+
+
+
+	<!-- CABEÇALHO ########################################################### -->
+	<header class="hv-topbar">
+
+
+		<!-- LOGO MARCA ########################################### -->
+		<div class="containerLogo">
+			<h:link outcome="/consulta/consulta-publicacao">
+				<h:graphicImage
+					library="images"
+					name="logo.png" styleClass="imagemTopo"/>
+			</h:link>
+		</div>
+
+		<!-- ALTERNA: BOTAO PARA MOSTRA E ESCONDER MENU -->
+		<!-- utiliza o fontAwesome para inserir icones na tela fa, fa-2x aumenta o tamanho do icone -->
+		<a
+			href="#"
+			class="hv-toggle js-toggle"><i class="fa  fa-bars fa-2x" ></i></a>
+
+
+		<!-- MENU DO TOPO ###################################### -->
+		<div id="hv-opcao-topo">
+			<span style="float: left; height: 30px; line-height: 30px; margin-right: 60px"> Olá
+				#{seguranca.nomeCompletoDoUsuarioLogado == null ? 'seja bem vindo(a)' :
+				seguranca.nomeCompletoDoUsuarioLogado } </span>
+		</div>
+
+	</header>
+
+
+
+
+
+	<!-- BARRA LATERAL########################################### -->
+	<aside class="hv-sidebar js-sidebar">
+		<ui:include src="menuLateral.xhtml" />
+	</aside>
+
+
+	<!-- CORPO DA PAGINA######################################### -->
+	<section class="hv-content js-content">
+
+		<!-- MENSAGENS - MOSTRA MENSAGENS############################ -->
+		<div id="mensagem">
+			<p:messages
+				id="hv-msg-topo"
+				closable="true"
+				infoClass="info"
+				warnClass="warn"
+				errorClass="erro"
+				fatalClass="fatal"
+				globalOnly="true" />
+			<!-- <ui:insert name="mensagem" /> -->
+		</div>
+
+		<!-- INSERÇÃO DAS PAGINAS NO CORPO############################ -->
+		<ui:insert name="corpo" />
+
+	</section>
+
+
+
+	<!-- RODAPE################################################ -->
+	<p:separator style="margin-top: 20px" />
+	<footer class="hv-footer js-footer">
+		SESC - Tecnologia da Informação <a
+			href="http://www.sesc-am.com.br"
+			target="_blank">www.sesc-am.com.br</a>
+	</footer>
+
+
+	<script>
+		function configurarMoeda() {
+			$(".moeda").maskMoney({
+				decimal : ",",
+				thousands : ".",
+				allowZero : true
+			});
+		}
+
+		$(document).ready(function() {
+			configurarMoeda();
+		});
+	</script>
+	
+	
+	
+	<script >
+	//UTILIZADO PARA POSICIONAR OCORRETAMENTE O CONTEUDO ANCORA MESMO SE TIVE UM HEADER COM POSITION: FIX
+	(function(document, history, location) {
+		  var HISTORY_SUPPORT = !!(history &amp;&amp; history.pushState);
+
+		  var anchorScrolls = {
+		    ANCHOR_REGEX: /^#[^ ]+$/,
+		    OFFSET_HEIGHT_PX: 60,
+
+		    /**
+		     * Establish events, and fix initial scroll position if a hash is provided.
+		     */
+		    init: function() {
+		      this.scrollToCurrent();
+		      window.addEventListener('hashchange', this.scrollToCurrent.bind(this));
+		      document.body.addEventListener('click', this.delegateAnchors.bind(this));
+		    },
+
+		    /**
+		     * Return the offset amount to deduct from the normal scroll position.
+		     * Modify as appropriate to allow for dynamic calculations
+		     */
+		    getFixedOffset: function() {
+		      return this.OFFSET_HEIGHT_PX;
+		    },
+
+		    /**
+		     * If the provided href is an anchor which resolves to an element on the
+		     * page, scroll to it.
+		     * @param  {String} href
+		     * @return {Boolean} - Was the href an anchor.
+		     */
+		    scrollIfAnchor: function(href, pushToHistory) {
+		      var match, rect, anchorOffset;
+
+		      if(!this.ANCHOR_REGEX.test(href)) {
+		        return false;
+		      }
+
+		      match = document.getElementById(href.slice(1));
+
+		      if(match) {
+		        rect = match.getBoundingClientRect();
+		        anchorOffset = window.pageYOffset + rect.top - this.getFixedOffset();
+		        window.scrollTo(window.pageXOffset, anchorOffset);
+
+		        // Add the state to history as-per normal anchor links
+		        if(HISTORY_SUPPORT &amp;&amp; pushToHistory) {
+		          history.pushState({}, document.title, location.pathname + href);
+		        }
+		      }
+
+		      return !!match;
+		    },
+
+		    /**
+		     * Attempt to scroll to the current location's hash.
+		     */
+		    scrollToCurrent: function() {
+		      this.scrollIfAnchor(window.location.hash);
+		    },
+
+		    /**
+		     * If the click event's target was an anchor, fix the scroll position.
+		     */
+		    delegateAnchors: function(e) {
+		      var elem = e.target;
+
+		      if(
+		        elem.nodeName === 'A' &amp;&amp;
+		        this.scrollIfAnchor(elem.getAttribute('href'), true)
+		      ) {
+		        e.preventDefault();
+		      }
+		    }
+		  };
+
+		  window.addEventListener(
+		    'DOMContentLoaded', anchorScrolls.init.bind(anchorScrolls)
+		  );
+		})(window.document, window.history, window.location);
+	
+	</script>
+
+
+
+
+	<ui:debug hotkey="d" />
+
+
+
+</h:body>
+</html>

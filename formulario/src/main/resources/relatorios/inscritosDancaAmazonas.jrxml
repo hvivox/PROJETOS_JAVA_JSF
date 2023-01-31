@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inscritosDancaAmazonas" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1946da4e-6ec5-4ee3-b640-e3a32c92ef89">
+	<property name="template.type" value="columnar"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#000000" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="dataInicio" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dataFim" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="caminhoImagem" class="java.lang.String">
+		<defaultValueExpression><![CDATA["/resources/images/"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     danca.`idDancaAmazonas` AS danca_idDancaAmazonas,
+     modalidade.`nome` AS modalidade_nome,
+     danca.`cidade` AS danca_cidade,
+     danca.`coreografo` AS danca_coreografo,
+     danca.`nomeDiretor` AS danca_nomeDiretor,
+     danca.`dtaInscricao` AS danca_dtaInscricao,
+     danca.`email` AS danca_email,
+     danca.`estado` AS danca_estado,
+     danca.`fichaTecnica` AS danca_fichaTecnica,
+     danca.`fone` AS danca_fone,
+     danca.`historico` AS danca_historico,
+     danca.`linkCoreografia` AS danca_linkCoreografia,
+     danca.`musicaCompositor` AS danca_musicaCompositor,
+     danca.`nomeCoreografia` AS danca_nomeCoreografia,
+     danca.`nomeGrupo` AS danca_nomeGrupo,
+     danca.`qtdParticipantes` AS danca_qtdParticipantes,
+     danca.`siteContato` AS danca_siteContato,
+     danca.`tempoApresentacao` AS danca_tempoApresentacao,
+     danca.`whatzap` AS danca_whatzap
+FROM
+     `dancaamazonas` danca INNER JOIN `modalidadeDancaAmazonas` modalidade ON danca.`idModalidadeDancaAmazonas` = modalidade.`idModalidadeDancaAmazonas`
+WHERE (danca.`dtaInscricao` between $P{dataInicio} and $P{dataFim}) and
+     danca.`status` = 'ATIVO'
+ORDER BY
+     modalidade.`nome` ASC]]>
+	</queryString>
+	<field name="danca_idDancaAmazonas" class="java.lang.Integer"/>
+	<field name="modalidade_nome" class="java.lang.String"/>
+	<field name="danca_cidade" class="java.lang.String"/>
+	<field name="danca_coreografo" class="java.lang.String"/>
+	<field name="danca_nomeDiretor" class="java.lang.String"/>
+	<field name="danca_dtaInscricao" class="java.sql.Date"/>
+	<field name="danca_email" class="java.lang.String"/>
+	<field name="danca_estado" class="java.lang.String"/>
+	<field name="danca_fichaTecnica" class="java.lang.String"/>
+	<field name="danca_fone" class="java.lang.String"/>
+	<field name="danca_historico" class="java.lang.String"/>
+	<field name="danca_linkCoreografia" class="java.lang.String"/>
+	<field name="danca_musicaCompositor" class="java.lang.String"/>
+	<field name="danca_nomeCoreografia" class="java.lang.String"/>
+	<field name="danca_nomeGrupo" class="java.lang.String"/>
+	<field name="danca_qtdParticipantes" class="java.lang.Integer"/>
+	<field name="danca_siteContato" class="java.lang.String"/>
+	<field name="danca_tempoApresentacao" class="java.lang.Integer"/>
+	<field name="danca_whatzap" class="java.lang.String"/>
+	<group name="modalidade_nome">
+		<groupExpression><![CDATA[$F{modalidade_nome}]]></groupExpression>
+		<groupHeader>
+			<band height="31">
+				<frame>
+					<reportElement mode="Opaque" x="0" y="7" width="555" height="24" forecolor="#B89F7D" backcolor="#9DB1B8" uuid="428da61b-ff87-479b-9708-617f221775bf"/>
+					<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+						<reportElement style="SubTitle" isPrintRepeatedValues="false" x="2" y="1" width="479" height="23" forecolor="#FFFFFF" uuid="3271893a-2f3b-48e0-8ebb-83c64bbed771"/>
+						<textElement>
+							<font isBold="false"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{modalidade_nome}]]></textFieldExpression>
+					</textField>
+				</frame>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="6"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="87"/>
+	</title>
+	<pageHeader>
+		<band height="87" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="549" height="80" forecolor="#000000" uuid="50008bae-7fa5-4179-aec3-9e34e7eefe38"/>
+				<graphicElement>
+					<pen lineWidth="1.5"/>
+				</graphicElement>
+			</rectangle>
+			<image vAlign="Middle" onErrorType="Icon">
+				<reportElement mode="Transparent" x="1" y="6" width="108" height="69" backcolor="#FFFFFF" uuid="9ef50e29-157a-48ab-a95b-9eb73abc7bf8"/>
+				<imageExpression><![CDATA[$P{caminhoImagem}+"logoRelatorio.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="115" y="6" width="375" height="37" uuid="6b4abcda-33bf-499e-b131-d77ab4e50b5e"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font size="28" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório Dança Amazonas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="113" y="55" width="50" height="20" uuid="f6937a9c-6f8f-43c1-adaf-2840121e32b7"/>
+				<textElement verticalAlignment="Top">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Período:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="244" y="55" width="63" height="20" uuid="f65f261d-91ec-4901-bb72-80564c3edde7"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dataFim}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="226" y="55" width="18" height="20" uuid="b5804ddd-80cf-495d-9079-4ad903ed8d3c"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[à]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="163" y="55" width="63" height="20" uuid="ff3a32df-7699-4cde-973f-c5e31df58d91"/>
+				<textElement verticalAlignment="Top">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dataInicio}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="409" splitType="Immediate">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="2" y="396" width="551" height="1" uuid="303a1778-653f-48bf-b1a7-2f2febfb71f3"/>
+			</line>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="6" y="8" width="132" height="20" forecolor="#000000" uuid="780d2741-c97f-4235-8903-4b65f385c534"/>
+				<textElement textAlignment="Right">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Nº Inscrição]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="142" y="8" width="101" height="18" uuid="3c23f0eb-013b-4c36-ab79-ea89e89433b3"/>
+				<textElement>
+					<font size="14" isBold="true" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{danca_idDancaAmazonas}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="6" y="28" width="132" height="20" forecolor="#000000" uuid="dcae9f70-5a56-4ea5-aa48-75e2694790bf"/>
+				<textElement textAlignment="Right">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Cidade]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="142" y="28" width="403" height="18" uuid="2b1fce37-9df5-43cf-bf9c-ea032f7d0dae"/>
+				<textElement>
+					<font size="14" isBold="true" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{danca_cidade}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="6" y="48" width="132" height="20" forecolor="#000000" uuid="7fa3d3c4-d2b8-4013-9e69-a95851a5bafe"/>
+				<textElement textAlignment="Right">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Coreografo]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="142" y="48" width="403" height="18" uuid="819bc3b6-4c3e-49fa-8ed1-3ebb47e9c4cb"/>
+				<textElement>
+					<font size="14" isBold="true" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{danca_coreografo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="6" y="68" width="132" height="20" forecolor="#000000" uuid="6b22adee-1145-49b8-a989-dbd4402ccc67"/>
+				<textElement textAlignment="Right">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Diretor]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="142" y="68" width="403" height="18" uuid="d5376d8b-41c4-47ba-8a50-1b8a6883b20b"/>
+				<textElement>
+					<font size="14" isBold="true" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{danca_nomeDiretor}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="291" y="8" width="98" height="20" forecolor="#000000" uuid="d6557ff7-0144-4a08-88be-8361a69eb3b5"/>
+				<textElement textAlignment="Right">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Data Inscrição]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="391" y="7" width="154" height="18" uuid="52d58ed9-ffd9-4c66-a899-c65f7e5c5a55"/>
+				<textElement>
+					<font size="14" isBold="true" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{danca_dtaInscricao}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="6" y="89" width="132" height="20" forecolor="#000000" uuid="cfa30049-87c7-433f-ad84-73234c16d6dc"/>
+				<textElement textAlignment="Right">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Email]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="142" y="89" width="403" height="18" uuid="3f82cc15-e33b-4350-b923-0d8aaf1cfdd8"/>
+				<textElement>
+					<font size="14" isBold="true" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{danca_email}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="6" y="109" width="132" height="20" forecolor="#000000" uuid="4e2a9ae5-4001-4d97-8fee-7c04c6777758"/>
+				<textElement textAlignment="Right">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="142" y="109" width="403" height="18" uuid="b6b3ca9c-9c66-479c-afe3-a6abc08b9cf2"/>
+				<textElement>
+					<font size="14" isBold="true" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{danca_estado}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="6" y="350" width="132" height="20" forecolor="#000000" uuid="07a608a4-643c-4c16-a199-c6471fa16c61"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Ficha Técnica]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="136" y="369" width="409" height="18" uuid="8e19602f-624e-41dd-bbe9-c391e024642c"/>
+				<textElement textAlignment="Justified">
+					<font size="14" isBold="true" isStrikeThrough="false" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{danca_fichaTecnica}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="6" y="130" width="132" height="20" forecolor="#000000" uuid="06fd39ed-d7b5-4008-af1f-d483db769f3a"/>
+				<textElement textAlignment="Right">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Telefone]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="142" y="130" width="403" height="18" uuid="22c0e6c8-5dc7-4374-94d2-d0feee7e3361"/>
+				<textElement>
+					<font size="14" isBold="true" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{danca_fone}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="6" y="312" width="132" height="17" forecolor="#000000" uuid="c9b19041-2b92-4c47-b0b5-629e3e93d344"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Histórico]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="136" y="329" width="409" height="18" uuid="da5925d5-6497-47ed-bced-344dc19d0196"/>
+				<textElement textAlignment="Justified">
+					<font size="14" isBold="true" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{danca_historico}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="6" y="151" width="108" height="20" forecolor="#000000" uuid="9ad99187-7fd5-494b-af07-cfdf86ea8d10"/>
+				<textElement textAlignment="Right">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Link Coreografia]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="126" y="151" width="419" height="18" uuid="906b6026-cb04-44f6-8a69-55674580bec4"/>
+				<textElement>
+					<font size="14" isBold="true" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{danca_linkCoreografia}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="6" y="171" width="132" height="20" forecolor="#000000" uuid="1b3753f2-212b-4554-9531-e06374397f0f"/>
+				<textElement textAlignment="Right">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Musica Compositor]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="142" y="171" width="403" height="18" uuid="7a68e44c-8146-4104-aa75-0646195dec91"/>
+				<textElement>
+					<font size="14" isBold="true" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{danca_musicaCompositor}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="6" y="191" width="132" height="20" forecolor="#000000" uuid="8a093269-c294-482c-b3bb-b72ad8783d92"/>
+				<textElement textAlignment="Right">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Nome Coreografia]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="142" y="191" width="403" height="18" uuid="3f100f7f-9f7c-4d66-9f22-911f1dbe8653"/>
+				<textElement>
+					<font size="14" isBold="true" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{danca_nomeCoreografia}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="6" y="211" width="108" height="20" forecolor="#000000" uuid="43ba5f70-9521-4dd8-af3c-8e6c2c7bf507"/>
+				<textElement textAlignment="Right">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Nome Grupo]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="126" y="211" width="419" height="18" uuid="c8fe2715-38d4-4e41-9744-b724352f73fd"/>
+				<textElement>
+					<font size="14" isBold="true" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{danca_nomeGrupo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="6" y="231" width="132" height="20" forecolor="#000000" uuid="e39bdf03-f625-4d43-a8d6-3940d24dc83c"/>
+				<textElement textAlignment="Right">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Quantidade Participantes]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="142" y="231" width="403" height="18" uuid="37b1e050-53e1-4773-8482-a919d6736b76"/>
+				<textElement>
+					<font size="14" isBold="true" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{danca_qtdParticipantes}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="6" y="251" width="108" height="20" forecolor="#000000" uuid="7e9ad9f7-65b8-43ff-b39f-1d5e79ecc891"/>
+				<textElement textAlignment="Right">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Site Contato]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="126" y="251" width="419" height="18" uuid="1e43aba6-4db6-445e-a3c5-387df2ad0689"/>
+				<textElement>
+					<font size="14" isBold="true" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{danca_siteContato}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="6" y="271" width="132" height="20" forecolor="#000000" uuid="bd477a87-a4af-4e88-95b5-3c14c7f3307c"/>
+				<textElement textAlignment="Right">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Tempo Apresentação]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="142" y="271" width="403" height="18" uuid="abd03b7e-a724-4fa8-9276-0f5d8814e9ec"/>
+				<textElement>
+					<font size="14" isBold="true" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{danca_tempoApresentacao}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="6" y="291" width="132" height="20" forecolor="#000000" uuid="7fe4406f-1fc6-4108-be33-6e00d7dbb7b8"/>
+				<textElement textAlignment="Right">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[What Zap]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="142" y="291" width="403" height="18" uuid="4147a72f-2b47-472c-a0de-3101a8419650"/>
+				<textElement>
+					<font size="14" isBold="true" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{danca_whatzap}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="7" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="06619ade-f530-46b1-9c4b-38f599e0185c"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="13" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="2" y="0" width="555" height="13" forecolor="#D0B48E" backcolor="#9DB1B8" uuid="0e1c8761-0047-4536-9816-96bbeafeb679"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="513" y="0" width="40" height="13" forecolor="#FFFFFF" uuid="2928fb6a-c21a-4b21-bdf4-94c426333f08"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="429" y="0" width="84" height="13" forecolor="#FFFFFF" uuid="af87ce57-b4ce-40e8-bba5-7c3ed6985e3c"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="2" y="0" width="197" height="13" forecolor="#FFFFFF" uuid="46e66055-6e4e-4031-9f7b-50de9e31d7ea"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

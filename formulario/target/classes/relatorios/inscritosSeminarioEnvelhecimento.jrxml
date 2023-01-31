@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inscritosPromocaoIdoso" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3d08110f-b197-48c6-a776-4ce8ec18da8c">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="caminhoImagem" class="java.lang.String">
+		<defaultValueExpression><![CDATA["/resources/images/"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     seminarioEnvelhecimento.`idSeminarioEnvelhecimento` AS seminarioEnvelhecimento_idDSeminarioEnvelhecimento,
+     seminarioEnvelhecimento.`dtaInscricao` AS seminarioEnvelhecimento_dtaInscricao,
+     seminarioEnvelhecimento.`dtaNascimento` AS seminarioEnvelhecimento_dtaNascimento,
+     seminarioEnvelhecimento.`email` AS seminarioEnvelhecimento_email,
+     seminarioEnvelhecimento.`fone` AS seminarioEnvelhecimento_fone,
+     seminarioEnvelhecimento.`nome` AS seminarioEnvelhecimento_nome,
+     seminarioEnvelhecimento.`sexo` AS seminarioEnvelhecimento_sexo,
+     seminarioEnvelhecimento.`statusTipo` AS seminarioEnvelhecimento_statusTipo,
+     seminarioEnvelhecimento.`tipo` AS seminarioEnvelhecimento_tipo
+FROM
+     `seminarioEnvelhecimento` seminarioEnvelhecimento]]>
+	</queryString>
+	<field name="seminarioEnvelhecimento_idDSeminarioEnvelhecimento" class="java.lang.Integer"/>
+	<field name="seminarioEnvelhecimento_dtaInscricao" class="java.sql.Date"/>
+	<field name="seminarioEnvelhecimento_dtaNascimento" class="java.sql.Date"/>
+	<field name="seminarioEnvelhecimento_email" class="java.lang.String"/>
+	<field name="seminarioEnvelhecimento_fone" class="java.lang.String"/>
+	<field name="seminarioEnvelhecimento_nome" class="java.lang.String"/>
+	<field name="seminarioEnvelhecimento_sexo" class="java.lang.String"/>
+	<field name="seminarioEnvelhecimento_statusTipo" class="java.lang.String"/>
+	<field name="seminarioEnvelhecimento_tipo" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="95" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="172" y="0" width="461" height="62" uuid="3dbf6ffb-f228-4a2c-9c70-6e5b3d84a81e"/>
+				<textElement verticalAlignment="Middle">
+					<font size="22" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Seminário - Envelhecimento Masculina]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="303" y="62" width="196" height="22" uuid="71238d66-da31-456e-aaf6-d7abfa7605f7"/>
+				<textElement>
+					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Relação de Inscritos]]></text>
+			</staticText>
+			<image vAlign="Middle" isUsingCache="false" onErrorType="Icon">
+				<reportElement mode="Transparent" x="6" y="7" width="108" height="49" backcolor="#FFFFFF" uuid="02a01fcd-383c-42cc-b73e-5c7557b10ee1"/>
+				<imageExpression><![CDATA[$P{caminhoImagem}+"logoRelatorio.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="802" height="1" uuid="e1b4ed31-6002-4e12-b520-48d422080f69"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="0" y="0" width="25" height="15" forecolor="#736343" uuid="9f8393df-eb53-4fc7-8de4-947d08f95fe5"/>
+				<text><![CDATA[#]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="250" y="0" width="72" height="15" forecolor="#736343" uuid="f7ab671d-f082-48e3-af8e-c4bf36a0e853"/>
+				<text><![CDATA[Nascimento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="412" y="0" width="135" height="15" forecolor="#736343" uuid="5e7ca2c4-4619-4e87-95dc-489a0f5f9115"/>
+				<text><![CDATA[Email]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="324" y="0" width="88" height="15" forecolor="#736343" uuid="610ac2d8-d9e1-4a94-ac38-86c0a309e49d"/>
+				<text><![CDATA[Telefone]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="25" y="0" width="170" height="15" forecolor="#736343" uuid="69683d03-f44d-496a-a6b5-aac9362ba9b7"/>
+				<text><![CDATA[Nome]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="652" y="0" width="74" height="15" forecolor="#736343" uuid="9538a073-158e-4004-bc3f-ca0718d8e554"/>
+				<text><![CDATA[Sexo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="727" y="0" width="73" height="15" forecolor="#736343" uuid="111d6f50-e184-44e1-9cf6-d58cfb358f30"/>
+				<text><![CDATA[Tipo]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="802" height="15" uuid="d46802fa-5b20-4430-b88b-543d4ed85328"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="0" y="0" width="25" height="15" uuid="0b257382-e9ae-4ed3-ba59-6a4cce5db9ad"/>
+					<textElement>
+						<font size="11" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{seminarioEnvelhecimento_idDSeminarioEnvelhecimento}]]></textFieldExpression>
+				</textField>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement style="Detail" x="250" y="0" width="72" height="15" uuid="3c624081-d91f-48ff-a71f-51173ef7d416"/>
+					<textElement>
+						<font size="11" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{seminarioEnvelhecimento_dtaNascimento}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="413" y="0" width="234" height="15" uuid="05df268e-c3bb-42e7-b8bd-b58edc789f0d"/>
+					<textElement>
+						<font size="11" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{seminarioEnvelhecimento_email}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="324" y="0" width="88" height="15" uuid="87388b59-1dfb-4d92-879a-b9aa017d2874"/>
+					<textElement>
+						<font size="11" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{seminarioEnvelhecimento_fone}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="25" y="0" width="215" height="15" uuid="eb9855d6-d151-4883-bc6d-b31ff682b34b"/>
+					<textElement>
+						<font size="11" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{seminarioEnvelhecimento_nome}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="652" y="0" width="74" height="15" uuid="c0511e0c-9c59-4eca-8fdc-416f8c642b0e"/>
+					<textElement>
+						<font size="11" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{seminarioEnvelhecimento_sexo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="727" y="0" width="73" height="15" uuid="d6424ea8-78fe-4d7c-aeaf-b6d45b624518"/>
+					<textElement>
+						<font size="11" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{seminarioEnvelhecimento_tipo}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="6" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="802" height="1" uuid="d8c1c52b-3302-43c2-9a04-f30c33188210"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="-21" y="1" width="843" height="24" forecolor="#D0B48E" backcolor="#F2EBDF" uuid="5732ac85-2847-4012-b28d-313b7cc3f317"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="783" y="1" width="40" height="20" forecolor="#736343" uuid="e2cef147-8510-4613-b754-91b846565a95"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="703" y="1" width="80" height="20" forecolor="#736343" uuid="d0d708a1-1671-4acb-82ec-910e7d90eae3"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#736343" uuid="6dba3d5f-e529-424a-ba80-cbd2cc478e16"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

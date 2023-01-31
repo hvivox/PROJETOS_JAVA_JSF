@@ -1,0 +1,119 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:esp="http://www.especializa.com.br/facelets/taglibs"
+	xmlns:espc="http://java.sun.com/jsf/composite/componentes"
+	xmlns:o="http://omnifaces.org/ui"
+	template="../../WEB-INF/templates/mainTemplate.xhtml">
+
+
+	<ui:define name="titulo">#{mens.titulo_painel_publicacao}</ui:define>
+
+
+	<ui:define name="corpo">
+		<f:metadata>
+			<f:event
+				listener="#{mbCadastroGrupoDocumento.inicializar}"
+				type="preRenderView" />
+
+			<o:viewParam
+				name="idGrupoDocumento"
+				value="#{mbCadastroGrupoDocumento.grupoDocumento}" />
+		</f:metadata>
+
+
+
+		<h:form
+			id="formCadastro"
+			enctype="multipart/form-data">
+			<h1 class="hv-page-title">Cadastro Grupo de Documentos</h1>
+
+			<p:toolbar>
+				<p:toolbarGroup>
+					<p:commandButton
+						value="Salvar"
+						id="btnSalvar"
+						icon="ui-icon-disk"
+						action="#{mbCadastroGrupoDocumento.salvar}"
+						update="formCadastro :hv-msg-topo"
+						ajax="false">
+						<p:resetInput target="formCadastro" />
+
+					</p:commandButton>
+				</p:toolbarGroup>
+
+
+				<p:toolbarGroup align="right">
+					<p:button
+						id="btnVoltar"
+						icon="ui-icon-arrowreturnthick-1-w"
+						value="Voltar"
+						outcome="consulta-grupodocumento" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+
+
+			<!-- torna os campos fluidos -->
+			<div class="ui-fluid">
+
+
+				<!-- grid: torna o layout responsivo; uigrid-col: divide os espaços na linha até 12;  -->
+				<p:panelGrid
+					id="inclusaoPanel"
+					columns="3"
+					columnClasses="ui-grid-col-2, ui-grid-col-6, ui-gri-col-1"
+					layout="grid"
+					style="width: 100%; margin-top: 20px"
+					styleClass="panelgrid-noborder">
+
+
+					<p:outputLabel
+						value="Grupo de Documentos"
+						for="grupo" />
+					<p:inputText
+						id="grupo"
+						value="#{mbCadastroGrupoDocumento.grupoDocumento.nomeGrupoDoc}"
+						maxlength="100"
+						onkeydown="this.value = this.value.toUpperCase();"
+						onkeyup="this.value = this.value.toUpperCase();"
+						required="true"
+						requiredMessage="É necessário informar o campo grupo de documentos">
+					</p:inputText>
+					<p:message
+						id="mensgrupo"
+						for="grupo" />
+
+
+					<p:outputLabel
+						value="Status"
+						for="status" />
+					<p:selectOneMenu
+						id="status"
+						immediate="true"
+						style="width:70%"
+						value="#{mbCadastroGrupoDocumento.grupoDocumento.status}"
+						required="true"
+						requiredMessage="É necessário informar o estatus">
+
+						<f:selectItems
+							value="#{mbCadastroGrupoDocumento.listaEstatus}"
+							var="s"
+							itemLabel="#{s.status}" />
+					</p:selectOneMenu>
+					<p:message for="status" />
+
+
+				</p:panelGrid>
+			</div>
+
+
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>
